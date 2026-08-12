@@ -1,8 +1,9 @@
-from typing import Final
+from typing import Final, cast
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
     PERCENTAGE,
+    EntityCategory,
     UnitOfElectricCurrent,
     UnitOfElectricPotential,
     UnitOfEnergy,
@@ -10,7 +11,6 @@ from homeassistant.const import (
     UnitOfPower,
     UnitOfTemperature,
 )
-from homeassistant.helpers.entity import EntityCategory
 
 from .entity_description import (
     IndevoltSensorEntityDescription,
@@ -72,7 +72,7 @@ SENSORS_GEN2: Final = (
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: {"1000": "Master", "1001": "Slave", "1002": "None"}.get(
-            value
+            cast(str, value)
         ),
     ),
     # Bypass Power
@@ -153,7 +153,7 @@ SENSORS_GEN2: Final = (
         name="Meter Connection Status",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: {1000: "ON", 1001: "OFF"}.get(value),
+        value_fn=lambda value: {1000: "ON", 1001: "OFF"}.get(cast(int, value)),
     ),
     IndevoltSensorEntityDescription(
         key="11016",

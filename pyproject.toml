@@ -7,6 +7,13 @@ line-length = 88
 select = ["E4", "E7", "E9", "F", "I"]
 ignore = ["E501"]
 
+[tool.mypy]
+python_version = "3.14"
+files = ["custom_components/indevolt/sensor_descriptions"]
+follow_imports = "silent"
+strict = true
+show_error_codes = true
+
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"
 pythonpath = ["."]
@@ -18,6 +25,7 @@ environments = ["python_full_version >= '3.14.2'"]
 [dependency-groups]
 dev = [
     "homeassistant>=2026.8.1",
+    "mypy>=2.3.0",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",

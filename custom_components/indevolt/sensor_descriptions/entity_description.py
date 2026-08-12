@@ -2,7 +2,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 from homeassistant.components.sensor import SensorEntityDescription
-from homeassistant.helpers.entity import EntityCategory
+from homeassistant.const import EntityCategory
+from homeassistant.helpers.typing import StateType
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -10,11 +11,11 @@ class IndevoltSensorEntityDescription(SensorEntityDescription):
     """Custom entity description class for Indevolt sensors."""
 
     name: str = ""
-    value_fn: Callable[[str], float | int | str | None] = lambda value: value
+    value_fn: Callable[[StateType], StateType] = lambda value: value
     entity_category: EntityCategory | None = None
 
 
-def format_firmware_version(version: int | str) -> str:
+def format_firmware_version(version: StateType) -> str:
     """Format firmware version number."""
 
     v = str(version)

@@ -1,12 +1,12 @@
-from typing import Final
+from typing import Final, cast
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
     PERCENTAGE,
+    EntityCategory,
     UnitOfEnergy,
     UnitOfPower,
 )
-from homeassistant.helpers.entity import EntityCategory
 
 from .entity_description import IndevoltSensorEntityDescription
 
@@ -45,7 +45,7 @@ SENSORS_GEN1: Final = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
-        value_fn=lambda value: value * 0.001,
+        value_fn=lambda value: cast(float | int, value) * 0.001,
     ),
     IndevoltSensorEntityDescription(
         key="2101",
@@ -134,7 +134,7 @@ SENSORS_GEN1: Final = (
             1: "Self-consumed Prioritized",
             4: "Real-Time Control",
             5: "Charge/Discharge Schedule",
-        }.get(value),
+        }.get(cast(int, value)),
     ),
     IndevoltSensorEntityDescription(
         key="6001",
@@ -145,13 +145,13 @@ SENSORS_GEN1: Final = (
             1000: "Static",
             1001: "Charging",
             1002: "Discharging",
-        }.get(value),
+        }.get(cast(int, value)),
     ),
     IndevoltSensorEntityDescription(
         key="7120",
         name="Meter Connection Status",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: {1000: "ON", 1001: "OFF"}.get(value),
+        value_fn=lambda value: {1000: "ON", 1001: "OFF"}.get(cast(int, value)),
     ),
 )

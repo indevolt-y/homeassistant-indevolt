@@ -1,11 +1,11 @@
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
     PERCENTAGE,
+    EntityCategory,
     UnitOfElectricCurrent,
     UnitOfElectricPotential,
     UnitOfTemperature,
 )
-from homeassistant.helpers.entity import EntityCategory
 
 from .entity_description import (
     IndevoltSensorEntityDescription,
