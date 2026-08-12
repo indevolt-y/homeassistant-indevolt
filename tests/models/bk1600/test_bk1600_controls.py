@@ -65,9 +65,11 @@ async def test_bk1600_number_keeps_dynamic_boundary(state, maximum) -> None:
 
     assert entity.native_max_value == maximum
 
-    await entity.async_set_native_value(maximum)
+    requested_value = float(maximum)
+    await entity.async_set_native_value(requested_value)
 
-    assert coordinator.api.writes == [(47016, [maximum])]
+    assert coordinator.api.writes == [(47016, [requested_value])]
+    assert type(coordinator.api.writes[0][1][0]) is float
     assert coordinator.refreshes == 1
 
 

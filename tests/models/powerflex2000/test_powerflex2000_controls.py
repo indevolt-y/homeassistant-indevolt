@@ -65,7 +65,7 @@ def make_number_entity(coordinator, description):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("power", [2_400, 2_401, 4_800, 7_200, 10_800])
+@pytest.mark.parametrize("power", [2_400.0, 2_401.0, 4_800.0, 7_200.0, 10_800.0])
 async def test_powerflex2000_number_accepts_supported_power(power) -> None:
     coordinator = FakeCoordinator()
     description = next(item for item in NUMBERS_GEN2 if item.key == "power_setting")
@@ -74,6 +74,7 @@ async def test_powerflex2000_number_accepts_supported_power(power) -> None:
     await entity.async_set_native_value(power)
 
     assert coordinator.api.writes == [(47016, [power])]
+    assert type(coordinator.api.writes[0][1][0]) is float
     assert coordinator.refreshes == 1
 
 

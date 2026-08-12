@@ -163,6 +163,26 @@ async def test_set_data_request_and_return_contract() -> None:
 
 
 @pytest.mark.asyncio
+async def test_set_data_preserves_home_assistant_number_float_payload() -> None:
+    session = RecordingSession({"result": True})
+    api = make_api(session)
+
+    result = await api.set_data(point=47016, value=[1200.0])
+
+    assert result is True
+    assert session.requests == [
+        RecordedRequest(
+            "POST",
+            (
+                "http://192.0.2.10:80/rpc/Indevolt.SetData?"
+                'config={"f":16,"t":47016,"v":[1200.0]}',
+            ),
+            {"timeout": api.timeout},
+        )
+    ]
+
+
+@pytest.mark.asyncio
 async def test_get_config_request_and_return_contract() -> None:
     payload = {"device": {"type": "BK1600", "sn": "test-sn"}}
     session = RecordingSession(payload)

@@ -29,6 +29,14 @@ from .const import MAX_REAL_TIME_CONTROL_POWER
 from .coordinator import IndevoltDeviceUpdateCoordinator
 from .entity import IndevoltEntity
 from .opendata import IndevoltAPI
+from .opendata.commands import (
+    set_backup_soc,
+    set_feed_in_power_limit,
+    set_inverter_input_limit,
+    set_max_ac_output_power,
+    set_real_time_control_power,
+    set_real_time_control_target_soc,
+)
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -36,7 +44,7 @@ class IndevoltNumberEntityDescription(NumberEntityDescription):
     """Indevolt number entity description."""
 
     value_fn: Callable[[dict], int | None]
-    set_fn: Callable[[IndevoltAPI, int], Awaitable[bool]]
+    set_fn: Callable[[IndevoltAPI, float], Awaitable[bool]]
 
 
 NUMBERS_GEN2 = [
@@ -52,8 +60,7 @@ NUMBERS_GEN2 = [
         native_unit_of_measurement=PERCENTAGE,
         value_fn=lambda data: data.get("6105"),
         set_fn=lambda api, value: api.set_data(
-            point=1142,
-            value=[value],
+            **set_backup_soc(value).as_set_data_request()
         ),
     ),
     IndevoltNumberEntityDescription(
@@ -68,8 +75,7 @@ NUMBERS_GEN2 = [
         native_unit_of_measurement=UnitOfPower.WATT,
         value_fn=lambda data: data.get("11009"),
         set_fn=lambda api, value: api.set_data(
-            point=1138,
-            value=[value],
+            **set_inverter_input_limit(value).as_set_data_request()
         ),
     ),
     IndevoltNumberEntityDescription(
@@ -84,8 +90,7 @@ NUMBERS_GEN2 = [
         native_unit_of_measurement=UnitOfPower.WATT,
         value_fn=lambda data: data.get("11011"),
         set_fn=lambda api, value: api.set_data(
-            point=1147,
-            value=[value],
+            **set_max_ac_output_power(value).as_set_data_request()
         ),
     ),
     IndevoltNumberEntityDescription(
@@ -100,8 +105,7 @@ NUMBERS_GEN2 = [
         native_unit_of_measurement=UnitOfPower.WATT,
         value_fn=lambda data: data.get("11010"),
         set_fn=lambda api, value: api.set_data(
-            point=1146,
-            value=[value],
+            **set_feed_in_power_limit(value).as_set_data_request()
         ),
     ),
     IndevoltNumberEntityDescription(
@@ -128,8 +132,7 @@ NUMBERS_GEN2 = [
         native_unit_of_measurement=UnitOfPower.WATT,
         value_fn=lambda data: None,
         set_fn=lambda api, value: api.set_data(
-            point=47016,
-            value=[value],
+            **set_real_time_control_power(value).as_set_data_request()
         ),
     ),
     IndevoltNumberEntityDescription(
@@ -144,8 +147,7 @@ NUMBERS_GEN2 = [
         native_unit_of_measurement=PERCENTAGE,
         value_fn=lambda data: None,
         set_fn=lambda api, value: api.set_data(
-            point=47017,
-            value=[value],
+            **set_real_time_control_target_soc(value).as_set_data_request()
         ),
     ),
 ]
@@ -164,8 +166,7 @@ NUMBERS_GEN1 = [
         native_unit_of_measurement=UnitOfPower.WATT,
         value_fn=lambda data: None,
         set_fn=lambda api, value: api.set_data(
-            point=47016,
-            value=[value],
+            **set_real_time_control_power(value).as_set_data_request()
         ),
     ),
     IndevoltNumberEntityDescription(
@@ -180,8 +181,7 @@ NUMBERS_GEN1 = [
         native_unit_of_measurement=PERCENTAGE,
         value_fn=lambda data: None,
         set_fn=lambda api, value: api.set_data(
-            point=47017,
-            value=[value],
+            **set_real_time_control_target_soc(value).as_set_data_request()
         ),
     ),
 ]
@@ -236,7 +236,7 @@ class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
     def native_value(self) -> int | None:
         return self.entity_description.value_fn(self.coordinator.data)
 
-    async def async_set_native_value(self, value: int) -> None:
+    async def async_set_native_value(self, value: float) -> None:
         # Reason: Entity services or internal callers can bypass native_max_value,
         # so UI metadata is not a write guard.
         # Goal: Enforce the 10800 W pre-write limit for non-BK power_setting calls

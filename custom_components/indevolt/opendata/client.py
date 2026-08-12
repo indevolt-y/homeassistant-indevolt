@@ -34,7 +34,7 @@ class IndevoltAPI:
     async def set_data(
         self,
         point: int,
-        value: List[int],
+        value: List[int | float],
     ) -> bool:
         """Send configuration data to the device"""
         config_param = json.dumps({"f": 16, "t": point, "v": value}).replace(" ", "")

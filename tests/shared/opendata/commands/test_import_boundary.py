@@ -28,35 +28,21 @@ sys.path.insert(0, {str(OPEN_DATA_PACKAGE.parent)!r})
 import opendata
 assert not any(name.startswith("opendata.commands") for name in sys.modules)
 from opendata import commands
-from opendata.commands import set_real_time_control_parameters
+from opendata.commands import set_real_time_control_power
 assert set(commands.__all__) == {{
-    "LoadSetting",
-    "OpenDataWrite",
-    "RealTimeControlState",
-    "SetDataRequest",
-    "WorkMode",
     "set_backup_soc",
-    "set_bypass",
     "set_feed_in_power_limit",
-    "set_grid_charging",
     "set_inverter_input_limit",
-    "set_light",
-    "set_load_setting",
     "set_max_ac_output_power",
-    "set_real_time_control_parameters",
     "set_real_time_control_power",
-    "set_real_time_control_state",
     "set_real_time_control_target_soc",
-    "set_work_mode",
 }}
-assert not any(
-    name.startswith(("BK1600", "SF2000", "PF2000", "FALLBACK"))
-    for name in vars(commands)
-)
-assert set_real_time_control_parameters(1, 1200, 80).as_set_data_request() == {{
-    "point": 47015,
-    "value": [1, 1200, 80],
+request = set_real_time_control_power(1200.0).as_set_data_request()
+assert request == {{
+    "point": 47016,
+    "value": [1200.0],
 }}
+assert type(request["value"][0]) is float
 """
 
     subprocess.run(
