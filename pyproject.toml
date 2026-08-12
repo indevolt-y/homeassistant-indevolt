@@ -1,0 +1,5 @@
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.2",
+    "ruff>=0.16.2",
+]
