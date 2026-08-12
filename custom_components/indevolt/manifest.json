@@ -1,10 +1,13 @@
 {
   "domain": "indevolt",
   "name": "INDEVOLT",
-  "version": "1.2",
-  "requirements": ["aiohttp"],
-  "dependencies": [],
   "codeowners": ["@INDEVOLT"],
   "config_flow": true,
-  "iot_class": "local_polling"
+  "dependencies": [],
+  "documentation": "https://github.com/INDEVOLT/homeassistant-indevolt",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/INDEVOLT/homeassistant-indevolt/issues",
+  "requirements": ["aiohttp"],
+  "version": "1.3"
 }
