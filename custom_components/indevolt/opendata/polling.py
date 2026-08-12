@@ -1,27 +1,27 @@
-"""Model-specific OpenData response definitions."""
+"""Ordered polling baselines copied from the pre-V1.3.18 coordinator."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Final
 
+__all__ = ("BK_POLLING_BASELINE", "DEFAULT_POLLING_BASELINE", "PollingField")
+
 
 @dataclass(frozen=True, slots=True)
-class OpenDataField:
-    """A response field proven by the current polling contract."""
+class PollingField:
+    """A point and response key copied from the current polling path."""
 
     point: int
     response_key: str
 
 
-def _fields(*points: int) -> tuple[OpenDataField, ...]:
-    """Build immutable response fields without inventing protocol metadata."""
-    return tuple(
-        OpenDataField(point=point, response_key=str(point)) for point in points
-    )
+def _fields(*points: int) -> tuple[PollingField, ...]:
+    """Build immutable point/key pairs without adding protocol metadata."""
+    return tuple(PollingField(point=point, response_key=str(point)) for point in points)
 
 
-BK1600_SCHEMA: Final[tuple[OpenDataField, ...]] = _fields(
+BK_POLLING_BASELINE: Final[tuple[PollingField, ...]] = _fields(
     1501,
     1502,
     1505,
@@ -43,10 +43,7 @@ BK1600_SCHEMA: Final[tuple[OpenDataField, ...]] = _fields(
     21028,
 )
 
-# BK1600 and BK1600 Ultra are confirmed to use one point table.
-BK1600_ULTRA_SCHEMA: Final[tuple[OpenDataField, ...]] = BK1600_SCHEMA
-
-SF2000_SCHEMA: Final[tuple[OpenDataField, ...]] = _fields(
+DEFAULT_POLLING_BASELINE: Final[tuple[PollingField, ...]] = _fields(
     142,
     606,
     667,
@@ -146,11 +143,3 @@ SF2000_SCHEMA: Final[tuple[OpenDataField, ...]] = _fields(
     19176,
     19177,
 )
-
-# SF2000 and PF2000 are confirmed to use one point table.
-PF2000_SCHEMA: Final[tuple[OpenDataField, ...]] = SF2000_SCHEMA
-
-# A model without an explicitly registered point table keeps the current
-# non-BK behavior and uses the SF2000 table. Model registration is introduced
-# in a later V1.3.18 subversion.
-FALLBACK_SCHEMA: Final[tuple[OpenDataField, ...]] = SF2000_SCHEMA
