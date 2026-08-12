@@ -10,7 +10,7 @@ from .sensor_descriptions.gen2 import SENSORS_GEN2
 async def async_setup_entry(hass, entry, async_add_entities):
     """
     Set up the sensor platform for Indevolt.
-    
+
     This function is called by Home Assistant when the integration is set up.
     It creates sensor entities for each defined sensor description.
     """
@@ -31,9 +31,14 @@ async def async_setup_entry(hass, entry, async_add_entities):
         for pack_id, sensors in BATTERY_PACK_SENSORS.items():
             for description in sensors:
                 if entry.runtime_data.data.get(description.key) is not None:
-                    entities.append(IndevoltBatterySensorEntity(entry.runtime_data, description, pack_id))
+                    entities.append(
+                        IndevoltBatterySensorEntity(
+                            entry.runtime_data, description, pack_id
+                        )
+                    )
 
         async_add_entities(entities)
+
 
 class IndevoltSensorEntity(IndevoltEntity, SensorEntity):
     """Represents a sensor entity for Indevolt devices."""
@@ -52,8 +57,10 @@ class IndevoltSensorEntity(IndevoltEntity, SensorEntity):
 
     @property
     def native_value(self):
-        """Return the current value of the sensor in its native unit."""    
-        return self.entity_description.value_fn(self.coordinator.data.get(self.entity_description.key))
+        """Return the current value of the sensor in its native unit."""
+        return self.entity_description.value_fn(
+            self.coordinator.data.get(self.entity_description.key)
+        )
 
 
 class IndevoltBatterySensorEntity(IndevoltEntity, SensorEntity):

@@ -27,6 +27,7 @@ from .coordinator import IndevoltDeviceUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
     """
     Set up the indevolt integration component.
@@ -37,6 +38,7 @@ async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
         _register_services(hass)
     return True
 
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """
     Set up indevolt from a config entry.
@@ -44,7 +46,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     It initializes the coordinator and sets up platforms.
     """
     hass.data.setdefault(DOMAIN, {})
-    
+
     try:
         coordinator = IndevoltDeviceUpdateCoordinator(hass, entry.data)
         # Perform initial data refresh.
@@ -54,16 +56,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         # Set up all platforms (sensors, switches, etc.).
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-        return True 
-    
+        return True
+
     except Exception as err:
         _LOGGER.exception("Unexpected error occurred while setting config entry.")
-        
+
         # Clean up partially created resources.
         if entry.entry_id in hass.data.get(DOMAIN, {}):
             del hass.data[DOMAIN][entry.entry_id]
-        
+
         raise ConfigEntryNotReady from err
+
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """
@@ -71,15 +74,16 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     This is called when the integration is removed or reloaded.
     """
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-    
+
     if unload_ok:
         coordinator = hass.data[DOMAIN].pop(entry.entry_id)
         await coordinator.async_shutdown()
-        
+
         if not hass.data[DOMAIN]:
             hass.data.pop(DOMAIN)
-    
+
     return unload_ok
+
 
 def _register_services(hass: HomeAssistant) -> None:
     """Register Indevolt services."""
@@ -131,9 +135,8 @@ def _register_services(hass: HomeAssistant) -> None:
         }
 
         device_registry = dr.async_get(hass)
-        
-        for device_id in device_ids:
 
+        for device_id in device_ids:
             device = device_registry.async_get(device_id)
             entry_id = next(iter(device.config_entries), None)
 

@@ -45,7 +45,5 @@ async def test_coordinator_recovers_on_poll_after_transient_update_failure() -> 
     successful_batches = api.batches[1:]
     assert successful_batches
     assert data == {
-        str(point): point
-        for batch in successful_batches
-        for point in batch
+        str(point): point for batch in successful_batches for point in batch
     }

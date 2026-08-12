@@ -14,23 +14,23 @@ from .entity_description import (
 
 BATTERY_PACK1_SENSORS = {
     IndevoltSensorEntityDescription(
-        key="1136",	
+        key="1136",
         name="Firmware SFA/PFA DCDC1",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1137",	
+        key="1137",
         name="Firmware SFA/PFA BMS1",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9016",
         name="Battery SOC-Pack1",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="9020",
@@ -71,23 +71,23 @@ BATTERY_PACK1_SENSORS = {
 
 BATTERY_PACK2_SENSORS = {
     IndevoltSensorEntityDescription(
-        key="1138",	
+        key="1138",
         name="Firmware SFA/PFA DCDC2",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1139",	
+        key="1139",
         name="Firmware SFA/PFA BMS2",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9035",
         name="Battery SOC-Pack2",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="9039",
@@ -128,23 +128,23 @@ BATTERY_PACK2_SENSORS = {
 
 BATTERY_PACK3_SENSORS = {
     IndevoltSensorEntityDescription(
-        key="1140",	
+        key="1140",
         name="Firmware SFA/PFA DCDC3",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1141",	
+        key="1141",
         name="Firmware SFA/PFA BMS3",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9054",
         name="Battery SOC-Pack3",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="9058",
@@ -185,23 +185,23 @@ BATTERY_PACK3_SENSORS = {
 
 BATTERY_PACK4_SENSORS = {
     IndevoltSensorEntityDescription(
-        key="1142",	
+        key="1142",
         name="Firmware SFA/PFA DCDC4",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1143",	
+        key="1143",
         name="Firmware SFA/PFA BMS4",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9149",
         name="Battery SOC-Pack4",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="9153",
@@ -242,23 +242,23 @@ BATTERY_PACK4_SENSORS = {
 
 BATTERY_PACK5_SENSORS = {
     IndevoltSensorEntityDescription(
-        key="1098",	
+        key="1098",
         name="Firmware SFA/PFA DCDC5",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1099",	
+        key="1099",
         name="Firmware SFA/PFA BMS5",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9202",
         name="Battery SOC-Pack5",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="9206",

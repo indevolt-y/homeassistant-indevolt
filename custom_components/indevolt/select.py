@@ -26,6 +26,7 @@ class IndevoltSelectDescription(SelectEntityDescription):
     read_point: str = ""
     entity_category: EntityCategory = EntityCategory.CONFIG
 
+
 SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
     IndevoltSelectDescription(
         key="work_mode",
@@ -34,43 +35,32 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
         options_map={
             1: "Self-Consumed Prioritized",
             4: "Real-Time Control",
-            5: "Charge/Discharge Schedule"
+            5: "Charge/Discharge Schedule",
         },
         read_point="7101",
-        entity_category = EntityCategory.CONFIG,
+        entity_category=EntityCategory.CONFIG,
         value_fn=lambda data: data.get("7101"),
-        set_fn=lambda c, value: c.api.set_data(point=47005, value=[value])
+        set_fn=lambda c, value: c.api.set_data(point=47005, value=[value]),
     ),
     IndevoltSelectDescription(
         key="state_setting",
         name="State (Real-time control)",
         icon="mdi:cog",
-        options_map={
-            0: "Standby",
-            1: "Charging",
-            2: "Discharging"
-        },
+        options_map={0: "Standby", 1: "Charging", 2: "Discharging"},
         read_point="6001",
-        entity_category = EntityCategory.CONFIG,
+        entity_category=EntityCategory.CONFIG,
         value_fn=lambda data: (
-            data.get("6001") - 1000
-            if data.get("6001") is not None
-            else None
+            data.get("6001") - 1000 if data.get("6001") is not None else None
         ),
-        set_fn=lambda c, value: c.api.set_data(point=47015, value=[value])
+        set_fn=lambda c, value: c.api.set_data(point=47015, value=[value]),
     ),
     IndevoltSelectDescription(
         key="load_setting",
         name="Load Setting",
         icon="mdi:cog",
-        options_map={
-            1: "Smart Plug",
-            2: "Meter",
-            3: "Key Load",
-            4: "Custom"
-        },
+        options_map={1: "Smart Plug", 2: "Meter", 3: "Key Load", 4: "Custom"},
         value_fn=lambda data: None,
-        set_fn=lambda c, value: c.api.set_data(point=1, value=[value])
+        set_fn=lambda c, value: c.api.set_data(point=1, value=[value]),
     ),
 )
 
@@ -79,15 +69,11 @@ SELECTS_GEN1: tuple[IndevoltSelectDescription, ...] = (
         key="state_setting",
         name="State (Real-time control)",
         icon="mdi:cog",
-        options_map={
-            0: "Standby",
-            1: "Charging",
-            2: "Discharging"
-        },
+        options_map={0: "Standby", 1: "Charging", 2: "Discharging"},
         read_point="6001",
-        entity_category = EntityCategory.CONFIG,
-        value_fn=lambda data: data.get("6001")-1000,
-        set_fn=lambda c, value: c.api.set_data(point=47015, value=[value])
+        entity_category=EntityCategory.CONFIG,
+        value_fn=lambda data: data.get("6001") - 1000,
+        set_fn=lambda c, value: c.api.set_data(point=47015, value=[value]),
     ),
 )
 
@@ -98,7 +84,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     coordinator: IndevoltDeviceUpdateCoordinator = entry.runtime_data
-    
+
     if "BK1600" in entry.data.get("device_model"):
         async_add_entities(
             IndevoltSelectEntity(coordinator, description)
@@ -109,6 +95,7 @@ async def async_setup_entry(
             IndevoltSelectEntity(coordinator, description)
             for description in SELECTS_GEN2
         )
+
 
 class IndevoltSelectEntity(IndevoltEntity, SelectEntity):
     """Indevolt Select Entity."""
@@ -136,20 +123,18 @@ class IndevoltSelectEntity(IndevoltEntity, SelectEntity):
 
         if value is None:
             return
-        
+
         self._attr_current_option = option
         await self.entity_description.set_fn(self.coordinator, value)
         await self.coordinator.async_refresh()
 
-
     @property
     def current_option(self) -> str | None:
         """Return the current option as a string for HA UI."""
-    
+
         value = self.entity_description.value_fn(self.coordinator.data)
 
         if value is None:
             return None
-        
+
         return self.entity_description.options_map.get(value)
-    

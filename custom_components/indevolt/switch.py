@@ -19,14 +19,17 @@ from .entity import IndevoltEntity
 
 PARALLEL_UPDATES = 1
 
+
 @dataclass(frozen=True, kw_only=True)
 class IndevoltSwitchEntityDescription(SwitchEntityDescription):
-    """Class to describe a sensor entity."""    
+    """Class to describe a sensor entity."""
+
     is_on_fn: Callable[[dict[str, Any]], bool | None]
     read_point: str = ""
     available_fn: Callable[[dict[str, Any]], bool]
     create_fn: Callable[[dict[str, Any]], bool]
     set_fn: Callable[[Any, bool], Awaitable[bool]]
+
 
 SWITCHES = [
     IndevoltSwitchEntityDescription(
@@ -68,28 +71,32 @@ SWITCHES = [
             point=7266,
             value=[1] if active else [0],
         ),
-    )
+    ),
 ]
 
+
 async def async_setup_entry(
-        hass: HomeAssistant, 
-        entry: ConfigEntry, 
-        async_add_entities: AddConfigEntryEntitiesCallback
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up switches."""
     if "BK1600" in entry.data.get("device_model"):
         return
-    
+
     async_add_entities(
         IndevoltSwitchEntity(entry.runtime_data, description)
         for description in SWITCHES
         if description.create_fn(entry.runtime_data.data)
     )
 
+
 class IndevoltSwitchEntity(IndevoltEntity, SwitchEntity):
     """Representation of a Indevolt switch."""
 
-    def __init__(self, coordinator, description: IndevoltSwitchEntityDescription) -> None:
+    def __init__(
+        self, coordinator, description: IndevoltSwitchEntityDescription
+    ) -> None:
         """Initialize the switch."""
         super().__init__(coordinator)
         self.entity_description = description
@@ -104,11 +111,11 @@ class IndevoltSwitchEntity(IndevoltEntity, SwitchEntity):
         return super().available and self.entity_description.available_fn(
             self.coordinator.data
         )
-    
+
     @property
     def is_on(self) -> bool | None:
         return self.entity_description.is_on_fn(self.coordinator.data)
-    
+
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch on."""
         self.coordinator.async_set_updated_data(

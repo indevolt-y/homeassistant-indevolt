@@ -54,9 +54,7 @@ async def test_bk1600_ultra_creates_its_model_entry(monkeypatch) -> None:
         lambda hass: "fake-session",
     )
 
-    result = await flow.async_step_user(
-        {"host": "192.0.2.22", "scan_interval": 45}
-    )
+    result = await flow.async_step_user({"host": "192.0.2.22", "scan_interval": 45})
 
     assert result == {
         "type": "create_entry",

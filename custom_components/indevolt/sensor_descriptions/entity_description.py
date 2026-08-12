@@ -8,9 +8,11 @@ from homeassistant.helpers.entity import EntityCategory
 @dataclass(frozen=True, kw_only=True)
 class IndevoltSensorEntityDescription(SensorEntityDescription):
     """Custom entity description class for Indevolt sensors."""
+
     name: str = ""
     value_fn: Callable[[str], float | int | str | None] = lambda value: value
     entity_category: EntityCategory | None = None
+
 
 def format_firmware_version(version: int | str) -> str:
     """Format firmware version number."""

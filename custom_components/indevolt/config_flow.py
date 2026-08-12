@@ -10,6 +10,7 @@ from .coordinator import IndevoltAPI
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class IndevoltConfigFlow(ConfigFlow, domain=DOMAIN):
     """Configuration flow for Indevolt integration."""
 
@@ -21,13 +22,13 @@ class IndevoltConfigFlow(ConfigFlow, domain=DOMAIN):
         This method is called when the user initiates the integration setup.
         It presents a form for device connection parameters and validates them.
         """
-        
+
         errors = {}
         if user_input is not None:
             host = user_input["host"]
             scan_interval = user_input.get("scan_interval", DEFAULT_SCAN_INTERVAL)
 
-            api = IndevoltAPI(host, DEFAULT_PORT, async_get_clientsession(self.hass))            
+            api = IndevoltAPI(host, DEFAULT_PORT, async_get_clientsession(self.hass))
 
             try:
                 data = await api.get_config()
@@ -46,28 +47,34 @@ class IndevoltConfigFlow(ConfigFlow, domain=DOMAIN):
 
                 # Create configuration entry on successful connection.
                 return self.async_create_entry(
-                    title=f"INDEVOLT {device_model} ({host})", # Entry title shown in HA UI.
+                    title=f"INDEVOLT {device_model} ({host})",  # Entry title shown in HA UI.
                     data={
                         "host": host,
                         "port": DEFAULT_PORT,
                         "scan_interval": scan_interval,
                         "sn": device_sn,
                         "device_model": device_model,
-                        "fw_version": device.get("f_ver")
-                    }
+                        "fw_version": device.get("f_ver"),
+                    },
                 )
-            
+
             except asyncio.TimeoutError:
                 errors["base"] = "timeout"
             except Exception as e:
-                _LOGGER.error("Unknown error occurred while verifying device: %s", str(e), exc_info=True)
+                _LOGGER.error(
+                    "Unknown error occurred while verifying device: %s",
+                    str(e),
+                    exc_info=True,
+                )
                 errors["base"] = "unknown"
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({
-                vol.Required("host"): str,
-                vol.Optional("scan_interval", default=DEFAULT_SCAN_INTERVAL): int,
-            }),
-            errors=errors
+            data_schema=vol.Schema(
+                {
+                    vol.Required("host"): str,
+                    vol.Optional("scan_interval", default=DEFAULT_SCAN_INTERVAL): int,
+                }
+            ),
+            errors=errors,
         )

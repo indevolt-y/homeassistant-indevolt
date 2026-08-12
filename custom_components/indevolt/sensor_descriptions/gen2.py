@@ -20,28 +20,28 @@ from .entity_description import (
 SENSORS_GEN2: Final = (
     # Firmware Version Information
     IndevoltSensorEntityDescription(
-        key="1118",	
+        key="1118",
         name="Firmware PG2000Series EMS",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1109",	
+        key="1109",
         name="Firmware PG2000Series BMS-MB",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1119",	
+        key="1119",
         name="Firmware PG2000Series PCS",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
-        key="1120",	
+        key="1120",
         name="Firmware PG2000Series DCDC",
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: format_firmware_version(version=value)
+        value_fn=lambda value: format_firmware_version(version=value),
     ),
     # System Operating Information
     IndevoltSensorEntityDescription(
@@ -49,21 +49,21 @@ SENSORS_GEN2: Final = (
         name="Rated Capacity",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="2101",
         name="Total AC Input Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="2108",
         name="Total AC Output Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     # Cluster Information
     IndevoltSensorEntityDescription(
@@ -71,11 +71,9 @@ SENSORS_GEN2: Final = (
         name="Master-Slave Identification",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: {
-            "1000": "Master",
-            "1001": "Slave",
-            "1002": "None"
-        }.get(value)
+        value_fn=lambda value: {"1000": "Master", "1001": "Slave", "1002": "None"}.get(
+            value
+        ),
     ),
     # Bypass Power
     IndevoltSensorEntityDescription(
@@ -83,7 +81,7 @@ SENSORS_GEN2: Final = (
         name="Bypass Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     # Electrical Energy Information
     IndevoltSensorEntityDescription(
@@ -91,63 +89,63 @@ SENSORS_GEN2: Final = (
         name="Total AC Input Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="2104",
         name="Total AC Output Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="2105",
         name="Off-grid Output Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="11034",
         name="Bypass Input Energy",
         native_unit_of_measurement=UnitOfEnergy.WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="1502",
         name="Daily Production",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="6004",
         name="Battery Daily Charging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="6005",
         name="Battery Daily Discharging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="6006",
         name="Battery Total Charging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     IndevoltSensorEntityDescription(
         key="6007",
         name="Battery Total Discharging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.TOTAL_INCREASING
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     # Electricity Meter Status
     IndevoltSensorEntityDescription(
@@ -155,17 +153,14 @@ SENSORS_GEN2: Final = (
         name="Meter Connection Status",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
-        value_fn=lambda value: {
-            1000: "ON",
-            1001: "OFF"
-        }.get(value)
+        value_fn=lambda value: {1000: "ON", 1001: "OFF"}.get(value),
     ),
     IndevoltSensorEntityDescription(
         key="11016",
         name="Meter Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     # Grid Information
     IndevoltSensorEntityDescription(
@@ -188,14 +183,14 @@ SENSORS_GEN2: Final = (
         name="Battery Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="6002",
         name="Battery SOC Total",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="9008",
@@ -207,7 +202,7 @@ SENSORS_GEN2: Final = (
         name="Battery SOC-MB",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="9004",
@@ -250,7 +245,7 @@ SENSORS_GEN2: Final = (
         name="Total DC Output Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="1632",
@@ -271,7 +266,7 @@ SENSORS_GEN2: Final = (
         name="DC Input Power 1",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="1633",
@@ -292,7 +287,7 @@ SENSORS_GEN2: Final = (
         name="DC Input Power 2",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="1634",
@@ -313,7 +308,7 @@ SENSORS_GEN2: Final = (
         name="DC Input Power 3",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     IndevoltSensorEntityDescription(
         key="1635",
@@ -334,6 +329,6 @@ SENSORS_GEN2: Final = (
         name="DC Input Power 4",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
-        state_class=SensorStateClass.MEASUREMENT
-    )
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
 )

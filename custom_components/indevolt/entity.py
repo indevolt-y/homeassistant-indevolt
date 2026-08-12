@@ -8,13 +8,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import DOMAIN
 from .coordinator import IndevoltDeviceUpdateCoordinator
 
-BATTERY_PACK_KEY = {
-    1: "9032",
-    2: "9051",
-    3: "9070",
-    4: "9165",
-    5: "9218"
-}
+BATTERY_PACK_KEY = {1: "9032", 2: "9051", 3: "9070", 4: "9165", 5: "9218"}
 
 
 class IndevoltEntity(CoordinatorEntity[IndevoltDeviceUpdateCoordinator]):

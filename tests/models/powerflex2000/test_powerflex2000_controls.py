@@ -202,9 +202,9 @@ async def test_powerflex2000_action_accepts_supported_power(
     )
     _register_services(hass)
 
-    await hass.services.handlers[
-        ("indevolt", "set_solidflex_powerflex_work_mode")
-    ](service_call(power))
+    await hass.services.handlers[("indevolt", "set_solidflex_powerflex_work_mode")](
+        service_call(power)
+    )
 
     assert coordinator.api.writes == [(47005, [4]), (47015, [1, power, 80])]
     assert coordinator.request_refreshes == 1
@@ -224,9 +224,9 @@ async def test_powerflex2000_action_rejects_10801_before_registry_or_api(
     _register_services(hass)
 
     with pytest.raises(ServiceValidationError, match="10800 W"):
-        await hass.services.handlers[
-            ("indevolt", "set_solidflex_powerflex_work_mode")
-        ](service_call(10_801))
+        await hass.services.handlers[("indevolt", "set_solidflex_powerflex_work_mode")](
+            service_call(10_801)
+        )
 
     assert coordinator.api.writes == []
     assert coordinator.request_refreshes == 0

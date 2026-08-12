@@ -54,9 +54,7 @@ async def test_unmatched_model_keeps_its_reported_name(monkeypatch) -> None:
         lambda hass: "fake-session",
     )
 
-    result = await flow.async_step_user(
-        {"host": "192.0.2.25", "scan_interval": 45}
-    )
+    result = await flow.async_step_user({"host": "192.0.2.25", "scan_interval": 45})
 
     assert result == {
         "type": "create_entry",

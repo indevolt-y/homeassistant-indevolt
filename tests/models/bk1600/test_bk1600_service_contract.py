@@ -18,9 +18,7 @@ def test_bk1600_service_schema_matches_its_number_contract() -> None:
             / "services.yaml"
         ).read_text()
     )
-    selector = services["set_bk1600_work_mode"]["fields"]["power"]["selector"][
-        "number"
-    ]
+    selector = services["set_bk1600_work_mode"]["fields"]["power"]["selector"]["number"]
     power = next(item for item in NUMBERS_GEN1 if item.key == "power_setting")
 
     assert power.native_max_value is None

@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 from collections.abc import Awaitable, Callable
@@ -179,14 +178,17 @@ NUMBERS_GEN1 = [
     ),
 ]
 
+
 async def async_setup_entry(hass, entry, async_add_entities):
     if "BK1600" in entry.data.get("device_model"):
         async_add_entities(
-            IndevoltNumberEntity(entry.runtime_data, description) for description in NUMBERS_GEN1
+            IndevoltNumberEntity(entry.runtime_data, description)
+            for description in NUMBERS_GEN1
         )
     else:
         async_add_entities(
-            IndevoltNumberEntity(entry.runtime_data, description) for description in NUMBERS_GEN2
+            IndevoltNumberEntity(entry.runtime_data, description)
+            for description in NUMBERS_GEN2
         )
 
 
@@ -200,8 +202,7 @@ class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
-        self._attr_unique_id = (f"{coordinator.config_entry.unique_id}_{description.key}")
-
+        self._attr_unique_id = f"{coordinator.config_entry.unique_id}_{description.key}"
 
     @property
     def device_info(self):
@@ -211,16 +212,16 @@ class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
     def native_max_value(self) -> int:
         if "BK1600" not in self.coordinator.config_entry.data.get("device_model"):
             return self.entity_description.native_max_value
-        
+
         if self.entity_description.key != "power_setting":
             return self.entity_description.native_max_value
-        
+
         state = self.coordinator.data.get("6001")
         if state == 1001:
             return 1200
         else:
-            return 800 
-    
+            return 800
+
     @property
     def native_value(self) -> int | None:
         return self.entity_description.value_fn(self.coordinator.data)

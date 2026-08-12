@@ -100,9 +100,7 @@ def test_solidflex2000_battery_pack_has_stable_identity_and_parent(
         pack_id,
     )
 
-    assert entity.unique_id == (
-        f"solidflex2000-entry_battery_{pack_id}_{sensor_key}"
-    )
+    assert entity.unique_id == (f"solidflex2000-entry_battery_{pack_id}_{sensor_key}")
     assert entity.available is True
     assert entity.device_info == {
         "identifiers": {(DOMAIN, f"battery_{pack_id}_{pack_serial}")},
