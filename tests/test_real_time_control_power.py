@@ -39,6 +39,13 @@ import pytest
 # services.yaml.
 import yaml
 
+# Reason: The product contract requires out-of-range requests to return the
+# standard HA validation error.
+# Usage: pytest.raises asserts both the error type and the 10800 W error message.
+# Impact: This is used only for test capture and does not change production
+# exception handling.
+from homeassistant.exceptions import ServiceValidationError
+
 # Reason: Copying handler logic would let tests diverge from production behavior.
 # Usage: Call the real _register_services, capture its actual closure, and verify
 # write ordering.
@@ -78,13 +85,6 @@ from custom_components.indevolt.number import (
     NUMBERS_GEN2,
     IndevoltNumberEntity,
 )
-
-# Reason: The product contract requires out-of-range requests to return the
-# standard HA validation error.
-# Usage: pytest.raises asserts both the error type and the 10800 W error message.
-# Impact: This is used only for test capture and does not change production
-# exception handling.
-from homeassistant.exceptions import ServiceValidationError
 
 
 # Coverage goal: Observe service registration, point payloads, and both refresh
@@ -389,7 +389,14 @@ async def test_gen2_setup_exposes_real_time_number(monkeypatch, model) -> None:
 # Does not prove: This is a static test-time consistency check and does not repair
 # an incorrect runtime configuration automatically.
 def test_yaml_and_python_use_the_same_maximum() -> None:
-    services = yaml.safe_load((Path(__file__).parents[1] / "services.yaml").read_text())
+    services = yaml.safe_load(
+        (
+            Path(__file__).parents[1]
+            / "custom_components"
+            / "indevolt"
+            / "services.yaml"
+        ).read_text()
+    )
     selector = services["set_solidflex_powerflex_work_mode"]["fields"]["power"][
         "selector"
     ]["number"]
