@@ -64,6 +64,8 @@ class IndevoltSensorEntity(IndevoltEntity, SensorEntity):
 
 
 class IndevoltBatterySensorEntity(IndevoltEntity, SensorEntity):
+    _attr_has_entity_name = True
+
     def __init__(self, coordinator, description, pack_id: int):
         super().__init__(coordinator)
         self.entity_description = description

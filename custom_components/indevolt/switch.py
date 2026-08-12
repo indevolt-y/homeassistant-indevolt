@@ -34,6 +34,7 @@ class IndevoltSwitchEntityDescription(SwitchEntityDescription):
 SWITCHES = [
     IndevoltSwitchEntityDescription(
         key="light",
+        translation_key="light",
         name="Light",
         icon="mdi:led-on",
         device_class=SwitchDeviceClass.SWITCH,
@@ -48,6 +49,7 @@ SWITCHES = [
     ),
     IndevoltSwitchEntityDescription(
         key="grid",
+        translation_key="grid_charging",
         name="Grid Charging",
         device_class=SwitchDeviceClass.OUTLET,
         read_point="2618",
@@ -61,6 +63,7 @@ SWITCHES = [
     ),
     IndevoltSwitchEntityDescription(
         key="bypass",
+        translation_key="bypass",
         name="Bypass",
         device_class=SwitchDeviceClass.OUTLET,
         read_point="680",
@@ -93,6 +96,8 @@ async def async_setup_entry(
 
 class IndevoltSwitchEntity(IndevoltEntity, SwitchEntity):
     """Representation of a Indevolt switch."""
+
+    _attr_has_entity_name = True
 
     def __init__(
         self, coordinator, description: IndevoltSwitchEntityDescription

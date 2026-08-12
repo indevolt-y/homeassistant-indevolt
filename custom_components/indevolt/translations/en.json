@@ -1,0 +1,391 @@
+{
+  "title": "Indevolt",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to an Indevolt device",
+        "description": "Enter the connection details for the device on your local network.",
+        "data": {
+          "host": "IP address",
+          "scan_interval": "Scan interval"
+        },
+        "data_description": {
+          "host": "The IP address of the device on your local network.",
+          "scan_interval": "The number of seconds between device polls."
+        }
+      }
+    },
+    "error": {
+      "timeout": "Timed out while connecting to the device.",
+      "unknown": "An unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery_cell_1_voltage_mb": {
+        "name": "Battery Cell1 V-MB"
+      },
+      "battery_cell_2_voltage_mb": {
+        "name": "Battery Cell2 V-MB"
+      },
+      "battery_charge_discharge_state": {
+        "name": "Battery Charge/Discharge State"
+      },
+      "battery_current_mb": {
+        "name": "Battery I-MB"
+      },
+      "battery_daily_charging_energy": {
+        "name": "Battery Daily Charging Energy"
+      },
+      "battery_daily_discharging_energy": {
+        "name": "Battery Daily Discharging Energy"
+      },
+      "battery_pack_1_cell_1_voltage": {
+        "name": "Battery Cell1 V-Pack1"
+      },
+      "battery_pack_1_cell_2_voltage": {
+        "name": "Battery Cell2 V-Pack1"
+      },
+      "battery_pack_1_current": {
+        "name": "Battery I-Pack1"
+      },
+      "battery_pack_1_firmware_bms": {
+        "name": "Firmware SFA/PFA BMS1"
+      },
+      "battery_pack_1_firmware_dcdc": {
+        "name": "Firmware SFA/PFA DCDC1"
+      },
+      "battery_pack_1_soc": {
+        "name": "Battery SOC-Pack1"
+      },
+      "battery_pack_1_temperature": {
+        "name": "Battery Temp-Pack1"
+      },
+      "battery_pack_1_voltage": {
+        "name": "Battery V-Pack1"
+      },
+      "battery_pack_2_cell_1_voltage": {
+        "name": "Battery Cell1 V-Pack2"
+      },
+      "battery_pack_2_cell_2_voltage": {
+        "name": "Battery Cell2 V-Pack2"
+      },
+      "battery_pack_2_current": {
+        "name": "Battery I-Pack2"
+      },
+      "battery_pack_2_firmware_bms": {
+        "name": "Firmware SFA/PFA BMS2"
+      },
+      "battery_pack_2_firmware_dcdc": {
+        "name": "Firmware SFA/PFA DCDC2"
+      },
+      "battery_pack_2_soc": {
+        "name": "Battery SOC-Pack2"
+      },
+      "battery_pack_2_temperature": {
+        "name": "Battery Temp-Pack2"
+      },
+      "battery_pack_2_voltage": {
+        "name": "Battery V-Pack2"
+      },
+      "battery_pack_3_cell_1_voltage": {
+        "name": "Battery Cell1 V-Pack3"
+      },
+      "battery_pack_3_cell_2_voltage": {
+        "name": "Battery Cell2 V-Pack3"
+      },
+      "battery_pack_3_current": {
+        "name": "Battery I-Pack3"
+      },
+      "battery_pack_3_firmware_bms": {
+        "name": "Firmware SFA/PFA BMS3"
+      },
+      "battery_pack_3_firmware_dcdc": {
+        "name": "Firmware SFA/PFA DCDC3"
+      },
+      "battery_pack_3_soc": {
+        "name": "Battery SOC-Pack3"
+      },
+      "battery_pack_3_temperature": {
+        "name": "Battery Temp-Pack3"
+      },
+      "battery_pack_3_voltage": {
+        "name": "Battery V-Pack3"
+      },
+      "battery_pack_4_cell_1_voltage": {
+        "name": "Battery Cell1 V-Pack4"
+      },
+      "battery_pack_4_cell_2_voltage": {
+        "name": "Battery Cell2 V-Pack4"
+      },
+      "battery_pack_4_current": {
+        "name": "Battery I-Pack4"
+      },
+      "battery_pack_4_firmware_bms": {
+        "name": "Firmware SFA/PFA BMS4"
+      },
+      "battery_pack_4_firmware_dcdc": {
+        "name": "Firmware SFA/PFA DCDC4"
+      },
+      "battery_pack_4_soc": {
+        "name": "Battery SOC-Pack4"
+      },
+      "battery_pack_4_temperature": {
+        "name": "Battery Temp-Pack4"
+      },
+      "battery_pack_4_voltage": {
+        "name": "Battery V-Pack4"
+      },
+      "battery_pack_5_cell_1_voltage": {
+        "name": "Battery Cell1 V-Pack5"
+      },
+      "battery_pack_5_cell_2_voltage": {
+        "name": "Battery Cell2 V-Pack5"
+      },
+      "battery_pack_5_current": {
+        "name": "Battery I-Pack5"
+      },
+      "battery_pack_5_firmware_bms": {
+        "name": "Firmware SFA/PFA BMS5"
+      },
+      "battery_pack_5_firmware_dcdc": {
+        "name": "Firmware SFA/PFA DCDC5"
+      },
+      "battery_pack_5_soc": {
+        "name": "Battery SOC-Pack5"
+      },
+      "battery_pack_5_temperature": {
+        "name": "Battery Temp-Pack5"
+      },
+      "battery_pack_5_voltage": {
+        "name": "Battery V-Pack5"
+      },
+      "battery_power": {
+        "name": "Battery Power"
+      },
+      "battery_serial_number_mb": {
+        "name": "Battery SN-MB"
+      },
+      "battery_soc": {
+        "name": "Battery SOC"
+      },
+      "battery_soc_mb": {
+        "name": "Battery SOC-MB"
+      },
+      "battery_soc_total": {
+        "name": "Battery SOC Total"
+      },
+      "battery_temperature_mb": {
+        "name": "Battery Temp-MB"
+      },
+      "battery_total_charging_energy": {
+        "name": "Battery Total Charging Energy"
+      },
+      "battery_total_discharging_energy": {
+        "name": "Battery Total Discharging Energy"
+      },
+      "battery_voltage_mb": {
+        "name": "Battery V-MB"
+      },
+      "bk_series_dc_input_power_1": {
+        "name": "DC Input Power1"
+      },
+      "bk_series_dc_input_power_2": {
+        "name": "DC Input Power2"
+      },
+      "bypass_input_energy": {
+        "name": "Bypass Input Energy"
+      },
+      "bypass_power": {
+        "name": "Bypass Power"
+      },
+      "cumulative_production": {
+        "name": "Cumulative Production"
+      },
+      "daily_production": {
+        "name": "Daily Production"
+      },
+      "dc_input_current_1": {
+        "name": "DC Input Current 1"
+      },
+      "dc_input_current_2": {
+        "name": "DC Input Current 2"
+      },
+      "dc_input_current_3": {
+        "name": "DC Input Current 3"
+      },
+      "dc_input_current_4": {
+        "name": "DC Input Current 4"
+      },
+      "dc_input_power_1": {
+        "name": "DC Input Power 1"
+      },
+      "dc_input_power_2": {
+        "name": "DC Input Power 2"
+      },
+      "dc_input_power_3": {
+        "name": "DC Input Power 3"
+      },
+      "dc_input_power_4": {
+        "name": "DC Input Power 4"
+      },
+      "dc_input_voltage_1": {
+        "name": "DC Input Voltage 1"
+      },
+      "dc_input_voltage_2": {
+        "name": "DC Input Voltage 2"
+      },
+      "dc_input_voltage_3": {
+        "name": "DC Input Voltage 3"
+      },
+      "dc_input_voltage_4": {
+        "name": "DC Input Voltage 4"
+      },
+      "emergency_power_supply_soc": {
+        "name": "Emergency power supply"
+      },
+      "firmware_pg2000_series_bms_mb": {
+        "name": "Firmware PG2000Series BMS-MB"
+      },
+      "firmware_pg2000_series_dcdc": {
+        "name": "Firmware PG2000Series DCDC"
+      },
+      "firmware_pg2000_series_ems": {
+        "name": "Firmware PG2000Series EMS"
+      },
+      "firmware_pg2000_series_pcs": {
+        "name": "Firmware PG2000Series PCS"
+      },
+      "grid_frequency": {
+        "name": "Grid Frequency"
+      },
+      "grid_voltage": {
+        "name": "Grid Voltage"
+      },
+      "master_slave_identification": {
+        "name": "Master-Slave Identification"
+      },
+      "meter_connection_status": {
+        "name": "Meter Connection Status"
+      },
+      "meter_power": {
+        "name": "Meter Power"
+      },
+      "off_grid_output_energy": {
+        "name": "Off-grid Output Energy"
+      },
+      "rated_capacity": {
+        "name": "Rated Capacity"
+      },
+      "total_ac_input_energy": {
+        "name": "Total AC Input Energy"
+      },
+      "total_ac_input_power": {
+        "name": "Total AC Input Power"
+      },
+      "total_ac_output_energy": {
+        "name": "Total AC Output Energy"
+      },
+      "total_ac_output_power": {
+        "name": "Total AC Output Power"
+      },
+      "total_dc_output_power": {
+        "name": "Total DC Output Power"
+      },
+      "working_mode": {
+        "name": "Working mode"
+      }
+    },
+    "number": {
+      "backup_soc": {
+        "name": "Backup SOC"
+      },
+      "feed_in_power_limit": {
+        "name": "Feed-in Power Limit"
+      },
+      "inverter_input_limit": {
+        "name": "Inverter Input Limit"
+      },
+      "max_ac_output_power": {
+        "name": "Max AC Output Power"
+      },
+      "real_time_control_power": {
+        "name": "Power (Real-time control)"
+      },
+      "real_time_control_target_soc": {
+        "name": "Target SOC (Real-time control)"
+      }
+    },
+    "select": {
+      "load_setting": {
+        "name": "Load Setting"
+      },
+      "real_time_control_state": {
+        "name": "State (Real-time control)"
+      },
+      "work_mode": {
+        "name": "Work Mode"
+      }
+    },
+    "switch": {
+      "bypass": {
+        "name": "Bypass"
+      },
+      "grid_charging": {
+        "name": "Grid Charging"
+      },
+      "light": {
+        "name": "Light"
+      }
+    }
+  },
+  "services": {
+    "set_solidflex_powerflex_work_mode": {
+      "name": "Set SolidFlex2000/PowerFlex2000 Work Mode",
+      "description": "Configure operating mode and control parameters for SolidFlex2000 / PowerFlex2000 devices.",
+      "fields": {
+        "mode": {
+          "name": "Work Mode",
+          "description": "Select device work mode"
+        },
+        "state": {
+          "name": "Status",
+          "description": "Available in Real-time control"
+        },
+        "power": {
+          "name": "Power (W)",
+          "description": "50~10800W (Available in Real-time control)"
+        },
+        "soc": {
+          "name": "Target SOC (%)",
+          "description": "5~100% (Available in Real-time control)"
+        }
+      }
+    },
+    "set_bk1600_work_mode": {
+      "name": "Set BK1600/BK1600 Ultra Work Mode",
+      "description": "Configure BK1600 / BK1600 Ultra device operating mode.",
+      "fields": {
+        "mode": {
+          "name": "Work Mode",
+          "description": "Set Real-Time Control Mode"
+        },
+        "state": {
+          "name": "Status",
+          "description": "Available in Real-time control"
+        },
+        "power": {
+          "name": "Power (W)",
+          "description": "Charging:0-1200W; Discharging:0-800W (Available in Real-time control)"
+        },
+        "soc": {
+          "name": "Target SOC (%)",
+          "description": "5~100% (Available in Real-time control)"
+        }
+      }
+    }
+  }
+}

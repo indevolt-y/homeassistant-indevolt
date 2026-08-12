@@ -30,6 +30,7 @@ class IndevoltSelectDescription(SelectEntityDescription):
 SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
     IndevoltSelectDescription(
         key="work_mode",
+        translation_key="work_mode",
         name="Work Mode",
         icon="mdi:cog",
         options_map={
@@ -44,6 +45,7 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
     ),
     IndevoltSelectDescription(
         key="state_setting",
+        translation_key="real_time_control_state",
         name="State (Real-time control)",
         icon="mdi:cog",
         options_map={0: "Standby", 1: "Charging", 2: "Discharging"},
@@ -56,6 +58,7 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
     ),
     IndevoltSelectDescription(
         key="load_setting",
+        translation_key="load_setting",
         name="Load Setting",
         icon="mdi:cog",
         options_map={1: "Smart Plug", 2: "Meter", 3: "Key Load", 4: "Custom"},
@@ -67,6 +70,7 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
 SELECTS_GEN1: tuple[IndevoltSelectDescription, ...] = (
     IndevoltSelectDescription(
         key="state_setting",
+        translation_key="real_time_control_state",
         name="State (Real-time control)",
         icon="mdi:cog",
         options_map={0: "Standby", 1: "Charging", 2: "Discharging"},

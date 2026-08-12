@@ -1,0 +1,391 @@
+{
+  "title": "Indevolt",
+  "config": {
+    "step": {
+      "user": {
+        "title": "连接 Indevolt 设备",
+        "description": "输入设备在本地网络中的连接信息。",
+        "data": {
+          "host": "IP 地址",
+          "scan_interval": "轮询间隔"
+        },
+        "data_description": {
+          "host": "设备在局域网中的 IP 地址。",
+          "scan_interval": "两次设备轮询之间的秒数。"
+        }
+      }
+    },
+    "error": {
+      "timeout": "连接设备超时。",
+      "unknown": "发生意外错误。"
+    },
+    "abort": {
+      "already_configured": "此设备已完成配置。"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery_cell_1_voltage_mb": {
+        "name": "主电池单体 1 电压"
+      },
+      "battery_cell_2_voltage_mb": {
+        "name": "主电池单体 2 电压"
+      },
+      "battery_charge_discharge_state": {
+        "name": "电池充放电状态"
+      },
+      "battery_current_mb": {
+        "name": "主电池电流"
+      },
+      "battery_daily_charging_energy": {
+        "name": "电池当日充电量"
+      },
+      "battery_daily_discharging_energy": {
+        "name": "电池当日放电量"
+      },
+      "battery_pack_1_cell_1_voltage": {
+        "name": "电池包 1 单体 1 电压"
+      },
+      "battery_pack_1_cell_2_voltage": {
+        "name": "电池包 1 单体 2 电压"
+      },
+      "battery_pack_1_current": {
+        "name": "电池包 1 电流"
+      },
+      "battery_pack_1_firmware_bms": {
+        "name": "电池包 1 BMS 固件版本"
+      },
+      "battery_pack_1_firmware_dcdc": {
+        "name": "电池包 1 DCDC 固件版本"
+      },
+      "battery_pack_1_soc": {
+        "name": "电池包 1 SOC"
+      },
+      "battery_pack_1_temperature": {
+        "name": "电池包 1 温度"
+      },
+      "battery_pack_1_voltage": {
+        "name": "电池包 1 电压"
+      },
+      "battery_pack_2_cell_1_voltage": {
+        "name": "电池包 2 单体 1 电压"
+      },
+      "battery_pack_2_cell_2_voltage": {
+        "name": "电池包 2 单体 2 电压"
+      },
+      "battery_pack_2_current": {
+        "name": "电池包 2 电流"
+      },
+      "battery_pack_2_firmware_bms": {
+        "name": "电池包 2 BMS 固件版本"
+      },
+      "battery_pack_2_firmware_dcdc": {
+        "name": "电池包 2 DCDC 固件版本"
+      },
+      "battery_pack_2_soc": {
+        "name": "电池包 2 SOC"
+      },
+      "battery_pack_2_temperature": {
+        "name": "电池包 2 温度"
+      },
+      "battery_pack_2_voltage": {
+        "name": "电池包 2 电压"
+      },
+      "battery_pack_3_cell_1_voltage": {
+        "name": "电池包 3 单体 1 电压"
+      },
+      "battery_pack_3_cell_2_voltage": {
+        "name": "电池包 3 单体 2 电压"
+      },
+      "battery_pack_3_current": {
+        "name": "电池包 3 电流"
+      },
+      "battery_pack_3_firmware_bms": {
+        "name": "电池包 3 BMS 固件版本"
+      },
+      "battery_pack_3_firmware_dcdc": {
+        "name": "电池包 3 DCDC 固件版本"
+      },
+      "battery_pack_3_soc": {
+        "name": "电池包 3 SOC"
+      },
+      "battery_pack_3_temperature": {
+        "name": "电池包 3 温度"
+      },
+      "battery_pack_3_voltage": {
+        "name": "电池包 3 电压"
+      },
+      "battery_pack_4_cell_1_voltage": {
+        "name": "电池包 4 单体 1 电压"
+      },
+      "battery_pack_4_cell_2_voltage": {
+        "name": "电池包 4 单体 2 电压"
+      },
+      "battery_pack_4_current": {
+        "name": "电池包 4 电流"
+      },
+      "battery_pack_4_firmware_bms": {
+        "name": "电池包 4 BMS 固件版本"
+      },
+      "battery_pack_4_firmware_dcdc": {
+        "name": "电池包 4 DCDC 固件版本"
+      },
+      "battery_pack_4_soc": {
+        "name": "电池包 4 SOC"
+      },
+      "battery_pack_4_temperature": {
+        "name": "电池包 4 温度"
+      },
+      "battery_pack_4_voltage": {
+        "name": "电池包 4 电压"
+      },
+      "battery_pack_5_cell_1_voltage": {
+        "name": "电池包 5 单体 1 电压"
+      },
+      "battery_pack_5_cell_2_voltage": {
+        "name": "电池包 5 单体 2 电压"
+      },
+      "battery_pack_5_current": {
+        "name": "电池包 5 电流"
+      },
+      "battery_pack_5_firmware_bms": {
+        "name": "电池包 5 BMS 固件版本"
+      },
+      "battery_pack_5_firmware_dcdc": {
+        "name": "电池包 5 DCDC 固件版本"
+      },
+      "battery_pack_5_soc": {
+        "name": "电池包 5 SOC"
+      },
+      "battery_pack_5_temperature": {
+        "name": "电池包 5 温度"
+      },
+      "battery_pack_5_voltage": {
+        "name": "电池包 5 电压"
+      },
+      "battery_power": {
+        "name": "电池功率"
+      },
+      "battery_serial_number_mb": {
+        "name": "主电池序列号"
+      },
+      "battery_soc": {
+        "name": "电池 SOC"
+      },
+      "battery_soc_mb": {
+        "name": "主电池 SOC"
+      },
+      "battery_soc_total": {
+        "name": "电池总 SOC"
+      },
+      "battery_temperature_mb": {
+        "name": "主电池温度"
+      },
+      "battery_total_charging_energy": {
+        "name": "电池累计充电量"
+      },
+      "battery_total_discharging_energy": {
+        "name": "电池累计放电量"
+      },
+      "battery_voltage_mb": {
+        "name": "主电池电压"
+      },
+      "bk_series_dc_input_power_1": {
+        "name": "直流输入 1 功率"
+      },
+      "bk_series_dc_input_power_2": {
+        "name": "直流输入 2 功率"
+      },
+      "bypass_input_energy": {
+        "name": "旁路输入电量"
+      },
+      "bypass_power": {
+        "name": "旁路功率"
+      },
+      "cumulative_production": {
+        "name": "累计发电量"
+      },
+      "daily_production": {
+        "name": "当日发电量"
+      },
+      "dc_input_current_1": {
+        "name": "直流输入 1 电流"
+      },
+      "dc_input_current_2": {
+        "name": "直流输入 2 电流"
+      },
+      "dc_input_current_3": {
+        "name": "直流输入 3 电流"
+      },
+      "dc_input_current_4": {
+        "name": "直流输入 4 电流"
+      },
+      "dc_input_power_1": {
+        "name": "直流输入 1 功率"
+      },
+      "dc_input_power_2": {
+        "name": "直流输入 2 功率"
+      },
+      "dc_input_power_3": {
+        "name": "直流输入 3 功率"
+      },
+      "dc_input_power_4": {
+        "name": "直流输入 4 功率"
+      },
+      "dc_input_voltage_1": {
+        "name": "直流输入 1 电压"
+      },
+      "dc_input_voltage_2": {
+        "name": "直流输入 2 电压"
+      },
+      "dc_input_voltage_3": {
+        "name": "直流输入 3 电压"
+      },
+      "dc_input_voltage_4": {
+        "name": "直流输入 4 电压"
+      },
+      "emergency_power_supply_soc": {
+        "name": "备电 SOC"
+      },
+      "firmware_pg2000_series_bms_mb": {
+        "name": "PG2000 系列 BMS-MB 固件版本"
+      },
+      "firmware_pg2000_series_dcdc": {
+        "name": "PG2000 系列 DCDC 固件版本"
+      },
+      "firmware_pg2000_series_ems": {
+        "name": "PG2000 系列 EMS 固件版本"
+      },
+      "firmware_pg2000_series_pcs": {
+        "name": "PG2000 系列 PCS 固件版本"
+      },
+      "grid_frequency": {
+        "name": "电网频率"
+      },
+      "grid_voltage": {
+        "name": "电网电压"
+      },
+      "master_slave_identification": {
+        "name": "主从标识"
+      },
+      "meter_connection_status": {
+        "name": "电表连接状态"
+      },
+      "meter_power": {
+        "name": "电表功率"
+      },
+      "off_grid_output_energy": {
+        "name": "离网输出电量"
+      },
+      "rated_capacity": {
+        "name": "额定容量"
+      },
+      "total_ac_input_energy": {
+        "name": "交流总输入电量"
+      },
+      "total_ac_input_power": {
+        "name": "交流总输入功率"
+      },
+      "total_ac_output_energy": {
+        "name": "交流总输出电量"
+      },
+      "total_ac_output_power": {
+        "name": "交流总输出功率"
+      },
+      "total_dc_output_power": {
+        "name": "直流总输出功率"
+      },
+      "working_mode": {
+        "name": "工作模式"
+      }
+    },
+    "number": {
+      "backup_soc": {
+        "name": "备电 SOC"
+      },
+      "feed_in_power_limit": {
+        "name": "馈网功率限制"
+      },
+      "inverter_input_limit": {
+        "name": "逆变器输入限制"
+      },
+      "max_ac_output_power": {
+        "name": "最大交流输出功率"
+      },
+      "real_time_control_power": {
+        "name": "实时控制功率"
+      },
+      "real_time_control_target_soc": {
+        "name": "实时控制目标 SOC"
+      }
+    },
+    "select": {
+      "load_setting": {
+        "name": "负载设置"
+      },
+      "real_time_control_state": {
+        "name": "实时控制状态"
+      },
+      "work_mode": {
+        "name": "工作模式"
+      }
+    },
+    "switch": {
+      "bypass": {
+        "name": "旁路"
+      },
+      "grid_charging": {
+        "name": "电网充电"
+      },
+      "light": {
+        "name": "灯光"
+      }
+    }
+  },
+  "services": {
+    "set_solidflex_powerflex_work_mode": {
+      "name": "设置 SolidFlex2000/PowerFlex2000 工作模式",
+      "description": "配置 SolidFlex2000 和 PowerFlex2000 设备的工作模式与控制参数。",
+      "fields": {
+        "mode": {
+          "name": "工作模式",
+          "description": "选择设备工作模式。"
+        },
+        "state": {
+          "name": "状态",
+          "description": "用于实时控制模式。"
+        },
+        "power": {
+          "name": "功率",
+          "description": "范围为 50–10800 W，用于实时控制模式。"
+        },
+        "soc": {
+          "name": "目标 SOC",
+          "description": "范围为 5–100%，用于实时控制模式。"
+        }
+      }
+    },
+    "set_bk1600_work_mode": {
+      "name": "设置 BK1600/BK1600 Ultra 工作模式",
+      "description": "配置 BK1600 和 BK1600 Ultra 设备的工作模式。",
+      "fields": {
+        "mode": {
+          "name": "工作模式",
+          "description": "设置实时控制模式。"
+        },
+        "state": {
+          "name": "状态",
+          "description": "用于实时控制模式。"
+        },
+        "power": {
+          "name": "功率",
+          "description": "充电范围为 0–1200 W，放电范围为 0–800 W，用于实时控制模式。"
+        },
+        "soc": {
+          "name": "目标 SOC",
+          "description": "范围为 5–100%，用于实时控制模式。"
+        }
+      }
+    }
+  }
+}

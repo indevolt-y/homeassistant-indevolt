@@ -15,18 +15,21 @@ from .entity_description import (
 BATTERY_PACK1_SENSORS = {
     IndevoltSensorEntityDescription(
         key="1136",
+        translation_key="battery_pack_1_firmware_dcdc",
         name="Firmware SFA/PFA DCDC1",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1137",
+        translation_key="battery_pack_1_firmware_bms",
         name="Firmware SFA/PFA BMS1",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9016",
+        translation_key="battery_pack_1_soc",
         name="Battery SOC-Pack1",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -34,6 +37,7 @@ BATTERY_PACK1_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9020",
+        translation_key="battery_pack_1_voltage",
         name="Battery V-Pack1",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -41,6 +45,7 @@ BATTERY_PACK1_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="19173",
+        translation_key="battery_pack_1_current",
         name="Battery I-Pack1",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -48,6 +53,7 @@ BATTERY_PACK1_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9030",
+        translation_key="battery_pack_1_temperature",
         name="Battery Temp-Pack1",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -55,6 +61,7 @@ BATTERY_PACK1_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9021",
+        translation_key="battery_pack_1_cell_1_voltage",
         name="Battery Cell1 V-Pack1",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -62,6 +69,7 @@ BATTERY_PACK1_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9023",
+        translation_key="battery_pack_1_cell_2_voltage",
         name="Battery Cell2 V-Pack1",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -72,18 +80,21 @@ BATTERY_PACK1_SENSORS = {
 BATTERY_PACK2_SENSORS = {
     IndevoltSensorEntityDescription(
         key="1138",
+        translation_key="battery_pack_2_firmware_dcdc",
         name="Firmware SFA/PFA DCDC2",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1139",
+        translation_key="battery_pack_2_firmware_bms",
         name="Firmware SFA/PFA BMS2",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9035",
+        translation_key="battery_pack_2_soc",
         name="Battery SOC-Pack2",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -91,6 +102,7 @@ BATTERY_PACK2_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9039",
+        translation_key="battery_pack_2_voltage",
         name="Battery V-Pack2",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -98,6 +110,7 @@ BATTERY_PACK2_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="19174",
+        translation_key="battery_pack_2_current",
         name="Battery I-Pack2",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -105,6 +118,7 @@ BATTERY_PACK2_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9049",
+        translation_key="battery_pack_2_temperature",
         name="Battery Temp-Pack2",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -112,6 +126,7 @@ BATTERY_PACK2_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9040",
+        translation_key="battery_pack_2_cell_1_voltage",
         name="Battery Cell1 V-Pack2",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -119,6 +134,7 @@ BATTERY_PACK2_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9042",
+        translation_key="battery_pack_2_cell_2_voltage",
         name="Battery Cell2 V-Pack2",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -129,18 +145,21 @@ BATTERY_PACK2_SENSORS = {
 BATTERY_PACK3_SENSORS = {
     IndevoltSensorEntityDescription(
         key="1140",
+        translation_key="battery_pack_3_firmware_dcdc",
         name="Firmware SFA/PFA DCDC3",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1141",
+        translation_key="battery_pack_3_firmware_bms",
         name="Firmware SFA/PFA BMS3",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9054",
+        translation_key="battery_pack_3_soc",
         name="Battery SOC-Pack3",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -148,6 +167,7 @@ BATTERY_PACK3_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9058",
+        translation_key="battery_pack_3_voltage",
         name="Battery V-Pack3",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -155,6 +175,7 @@ BATTERY_PACK3_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="19175",
+        translation_key="battery_pack_3_current",
         name="Battery I-Pack3",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -162,6 +183,7 @@ BATTERY_PACK3_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9068",
+        translation_key="battery_pack_3_temperature",
         name="Battery Temp-Pack3",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -169,6 +191,7 @@ BATTERY_PACK3_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9059",
+        translation_key="battery_pack_3_cell_1_voltage",
         name="Battery Cell1 V-Pack3",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -176,6 +199,7 @@ BATTERY_PACK3_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9061",
+        translation_key="battery_pack_3_cell_2_voltage",
         name="Battery Cell2 V-Pack3",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -186,18 +210,21 @@ BATTERY_PACK3_SENSORS = {
 BATTERY_PACK4_SENSORS = {
     IndevoltSensorEntityDescription(
         key="1142",
+        translation_key="battery_pack_4_firmware_dcdc",
         name="Firmware SFA/PFA DCDC4",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1143",
+        translation_key="battery_pack_4_firmware_bms",
         name="Firmware SFA/PFA BMS4",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9149",
+        translation_key="battery_pack_4_soc",
         name="Battery SOC-Pack4",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -205,6 +232,7 @@ BATTERY_PACK4_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9153",
+        translation_key="battery_pack_4_voltage",
         name="Battery V-Pack4",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -212,6 +240,7 @@ BATTERY_PACK4_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="19176",
+        translation_key="battery_pack_4_current",
         name="Battery I-Pack4",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -219,6 +248,7 @@ BATTERY_PACK4_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9163",
+        translation_key="battery_pack_4_temperature",
         name="Battery Temp-Pack4",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -226,6 +256,7 @@ BATTERY_PACK4_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9154",
+        translation_key="battery_pack_4_cell_1_voltage",
         name="Battery Cell1 V-Pack4",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -233,6 +264,7 @@ BATTERY_PACK4_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9156",
+        translation_key="battery_pack_4_cell_2_voltage",
         name="Battery Cell2 V-Pack4",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -243,18 +275,21 @@ BATTERY_PACK4_SENSORS = {
 BATTERY_PACK5_SENSORS = {
     IndevoltSensorEntityDescription(
         key="1098",
+        translation_key="battery_pack_5_firmware_dcdc",
         name="Firmware SFA/PFA DCDC5",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1099",
+        translation_key="battery_pack_5_firmware_bms",
         name="Firmware SFA/PFA BMS5",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="9202",
+        translation_key="battery_pack_5_soc",
         name="Battery SOC-Pack5",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -262,6 +297,7 @@ BATTERY_PACK5_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9206",
+        translation_key="battery_pack_5_voltage",
         name="Battery V-Pack5",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -269,6 +305,7 @@ BATTERY_PACK5_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="19177",
+        translation_key="battery_pack_5_current",
         name="Battery I-Pack5",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -276,6 +313,7 @@ BATTERY_PACK5_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9216",
+        translation_key="battery_pack_5_temperature",
         name="Battery Temp-Pack5",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -283,6 +321,7 @@ BATTERY_PACK5_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9219",
+        translation_key="battery_pack_5_cell_1_voltage",
         name="Battery Cell1 V-Pack5",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -290,6 +329,7 @@ BATTERY_PACK5_SENSORS = {
     ),
     IndevoltSensorEntityDescription(
         key="9222",
+        translation_key="battery_pack_5_cell_2_voltage",
         name="Battery Cell2 V-Pack5",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,

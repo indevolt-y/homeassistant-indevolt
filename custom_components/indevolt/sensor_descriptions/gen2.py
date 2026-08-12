@@ -21,24 +21,28 @@ SENSORS_GEN2: Final = (
     # Firmware Version Information
     IndevoltSensorEntityDescription(
         key="1118",
+        translation_key="firmware_pg2000_series_ems",
         name="Firmware PG2000Series EMS",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1109",
+        translation_key="firmware_pg2000_series_bms_mb",
         name="Firmware PG2000Series BMS-MB",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1119",
+        translation_key="firmware_pg2000_series_pcs",
         name="Firmware PG2000Series PCS",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
     ),
     IndevoltSensorEntityDescription(
         key="1120",
+        translation_key="firmware_pg2000_series_dcdc",
         name="Firmware PG2000Series DCDC",
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda value: format_firmware_version(version=value),
@@ -46,6 +50,7 @@ SENSORS_GEN2: Final = (
     # System Operating Information
     IndevoltSensorEntityDescription(
         key="142",
+        translation_key="rated_capacity",
         name="Rated Capacity",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -53,6 +58,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2101",
+        translation_key="total_ac_input_power",
         name="Total AC Input Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -60,6 +66,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2108",
+        translation_key="total_ac_output_power",
         name="Total AC Output Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -68,6 +75,7 @@ SENSORS_GEN2: Final = (
     # Cluster Information
     IndevoltSensorEntityDescription(
         key="606",
+        translation_key="master_slave_identification",
         name="Master-Slave Identification",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -78,6 +86,7 @@ SENSORS_GEN2: Final = (
     # Bypass Power
     IndevoltSensorEntityDescription(
         key="667",
+        translation_key="bypass_power",
         name="Bypass Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -86,6 +95,7 @@ SENSORS_GEN2: Final = (
     # Electrical Energy Information
     IndevoltSensorEntityDescription(
         key="2107",
+        translation_key="total_ac_input_energy",
         name="Total AC Input Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -93,6 +103,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2104",
+        translation_key="total_ac_output_energy",
         name="Total AC Output Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -100,6 +111,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2105",
+        translation_key="off_grid_output_energy",
         name="Off-grid Output Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -107,6 +119,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="11034",
+        translation_key="bypass_input_energy",
         name="Bypass Input Energy",
         native_unit_of_measurement=UnitOfEnergy.WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -114,6 +127,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1502",
+        translation_key="daily_production",
         name="Daily Production",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -121,6 +135,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6004",
+        translation_key="battery_daily_charging_energy",
         name="Battery Daily Charging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -128,6 +143,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6005",
+        translation_key="battery_daily_discharging_energy",
         name="Battery Daily Discharging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -135,6 +151,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6006",
+        translation_key="battery_total_charging_energy",
         name="Battery Total Charging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -142,6 +159,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6007",
+        translation_key="battery_total_discharging_energy",
         name="Battery Total Discharging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -150,6 +168,7 @@ SENSORS_GEN2: Final = (
     # Electricity Meter Status
     IndevoltSensorEntityDescription(
         key="7120",
+        translation_key="meter_connection_status",
         name="Meter Connection Status",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -157,6 +176,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="11016",
+        translation_key="meter_power",
         name="Meter Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -165,6 +185,7 @@ SENSORS_GEN2: Final = (
     # Grid Information
     IndevoltSensorEntityDescription(
         key="2600",
+        translation_key="grid_voltage",
         name="Grid Voltage",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -172,6 +193,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2612",
+        translation_key="grid_frequency",
         name="Grid Frequency",
         native_unit_of_measurement=UnitOfFrequency.HERTZ,
         device_class=SensorDeviceClass.FREQUENCY,
@@ -180,6 +202,7 @@ SENSORS_GEN2: Final = (
     # Battery Pack Operating Parameters
     IndevoltSensorEntityDescription(
         key="6000",
+        translation_key="battery_power",
         name="Battery Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -187,6 +210,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6002",
+        translation_key="battery_soc_total",
         name="Battery SOC Total",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -194,11 +218,13 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="9008",
+        translation_key="battery_serial_number_mb",
         name="Battery SN-MB",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     IndevoltSensorEntityDescription(
         key="9000",
+        translation_key="battery_soc_mb",
         name="Battery SOC-MB",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -206,6 +232,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="9004",
+        translation_key="battery_voltage_mb",
         name="Battery V-MB",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -213,6 +240,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="9013",
+        translation_key="battery_current_mb",
         name="Battery I-MB",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -220,6 +248,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="9012",
+        translation_key="battery_temperature_mb",
         name="Battery Temp-MB",
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
@@ -227,6 +256,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="9009",
+        translation_key="battery_cell_1_voltage_mb",
         name="Battery Cell1 V-MB",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -234,6 +264,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="9011",
+        translation_key="battery_cell_2_voltage_mb",
         name="Battery Cell2 V-MB",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -242,6 +273,7 @@ SENSORS_GEN2: Final = (
     # PV Operating Parameters
     IndevoltSensorEntityDescription(
         key="1501",
+        translation_key="total_dc_output_power",
         name="Total DC Output Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -249,6 +281,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1632",
+        translation_key="dc_input_current_1",
         name="DC Input Current 1",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -256,6 +289,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1600",
+        translation_key="dc_input_voltage_1",
         name="DC Input Voltage 1",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -263,6 +297,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1664",
+        translation_key="dc_input_power_1",
         name="DC Input Power 1",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -270,6 +305,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1633",
+        translation_key="dc_input_current_2",
         name="DC Input Current 2",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -277,6 +313,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1601",
+        translation_key="dc_input_voltage_2",
         name="DC Input Voltage 2",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -284,6 +321,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1665",
+        translation_key="dc_input_power_2",
         name="DC Input Power 2",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -291,6 +329,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1634",
+        translation_key="dc_input_current_3",
         name="DC Input Current 3",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -298,6 +337,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1602",
+        translation_key="dc_input_voltage_3",
         name="DC Input Voltage 3",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -305,6 +345,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1666",
+        translation_key="dc_input_power_3",
         name="DC Input Power 3",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -312,6 +353,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1635",
+        translation_key="dc_input_current_4",
         name="DC Input Current 4",
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         device_class=SensorDeviceClass.CURRENT,
@@ -319,6 +361,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1603",
+        translation_key="dc_input_voltage_4",
         name="DC Input Voltage 4",
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         device_class=SensorDeviceClass.VOLTAGE,
@@ -326,6 +369,7 @@ SENSORS_GEN2: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1667",
+        translation_key="dc_input_power_4",
         name="DC Input Power 4",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,

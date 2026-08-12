@@ -13,6 +13,7 @@ from .entity_description import IndevoltSensorEntityDescription
 SENSORS_GEN1: Final = (
     IndevoltSensorEntityDescription(
         key="1664",
+        translation_key="bk_series_dc_input_power_1",
         name="DC Input Power1",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -20,6 +21,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1665",
+        translation_key="bk_series_dc_input_power_2",
         name="DC Input Power2",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -27,6 +29,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2108",
+        translation_key="total_ac_output_power",
         name="Total AC Output Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -34,6 +37,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1502",
+        translation_key="daily_production",
         name="Daily Production",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -41,6 +45,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1505",
+        translation_key="cumulative_production",
         name="Cumulative Production",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -49,6 +54,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2101",
+        translation_key="total_ac_input_power",
         name="Total AC Input Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -56,6 +62,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="2107",
+        translation_key="total_ac_input_energy",
         name="Total AC Input Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -63,6 +70,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="1501",
+        translation_key="total_dc_output_power",
         name="Total DC Output Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -70,6 +78,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6000",
+        translation_key="battery_power",
         name="Battery Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -77,6 +86,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6002",
+        translation_key="battery_soc",
         name="Battery SOC",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -84,6 +94,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6105",
+        translation_key="emergency_power_supply_soc",
         name="Emergency power supply",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
@@ -91,6 +102,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6004",
+        translation_key="battery_daily_charging_energy",
         name="Battery Daily Charging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -98,6 +110,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6005",
+        translation_key="battery_daily_discharging_energy",
         name="Battery Daily Discharging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -105,6 +118,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6006",
+        translation_key="battery_total_charging_energy",
         name="Battery Total Charging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -112,6 +126,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6007",
+        translation_key="battery_total_discharging_energy",
         name="Battery Total Discharging Energy",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
@@ -119,6 +134,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="21028",
+        translation_key="meter_power",
         name="Meter Power",
         native_unit_of_measurement=UnitOfPower.WATT,
         device_class=SensorDeviceClass.POWER,
@@ -126,6 +142,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="7101",
+        translation_key="working_mode",
         name="Working mode",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -138,6 +155,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="6001",
+        translation_key="battery_charge_discharge_state",
         name="Battery Charge/Discharge State",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -149,6 +167,7 @@ SENSORS_GEN1: Final = (
     ),
     IndevoltSensorEntityDescription(
         key="7120",
+        translation_key="meter_connection_status",
         name="Meter Connection Status",
         device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,

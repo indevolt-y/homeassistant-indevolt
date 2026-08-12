@@ -42,6 +42,7 @@ class IndevoltNumberEntityDescription(NumberEntityDescription):
 NUMBERS_GEN2 = [
     IndevoltNumberEntityDescription(
         key="backup_soc",
+        translation_key="backup_soc",
         name="Backup SOC",
         device_class=NumberDeviceClass.BATTERY,
         entity_category=EntityCategory.CONFIG,
@@ -57,6 +58,7 @@ NUMBERS_GEN2 = [
     ),
     IndevoltNumberEntityDescription(
         key="inverter_input_limit",
+        translation_key="inverter_input_limit",
         name="Inverter Input Limit",
         device_class=NumberDeviceClass.POWER,
         entity_category=EntityCategory.CONFIG,
@@ -72,6 +74,7 @@ NUMBERS_GEN2 = [
     ),
     IndevoltNumberEntityDescription(
         key="max_output_power",
+        translation_key="max_ac_output_power",
         name="Max AC Output Power",
         device_class=NumberDeviceClass.POWER,
         entity_category=EntityCategory.CONFIG,
@@ -87,6 +90,7 @@ NUMBERS_GEN2 = [
     ),
     IndevoltNumberEntityDescription(
         key="feed_in_power_limit",
+        translation_key="feed_in_power_limit",
         name="Feed-in Power Limit",
         device_class=NumberDeviceClass.POWER,
         entity_category=EntityCategory.CONFIG,
@@ -102,6 +106,7 @@ NUMBERS_GEN2 = [
     ),
     IndevoltNumberEntityDescription(
         key="power_setting",
+        translation_key="real_time_control_power",
         name="Power (Real-time control)",
         device_class=NumberDeviceClass.POWER,
         entity_category=EntityCategory.CONFIG,
@@ -129,6 +134,7 @@ NUMBERS_GEN2 = [
     ),
     IndevoltNumberEntityDescription(
         key="soc_setting",
+        translation_key="real_time_control_target_soc",
         name="Target SOC (Real-time control)",
         device_class=NumberDeviceClass.BATTERY,
         entity_category=EntityCategory.CONFIG,
@@ -148,6 +154,7 @@ NUMBERS_GEN2 = [
 NUMBERS_GEN1 = [
     IndevoltNumberEntityDescription(
         key="power_setting",
+        translation_key="real_time_control_power",
         name="Power (Real-time control)",
         device_class=NumberDeviceClass.POWER,
         entity_category=EntityCategory.CONFIG,
@@ -163,6 +170,7 @@ NUMBERS_GEN1 = [
     ),
     IndevoltNumberEntityDescription(
         key="soc_setting",
+        translation_key="real_time_control_target_soc",
         name="Target SOC (Real-time control)",
         device_class=NumberDeviceClass.BATTERY,
         entity_category=EntityCategory.CONFIG,
@@ -194,6 +202,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
 class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
     """Indevolt number entity."""
+
+    _attr_has_entity_name = True
 
     def __init__(
         self,
