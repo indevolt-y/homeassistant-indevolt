@@ -1,16 +1,17 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from collections.abc import Awaitable, Callable
+from dataclasses import dataclass
 
 from homeassistant.components.number import (
+    NumberDeviceClass,
     NumberEntity,
     NumberEntityDescription,
-    NumberDeviceClass,
-    NumberMode
+    NumberMode,
 )
-from homeassistant.const import EntityCategory, PERCENTAGE, UnitOfPower
+from homeassistant.const import PERCENTAGE, EntityCategory, UnitOfPower
+
 # Reason: Direct number calls need the standard HA validation error to prevent an
 # out-of-range write.
 # Usage: async_set_native_value raises this exception before set_fn for requests
@@ -26,9 +27,9 @@ from homeassistant.exceptions import ServiceValidationError
 # Impact: This introduces only a shared read-only constant; API, coordinator, and
 # other entity initialization are unchanged.
 from .const import MAX_REAL_TIME_CONTROL_POWER
-from .indevolt_api import IndevoltAPI
 from .coordinator import IndevoltDeviceUpdateCoordinator
 from .entity import IndevoltEntity
+from .indevolt_api import IndevoltAPI
 
 
 @dataclass(frozen=True, kw_only=True)

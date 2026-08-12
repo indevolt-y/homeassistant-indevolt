@@ -1,7 +1,9 @@
 import asyncio
-import aiohttp
 import json
-from typing import Dict, Any, List
+from typing import Any, Dict, List
+
+import aiohttp
+
 
 class IndevoltAPI:
     """Handles all HTTP communication with Indevolt devices"""

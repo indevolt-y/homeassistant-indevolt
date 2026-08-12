@@ -15,6 +15,13 @@ prove behavior on a physical device.
 # module_from_spec creates the corresponding module object.
 # Impact: The module exists only in the current pytest process and is not installed
 # into the system Python environment.
+# Reason: A dynamic package must be registered in sys.modules and needs a minimal
+# parent-package object.
+# Usage: sys stores the package registration and ModuleType creates the
+# custom_components parent namespace.
+# Impact: This changes only memory in the current test process; it does not
+# overwrite files or affect a running HA instance.
+import sys
 from importlib.util import module_from_spec, spec_from_file_location
 
 # Reason: Test commands may start in different working directories and cannot
@@ -23,16 +30,7 @@ from importlib.util import module_from_spec, spec_from_file_location
 # Impact: This only resolves local paths; it neither reads nor modifies directories
 # outside the repository scope.
 from pathlib import Path
-
-# Reason: A dynamic package must be registered in sys.modules and needs a minimal
-# parent-package object.
-# Usage: sys stores the package registration and ModuleType creates the
-# custom_components parent namespace.
-# Impact: This changes only memory in the current test process; it does not
-# overwrite files or affect a running HA instance.
-import sys
 from types import ModuleType
-
 
 # Reason: Package registration, the spec, and test imports reuse the import path
 # and package name.

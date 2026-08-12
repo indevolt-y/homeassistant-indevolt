@@ -15,6 +15,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import ConfigEntryNotReady, ServiceValidationError
 from homeassistant.helpers import device_registry as dr
+
 # Reason: Hard-coding 10800 separately in the Action and number paths could let
 # their limits drift during later maintenance.
 # Usage: The service handler uses this constant to enforce the real-time power

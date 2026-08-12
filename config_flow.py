@@ -1,9 +1,11 @@
+import asyncio
+import logging
+
 import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from .const import DOMAIN, DEFAULT_PORT, DEFAULT_SCAN_INTERVAL
-import logging
-import asyncio
+
+from .const import DEFAULT_PORT, DEFAULT_SCAN_INTERVAL, DOMAIN
 from .coordinator import IndevoltAPI
 
 _LOGGER = logging.getLogger(__name__)

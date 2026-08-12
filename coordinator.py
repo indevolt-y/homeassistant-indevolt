@@ -1,15 +1,15 @@
-from __future__ import annotations
-
 """Home Assistant integration for indevolt device."""
 
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict, Iterable
 from datetime import timedelta
+from typing import Any, Dict, Iterable
 
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DOMAIN, DEFAULT_SCAN_INTERVAL
+from .const import DEFAULT_SCAN_INTERVAL, DOMAIN
 from .indevolt_api import IndevoltAPI
 
 _LOGGER = logging.getLogger(__name__)
