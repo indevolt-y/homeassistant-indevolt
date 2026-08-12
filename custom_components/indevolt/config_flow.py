@@ -6,7 +6,7 @@ from homeassistant.config_entries import ConfigFlow
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DEFAULT_PORT, DEFAULT_SCAN_INTERVAL, DOMAIN
-from .coordinator import IndevoltAPI
+from .opendata import IndevoltAPI
 
 _LOGGER = logging.getLogger(__name__)
 

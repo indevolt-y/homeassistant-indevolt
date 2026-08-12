@@ -28,7 +28,7 @@ from homeassistant.exceptions import ServiceValidationError
 from .const import MAX_REAL_TIME_CONTROL_POWER
 from .coordinator import IndevoltDeviceUpdateCoordinator
 from .entity import IndevoltEntity
-from .indevolt_api import IndevoltAPI
+from .opendata import IndevoltAPI
 
 
 @dataclass(frozen=True, kw_only=True)

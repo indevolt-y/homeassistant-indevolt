@@ -10,7 +10,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DEFAULT_SCAN_INTERVAL, DOMAIN
-from .indevolt_api import IndevoltAPI
+from .opendata import IndevoltAPI
 
 _LOGGER = logging.getLogger(__name__)
 
