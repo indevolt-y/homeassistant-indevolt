@@ -1,26 +1,15 @@
-<!--
-Reason: README is for installation and daily use, so it is not the right place
-for functional differences between versions.
-Goal: Provide a separate, traceable, and reviewable user-visible change record
-for each version.
-Implementation: Record local-history versions 1.2, 1.1, and 1.0 in reverse order,
-keeping only functional changes, compatibility boundaries, and user-visible
-documentation changes. Version 1.2 first identifies the problem caused by the
-previous 2400 W input limit and then lists the documentation deliverables.
-Impact: Reviewers can judge what each version changed independently, while README
-remains focused on user guidance.
-Scope: Do not record deployment or version-switching procedures, internal functions,
-test commands, or development environments, and do not claim that a physical device
-has produced 10800 W.
-Validation: Local manifest.json history confirms versions 1.0, 1.1, and 1.2; each
-entry was checked against the configuration and entity differences in that version.
-Risk: Adding procedural guidance would overlap with README again, so this file keeps
-only version facts.
--->
-
 # Change log
 
 This file records user-visible changes to the INDEVOLT integration.
+
+[简体中文](CHANGE.zh-CN.md)
+
+## 1.3
+
+### Added
+
+- The integration can now be installed and updated through HACS as a custom
+  repository.
 
 ## 1.2
 
