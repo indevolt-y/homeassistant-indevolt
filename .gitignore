@@ -1,0 +1,58 @@
+# Operating system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+desktop.ini
+
+# Editors and IDEs
+.idea/
+*.iml
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+*#
+*.orig
+tags
+
+# Python bytecode and native extensions
+__pycache__/
+*.py[cod]
+*.so
+
+# Python packages and build output
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+pyvenv.cfg
+pip-selfcheck.json
+
+# Test, coverage, lint, and type-check caches
+.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.dmypy.json
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+test-reports/
+test-results.xml
+test-output.xml
+pytest-*.txt
+junit.xml
+
+# Logs and local environment files
+*.log
+.env
