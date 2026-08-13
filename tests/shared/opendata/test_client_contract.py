@@ -44,6 +44,17 @@ class FakeResponse:
         return self.payload
 
 
+class FailingJSONResponse(FakeResponse):
+    """Raise the configured parser error from response.json()."""
+
+    def __init__(self, error: Exception) -> None:
+        super().__init__(None, 200)
+        self.error = error
+
+    async def json(self) -> Any:
+        raise self.error
+
+
 class FakeRequestContext:
     """Async request context returned by the recording session."""
 
@@ -182,6 +193,36 @@ async def test_set_data_preserves_home_assistant_number_float_payload() -> None:
     ]
 
 
+@pytest.mark.parametrize(
+    ("payload", "expected"),
+    [
+        ({}, False),
+        ({"result": None}, False),
+        ({"result": 0}, False),
+        ({"result": False}, False),
+        ({"result": []}, False),
+        ({"result": 1}, True),
+        ({"result": "false"}, True),
+    ],
+)
+@pytest.mark.asyncio
+async def test_set_data_keeps_existing_result_truthiness(payload, expected) -> None:
+    api = make_api(RecordingSession(payload))
+
+    assert await api.set_data(point=47016, value=[800]) is expected
+
+
+@pytest.mark.asyncio
+async def test_fetch_data_preserves_empty_point_request() -> None:
+    session = RecordingSession({})
+    api = make_api(session)
+
+    assert await api.fetch_data([]) == {}
+    assert session.requests[0].args == (
+        'http://192.0.2.10:80/rpc/Indevolt.GetData?config={"t":[]}',
+    )
+
+
 @pytest.mark.asyncio
 async def test_get_config_request_and_return_contract() -> None:
     payload = {"device": {"type": "BK1600", "sn": "test-sn"}}
@@ -261,4 +302,22 @@ async def test_network_error_contract(call: ClientCall, message: str) -> None:
     api = make_api(RecordingSession({}, error=error))
 
     with pytest.raises(Exception, match=f"^{message}$"):
+        await call(api)
+
+
+@pytest.mark.parametrize(
+    "call",
+    [
+        lambda api: api.fetch_data([1501]),
+        lambda api: api.set_data(47016, [800]),
+        lambda api: api.get_config(),
+    ],
+)
+@pytest.mark.asyncio
+async def test_json_decode_errors_are_not_rewritten(call: ClientCall) -> None:
+    session = RecordingSession({})
+    session.response = FailingJSONResponse(ValueError("invalid json"))
+    api = make_api(session)
+
+    with pytest.raises(ValueError, match="^invalid json$"):
         await call(api)

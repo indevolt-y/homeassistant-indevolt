@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Iterable
+from hashlib import sha256
 from pathlib import Path
 from string import Formatter
 from typing import Any
@@ -86,6 +87,23 @@ def test_translation_files_have_identical_contracts() -> None:
     assert {path: _placeholders(value) for path, value in english.items()} == {
         path: _placeholders(value) for path, value in chinese.items()
     }
+
+
+def test_every_translation_text_matches_the_complete_golden_contract() -> None:
+    """Lock every user-facing string, not only representative examples."""
+    expected_hashes = {
+        "en": "18c07802d5d56d63f34ee14054ae9aa3b2783c28f3f78c82d2ffbab3c05f4b72",
+        "zh-Hans": "812b1d16b2edf66316d54d2de378eaa177e4f0b9b4ad1ee7a23158a8b6830a4a",
+    }
+
+    for language, expected_hash in expected_hashes.items():
+        canonical_json = json.dumps(
+            _load_json(language),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode()
+        assert sha256(canonical_json).hexdigest() == expected_hash
 
 
 def test_every_entity_description_has_a_name_translation() -> None:

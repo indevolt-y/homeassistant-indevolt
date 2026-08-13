@@ -63,3 +63,25 @@ async def test_failed_platform_unload_keeps_coordinator_running() -> None:
     assert coordinator.shutdowns == 0
     assert hass.config_entries.unloaded == [(entry, list(PLATFORMS))]
     assert hass.data == {DOMAIN: {entry.entry_id: coordinator}}
+
+
+@pytest.mark.asyncio
+async def test_successful_unload_preserves_other_entries_and_domain() -> None:
+    entry = SimpleNamespace(entry_id="entry-6")
+    coordinator = FakeCoordinator()
+    other_coordinator = FakeCoordinator()
+    hass = SimpleNamespace(
+        data={
+            DOMAIN: {
+                entry.entry_id: coordinator,
+                "entry-7": other_coordinator,
+            }
+        },
+        config_entries=FakeConfigEntries(True),
+    )
+
+    assert await indevolt.async_unload_entry(hass, entry) is True
+
+    assert coordinator.shutdowns == 1
+    assert other_coordinator.shutdowns == 0
+    assert hass.data == {DOMAIN: {"entry-7": other_coordinator}}

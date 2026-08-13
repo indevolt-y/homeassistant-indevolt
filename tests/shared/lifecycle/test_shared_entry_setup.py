@@ -86,3 +86,32 @@ async def test_entry_setup_wraps_refresh_error_and_cleans_partial_data(
     assert isinstance(error.value.__cause__, RuntimeError)
     assert hass.data == {DOMAIN: {}}
     assert hass.config_entries.forwarded == []
+
+
+@pytest.mark.asyncio
+async def test_entry_setup_wraps_platform_forwarding_error(monkeypatch) -> None:
+    class FailingConfigEntries(FakeConfigEntries):
+        async def async_forward_entry_setups(self, entry, platforms) -> None:
+            self.forwarded.append((entry, list(platforms)))
+            raise RuntimeError("platform setup failed")
+
+    FakeCoordinator.instances = []
+    FakeCoordinator.refresh_error = None
+    FakeCoordinator.partial_entry_id = None
+    monkeypatch.setattr(indevolt, "IndevoltDeviceUpdateCoordinator", FakeCoordinator)
+    hass = SimpleNamespace(data={}, config_entries=FailingConfigEntries())
+    entry = SimpleNamespace(
+        entry_id="entry-5",
+        data={"host": "192.0.2.51", "port": 8080},
+    )
+
+    with pytest.raises(ConfigEntryNotReady) as error:
+        await indevolt.async_setup_entry(hass, entry)
+
+    coordinator = FakeCoordinator.instances[0]
+    assert isinstance(error.value.__cause__, RuntimeError)
+    assert str(error.value.__cause__) == "platform setup failed"
+    assert coordinator.first_refreshes == 1
+    assert entry.runtime_data is coordinator
+    assert hass.data == {DOMAIN: {}}
+    assert hass.config_entries.forwarded == [(entry, list(PLATFORMS))]

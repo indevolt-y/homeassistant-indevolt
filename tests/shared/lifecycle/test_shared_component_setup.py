@@ -35,3 +35,27 @@ async def test_component_setup_registers_services_only_once() -> None:
         (DOMAIN, "set_solidflex_powerflex_work_mode"),
         (DOMAIN, "set_bk1600_work_mode"),
     }
+
+
+@pytest.mark.asyncio
+async def test_component_setup_preserves_existing_domain_data() -> None:
+    existing = {"entry-id": object()}
+    hass = SimpleNamespace(data={DOMAIN: existing}, services=FakeServices())
+
+    assert await indevolt.async_setup(hass, {}) is True
+
+    assert hass.data[DOMAIN] is existing
+
+
+@pytest.mark.asyncio
+async def test_component_setup_skips_registration_when_primary_service_exists() -> None:
+    services = FakeServices()
+    existing_handler = object()
+    services.handlers[(DOMAIN, "set_solidflex_powerflex_work_mode")] = existing_handler
+    hass = SimpleNamespace(data={}, services=services)
+
+    assert await indevolt.async_setup(hass, {}) is True
+
+    assert services.handlers == {
+        (DOMAIN, "set_solidflex_powerflex_work_mode"): existing_handler,
+    }
