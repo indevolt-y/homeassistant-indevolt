@@ -2,14 +2,19 @@
 
 from __future__ import annotations
 
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
 from homeassistant import loader
-from homeassistant.config_entries import SOURCE_USER, ConfigEntries, ConfigEntry
+from homeassistant.config_entries import (
+    SOURCE_USER,
+    ConfigEntries,
+    ConfigEntry,
+    ConfigEntryState,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
@@ -29,11 +34,16 @@ class FakeDevice:
 
     data: dict[str, Any]
     config: dict[str, Any] | None = None
+    config_error: Exception | None = None
     writes: list[tuple[int, list[int | float | None]]] = field(default_factory=list)
     fetches: list[list[int]] = field(default_factory=list)
     fetch_error: Exception | None = None
     write_error: Exception | None = None
     write_result: bool = True
+    before_fetch: Callable[[list[int]], Awaitable[None]] | None = None
+    before_write: Callable[[int, list[int | float | None]], Awaitable[None]] | None = (
+        None
+    )
 
 
 def install_fake_devices(monkeypatch, devices: dict[str, FakeDevice]) -> None:
@@ -47,7 +57,10 @@ def install_fake_devices(monkeypatch, devices: dict[str, FakeDevice]) -> None:
             self.device = devices[host]
 
         async def fetch_data(self, keys):
-            self.device.fetches.append(list(keys))
+            requested_keys = list(keys)
+            self.device.fetches.append(requested_keys)
+            if self.device.before_fetch is not None:
+                await self.device.before_fetch(requested_keys)
             if self.device.fetch_error is not None:
                 raise self.device.fetch_error
             return {
@@ -57,12 +70,17 @@ def install_fake_devices(monkeypatch, devices: dict[str, FakeDevice]) -> None:
             }
 
         async def set_data(self, point, value):
-            self.device.writes.append((point, list(value)))
+            requested_value = list(value)
+            self.device.writes.append((point, requested_value))
+            if self.device.before_write is not None:
+                await self.device.before_write(point, requested_value)
             if self.device.write_error is not None:
                 raise self.device.write_error
             return self.device.write_result
 
         async def get_config(self):
+            if self.device.config_error is not None:
+                raise self.device.config_error
             if self.device.config is None:
                 raise RuntimeError("Sys.GetConfig fixture is missing")
             return self.device.config
@@ -83,27 +101,56 @@ def install_fake_devices(monkeypatch, devices: dict[str, FakeDevice]) -> None:
 
 
 @asynccontextmanager
-async def home_assistant_runtime(tmp_path: Path) -> AsyncIterator[HomeAssistant]:
-    """Start the minimum real HA runtime needed to load the integration."""
+async def home_assistant_runtime(
+    tmp_path: Path,
+    *,
+    restore: bool = False,
+    writable_storage: bool = False,
+) -> AsyncIterator[HomeAssistant]:
+    """Start the minimum real HA runtime needed to load the integration.
+
+    When ``restore`` is true, Home Assistant loads the config entry, entity registry,
+    and device registry stores written by an earlier runtime using the same path.
+    Other tests keep HA's read-only empty registries unless ``writable_storage`` is
+    requested, avoiding unnecessary filesystem writes outside persistence scenarios.
+    """
     custom_components = tmp_path / "custom_components"
-    custom_components.mkdir()
-    (custom_components / DOMAIN).symlink_to(
-        INTEGRATION_ROOT,
-        target_is_directory=True,
-    )
+    custom_components.mkdir(exist_ok=True)
+    integration_link = custom_components / DOMAIN
+    if not integration_link.exists():
+        integration_link.symlink_to(INTEGRATION_ROOT, target_is_directory=True)
 
     hass = HomeAssistant(str(tmp_path))
     loader.async_setup(hass)
     frame.async_setup(hass)
     dr.async_setup(hass)
     hass.config_entries = ConfigEntries(hass, {})
-    await dr.async_get(hass).async_load(load_empty=True)
-    await er.async_get(hass).async_load(load_empty=True)
+    use_storage = restore or writable_storage
+    if use_storage:
+        await hass.config_entries.async_initialize()
+    await dr.async_get(hass).async_load(load_empty=not use_storage)
+    await er.async_get(hass).async_load(load_empty=not use_storage)
     await hass.async_start()
+
+    if restore:
+        for entry in hass.config_entries.async_entries(DOMAIN):
+            if entry.state is ConfigEntryState.NOT_LOADED:
+                await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
 
     try:
         yield hass
     finally:
+        for entry in hass.config_entries.async_entries(DOMAIN):
+            if entry.state is ConfigEntryState.LOADED:
+                # Production unload currently looks in hass.data even though setup
+                # stores the coordinator in runtime_data. Supply that missing cleanup
+                # reference only after every assertion has finished, so the strict
+                # lifecycle xfails still exercise the real bug while HA can release
+                # all entity-platform objects before the Python process exits.
+                hass.data.setdefault(DOMAIN, {})[entry.entry_id] = entry.runtime_data
+                await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
         await hass.async_stop(force=True)
 
 
@@ -167,17 +214,17 @@ async def configure_user_flow(
     hass: HomeAssistant,
     *,
     host: str,
-    scan_interval: int,
+    scan_interval: int | None = None,
 ):
     form = await hass.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_USER},
     )
     assert form["type"] == "form"
-    return await hass.config_entries.flow.async_configure(
-        form["flow_id"],
-        {"host": host, "scan_interval": scan_interval},
-    )
+    user_input = {"host": host}
+    if scan_interval is not None:
+        user_input["scan_interval"] = scan_interval
+    return await hass.config_entries.flow.async_configure(form["flow_id"], user_input)
 
 
 DEFAULT_DATA = {
