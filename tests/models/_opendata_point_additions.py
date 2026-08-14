@@ -186,6 +186,51 @@ DEFAULT_CAPABILITY_POINT_BATCHES = (
     ADDITIONAL_DEFAULT_POINT_BATCHES + CONTROL_STATE_POINT_BATCHES
 )
 
+# Documented GetData points that are outside both the current polling baseline
+# and the user-capability definitions above.  Keep them explicit so every point
+# has an executable expectation even before production support exists.
+REMAINING_DEFAULT_READ_POINTS: tuple[int, ...] = (
+    9284,
+    9285,
+    11035,
+    11039,
+    11037,
+    0,
+    1505,
+)
+
+REMAINING_BK_READ_POINTS: tuple[int, ...] = (
+    0,
+    1118,
+    1107,
+    1119,
+    311,
+    142,
+    2618,
+    2617,
+    4,
+    2619,
+    680,
+    7170,
+    667,
+    7620,
+    10112,
+    10113,
+    10114,
+    10115,
+    10116,
+    10117,
+    10118,
+    10119,
+    10120,
+    10121,
+    10122,
+    1632,
+    1600,
+    1633,
+    1601,
+)
+
 
 def flattened(batches: tuple[tuple[int, ...], ...]) -> tuple[int, ...]:
     """Flatten immutable expected request batches."""

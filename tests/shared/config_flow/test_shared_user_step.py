@@ -182,3 +182,56 @@ async def test_user_step_preserves_existing_substring_mapping_and_default_interv
     assert unique_ids == ["DEVICE-SN"]
     assert duplicate_checks == [True]
     assert api_arguments == [("192.0.2.32", DEFAULT_PORT, "fake-session")]
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("hostname", "indevolt-device"),
+        ("timezone", 480),
+        ("mac", "7C3E82EF997F"),
+        ("fw", "T1.4.06_R006.072_M4801_0000002C"),
+        ("time", "2025-12-18 09:44:57"),
+        ("time_stamp", 1_766_051_097),
+        ("run_time", 2_244),
+    ],
+)
+@pytest.mark.asyncio
+async def test_user_step_keeps_behavior_for_each_other_get_config_field(
+    monkeypatch,
+    field,
+    value,
+) -> None:
+    device = {
+        "type": "SF2000",
+        "sn": "DEVICE-SN",
+        "f_ver": "1.2.3",
+        field: value,
+    }
+    flow, unique_ids, duplicate_checks, api_arguments = make_flow(
+        monkeypatch,
+        PayloadAPI({"device": device}),
+    )
+    monkeypatch.setattr(
+        flow,
+        "async_create_entry",
+        lambda **kwargs: {"type": "create_entry", **kwargs},
+    )
+
+    result = await flow.async_step_user({"host": "192.0.2.33"})
+
+    assert result == {
+        "type": "create_entry",
+        "title": "INDEVOLT SolidFlex/PowerFlex2000 (192.0.2.33)",
+        "data": {
+            "host": "192.0.2.33",
+            "port": DEFAULT_PORT,
+            "scan_interval": DEFAULT_SCAN_INTERVAL,
+            "sn": "DEVICE-SN",
+            "device_model": "SolidFlex/PowerFlex2000",
+            "fw_version": "1.2.3",
+        },
+    }
+    assert unique_ids == ["DEVICE-SN"]
+    assert duplicate_checks == [True]
+    assert api_arguments == [("192.0.2.33", DEFAULT_PORT, "fake-session")]

@@ -6,6 +6,7 @@ import pytest
 
 from tests.models._opendata_user_testing import (
     assert_get_user_capability,
+    assert_set_point_is_not_exposed_as_a_new_user_control,
     assert_set_user_capability,
 )
 from tests.models.opendata_capabilities import (
@@ -18,6 +19,9 @@ from tests.models.opendata_capabilities import (
 MODEL = "PowerFlex2000"
 VISIBLE_SET_CAPABILITIES = tuple(
     capability for capability in SET_USER_CAPABILITIES if capability.user_visible
+)
+NON_USER_SET_CAPABILITIES = tuple(
+    capability for capability in SET_USER_CAPABILITIES if not capability.user_visible
 )
 
 
@@ -43,3 +47,15 @@ async def test_powerflex2000_operates_each_new_user_control(
     capability: SetUserCapability,
 ) -> None:
     await assert_set_user_capability(MODEL, capability)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "capability",
+    NON_USER_SET_CAPABILITIES,
+    ids=lambda capability: f"set-{capability.point}-not-user-control",
+)
+async def test_powerflex2000_keeps_each_non_user_write_point_out_of_ha_controls(
+    capability: SetUserCapability,
+) -> None:
+    await assert_set_point_is_not_exposed_as_a_new_user_control(MODEL, capability)

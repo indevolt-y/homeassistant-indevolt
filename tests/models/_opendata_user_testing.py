@@ -23,7 +23,21 @@ PACK_SERIAL_POINTS = {
     4: "9165",
     5: "9218",
 }
-CAPABILITY_DOMAINS = ("sensor", "binary_sensor", "number", "time", "select")
+CAPABILITY_DOMAINS = (
+    "sensor",
+    "binary_sensor",
+    "number",
+    "time",
+    "select",
+    "switch",
+)
+
+EXISTING_CONTROL_WRITE_POINTS = {
+    11009: ("number", "inverter_input_limit", 1138),
+    2618: ("switch", "grid", 1143),
+    6505: ("number", "backup_soc", 1142),
+    11010: ("number", "feed_in_power_limit", 1146),
+}
 
 
 class FakeAPI:
@@ -60,7 +74,7 @@ class FakeCoordinator:
         # These readable counterparts predate the point-table additions, but a
         # bidirectional control needs them to display a useful initial value.
         self.data.update({"8646": 30, "8647": 0x0800, "2802": 100})
-        self.data.update({"7101": 1, "7171": 1})
+        self.data.update({"7101": 1, "7171": 1, "2618": 1001, "680": 1})
         self.last_update_success = True
         self.refreshes = 0
         self.request_refreshes = 0
@@ -238,3 +252,37 @@ async def assert_set_user_capability(
         (capability.point, [capability.wire_value])
     ]
     assert harness.coordinator.refreshes + harness.coordinator.request_refreshes == 1
+
+
+async def assert_set_point_is_not_exposed_as_a_new_user_control(
+    model: str,
+    capability: SetUserCapability,
+) -> None:
+    """Assert one documented non-user write point adds no new HA control."""
+    assert not capability.user_visible
+    harness = ModelUserHarness(model)
+    await harness.set_up_platforms()
+
+    assert capability.name not in {
+        entity.entity_description.name for entity in harness.entities.values()
+    }
+
+    for (domain, _unique_id), entity in harness.entities.items():
+        description = entity.entity_description
+        if domain == "number":
+            value = description.native_min_value
+            await description.set_fn(harness.coordinator.api, float(value or 0))
+        elif domain == "select":
+            await description.set_fn(harness.coordinator, 0)
+        elif domain == "switch":
+            await description.set_fn(harness.coordinator.api, True)
+
+    written_points = {point for point, _value in harness.coordinator.api.writes}
+    assert capability.point not in written_points
+
+    if capability.exposure == "existing_control_transport":
+        domain, key, existing_write_point = EXISTING_CONTROL_WRITE_POINTS[
+            capability.point
+        ]
+        assert (domain, f"{SERIAL}_{key}") in harness.entities
+        assert existing_write_point in written_points
