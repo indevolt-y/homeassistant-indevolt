@@ -339,12 +339,6 @@ async def test_f_06_wired_parallel_topology_accepts_3600_w_feed_in(
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, master_entry)
         await add_entry(hass, slave_entry)
-        await set_number(hass, master_entry, "feed_in_power_limit", 3600)
-
-        # This is a user-level scenario.  The source material has no OpenData
-        # request sample, so the test deliberately does not choose a raw point.
-        assert len(master.writes) == 1
-        assert slave.writes == []
         assert require_state(hass, master_entry, "WIRED-MASTER-SN_606").state == (
             "Master"
         )
@@ -355,6 +349,13 @@ async def test_f_06_wired_parallel_topology_accepts_3600_w_feed_in(
         assert require_state(hass, slave_entry, "WIRED-SLAVE-SN_669").state == (
             "Centralized"
         )
+
+        await set_number(hass, master_entry, "feed_in_power_limit", 3600)
+
+        # This is a user-level scenario.  The source material has no OpenData
+        # request sample, so the test deliberately does not choose a raw point.
+        assert len(master.writes) == 1
+        assert slave.writes == []
 
 
 @pytest.mark.asyncio
@@ -379,12 +380,6 @@ async def test_f_07_wireless_parallel_topology_accepts_10800_w_feed_in(
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, master_entry)
         await add_entry(hass, slave_entry)
-        await set_number(hass, master_entry, "feed_in_power_limit", 10_800)
-
-        # This is a user-level scenario.  The source material has no OpenData
-        # request sample, so the test deliberately does not choose a raw point.
-        assert len(master.writes) == 1
-        assert slave.writes == []
         assert require_state(hass, master_entry, "RADIO-MASTER-SN_606").state == (
             "Master"
         )
@@ -395,6 +390,13 @@ async def test_f_07_wireless_parallel_topology_accepts_10800_w_feed_in(
         assert require_state(hass, slave_entry, "RADIO-SLAVE-SN_669").state == (
             "Coordinated"
         )
+
+        await set_number(hass, master_entry, "feed_in_power_limit", 10_800)
+
+        # This is a user-level scenario.  The source material has no OpenData
+        # request sample, so the test deliberately does not choose a raw point.
+        assert len(master.writes) == 1
+        assert slave.writes == []
 
 
 @pytest.mark.asyncio
@@ -931,16 +933,7 @@ async def test_f_23_reported_master_heater_fault_is_user_visible(
     monkeypatch,
     tmp_path,
 ) -> None:
-    """F-23: HA exposes a reported heater fault, not the physical wire state."""
-    # The source fixes the user-visible sequence but contains no raw OpenData
-    # report.  Keep that contract here without pretending DC/DC point 9079 is a
-    # heater-fault point.  A confirmed protocol fixture must supply the mapping.
-    reported_faults = (False, False, True, False)
-    expected_user_states = ("off", "off", "on", "off")
-    assert tuple("on" if fault else "off" for fault in reported_faults) == (
-        expected_user_states
-    )
-
+    """F-23: HA provides a user-visible master-heater fault entity."""
     backend = FakeDevice(scenario_data())
     install_fake_devices(monkeypatch, {HOST: backend})
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
@@ -956,4 +949,4 @@ async def test_f_23_reported_master_heater_fault_is_user_visible(
             if entity.entity_id == fault.entity_id
         )
         assert registry_entry.device_id == main_device.id
-        assert fault.state == expected_user_states[0]
+        assert fault.state == "off"

@@ -30,6 +30,13 @@ from ._support import (
 HOST = "192.0.2.180"
 SERIAL = "CAPABILITY-RUNTIME-SN"
 MODEL = "SolidFlex/PowerFlex2000"
+PROTOCOL_MARKER_POINT = "1127"
+HIDDEN_WRITE_SAMPLES = {
+    "15203": 0,
+    "15204": 0,
+    "18000": 1,
+    "18001": 0,
+}
 BASELINE_UNIQUE_IDS = {
     f"{SERIAL}_work_mode",
     f"{SERIAL}_state_setting",
@@ -62,6 +69,9 @@ def capability_backend_data() -> dict[str, object]:
         {point: f"PACK-{pack_id}" for pack_id, point in PACK_SERIAL_POINTS.items()}
     )
     data.update({"8646": 30, "8647": 0x0800, "2802": 100})
+    # These SetData-only inputs are present deliberately so the runtime test can
+    # prove that production setup never polls them as user capabilities.
+    data.update(HIDDEN_WRITE_SAMPLES)
     return data
 
 
@@ -132,12 +142,20 @@ def assert_set_entity(hass, entry, capability: SetUserCapability) -> None:
 
 
 @pytest.mark.asyncio
-async def test_old_firmware_without_additional_points_sees_no_other_user_change(
+@pytest.mark.parametrize("return_unmarked_capability_values", (False, True))
+async def test_device_without_protocol_marker_keeps_the_baseline_user_experience(
     monkeypatch,
     tmp_path,
+    return_unmarked_capability_values,
 ) -> None:
-    """An existing device gets no new entities or changed Work Mode options."""
-    backend = FakeDevice(dict(DEFAULT_DATA))
+    """Without the protocol marker, old users keep the complete baseline UI."""
+    if return_unmarked_capability_values:
+        backend_data = capability_backend_data()
+        backend_data.pop(PROTOCOL_MARKER_POINT)
+    else:
+        backend_data = dict(DEFAULT_DATA)
+
+    backend = FakeDevice(backend_data)
     install_fake_devices(monkeypatch, {HOST: backend})
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
 
@@ -153,6 +171,23 @@ async def test_old_firmware_without_additional_points_sees_no_other_user_change(
             "Real-Time Control",
             "Charge/Discharge Schedule",
         )
+
+
+@pytest.mark.asyncio
+async def test_setdata_only_inputs_are_not_polled_as_user_capabilities(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """SetData-only inputs never enter the production read path."""
+    backend = FakeDevice(capability_backend_data())
+    install_fake_devices(monkeypatch, {HOST: backend})
+    entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+
+        requested_points = {str(point) for batch in backend.fetches for point in batch}
+        assert requested_points.isdisjoint(HIDDEN_WRITE_SAMPLES)
 
 
 @pytest.mark.asyncio
