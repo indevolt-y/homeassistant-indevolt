@@ -8,6 +8,9 @@ from collections import Counter
 import pytest
 
 from custom_components.indevolt.const import DOMAIN
+from custom_components.indevolt.opendata.additional_points import (
+    DEFAULT_ADDITIONAL_READ_GROUPS,
+)
 from custom_components.indevolt.opendata.polling import DEFAULT_POLLING_BASELINE
 
 from ._support import (
@@ -22,7 +25,9 @@ from ._support import (
     state_for_unique_id,
 )
 
-DEFAULT_BATCH_COUNT = (len(DEFAULT_POLLING_BASELINE) + 7) // 8
+DEFAULT_BATCH_COUNT = (len(DEFAULT_POLLING_BASELINE) + 7) // 8 + sum(
+    (len(group) + 7) // 8 for group in DEFAULT_ADDITIONAL_READ_GROUPS
+)
 
 
 @pytest.mark.asyncio

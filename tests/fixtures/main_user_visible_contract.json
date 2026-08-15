@@ -9,6 +9,10 @@
     "entity_translation_key": {
       "reason": "Home Assistant localization metadata may change the translated display name, but it does not change an existing entity's unique ID, entity ID, device assignment, state value, option value, or control request. Existing user-assigned names remain registry data rather than translation output.",
       "separate_test": "tests/shared/localization/test_shared_translations.py"
+    },
+    "work_mode_custom_time_option": {
+      "reason": "OpenData point 4 adds exactly one new Custom Time Control Mode option after the three MAIN options. The MAIN options keep their text, order, values, unique ID, entity ID, and point 47005 requests; only the new option writes point 4.",
+      "separate_test": "tests/models/solidflex2000/test_solidflex2000_opendata_capabilities.py"
     }
   },
   "routes": {

@@ -60,7 +60,7 @@ async def test_real_config_flow_creates_and_loads_entry(
         )
         assert created_entry is not None
         assert created_entry.state is ConfigEntryState.LOADED
-        assert len(entry_entities(hass, created_entry)) == 15
+        assert len(entry_entities(hass, created_entry)) == 16
 
 
 @pytest.mark.xfail(

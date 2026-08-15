@@ -49,8 +49,8 @@ async def test_two_entries_keep_entities_states_updates_and_writes_isolated(
 
         first_entities = entry_entities(hass, first_entry)
         second_entities = entry_entities(hass, second_entry)
-        assert len(first_entities) == 15
-        assert len(second_entities) == 15
+        assert len(first_entities) == 16
+        assert len(second_entities) == 16
         assert set(first_entities).isdisjoint(second_entities)
         assert {item.entity_id for item in first_entities.values()}.isdisjoint(
             item.entity_id for item in second_entities.values()

@@ -691,7 +691,7 @@ async def test_f_16_forced_full_charge_settings_survive_reload(
         assert set(entry_entities(hass, entry)) == original_unique_ids
         assert (
             require_state(hass, entry, f"{SERIAL}_forced_full_charge_interval").state
-            == "1"
+            == "1.0"
         )
         assert (
             require_state(hass, entry, f"{SERIAL}_forced_full_charge_start_time").state
@@ -750,7 +750,7 @@ async def test_f_17_deep_sleep_updates_existing_soc_entities_without_waiting(
             {11006: 14, 9000: 52.5, 9016: 68},
         )
 
-        assert require_state(hass, entry, f"{SERIAL}_11006").state == "Deep Sleep"
+        assert require_state(hass, entry, f"{SERIAL}_11006").state == "deep_sleep"
         assert require_state(hass, entry, f"{SERIAL}_9000").state == "52.5"
         assert require_state(hass, entry, f"{SERIAL}_battery_1_9016").state == "68"
         assert stable_ids == {

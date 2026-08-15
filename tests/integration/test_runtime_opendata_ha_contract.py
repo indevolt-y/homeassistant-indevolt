@@ -6,6 +6,7 @@ import asyncio
 from datetime import time
 
 import pytest
+import voluptuous as vol
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import STATE_UNAVAILABLE, STATE_UNKNOWN
 from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
@@ -233,7 +234,7 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
                 {"entity_id": light_mode, "option": "not-a-protocol-option"},
                 blocking=True,
             )
-        with pytest.raises(ServiceValidationError):
+        with pytest.raises((ServiceValidationError, vol.Invalid)):
             await hass.services.async_call(
                 "time",
                 "set_value",

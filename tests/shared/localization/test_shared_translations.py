@@ -21,6 +21,7 @@ from custom_components.indevolt.binary_sensor import (
 from custom_components.indevolt.number import (
     NUMBERS_GEN1,
     NUMBERS_GEN2,
+    IndevoltCapabilityNumberEntity,
     IndevoltNumberEntity,
 )
 from custom_components.indevolt.select import (
@@ -39,6 +40,7 @@ from custom_components.indevolt.sensor_descriptions.battery_pack import (
 from custom_components.indevolt.sensor_descriptions.gen1 import SENSORS_GEN1
 from custom_components.indevolt.sensor_descriptions.gen2 import SENSORS_GEN2
 from custom_components.indevolt.switch import SWITCHES, IndevoltSwitchEntity
+from custom_components.indevolt.time import IndevoltCapabilityTimeEntity
 from tests.models.opendata_capabilities import (
     BK_GET_USER_CAPABILITIES,
     GET_USER_CAPABILITIES,
@@ -102,7 +104,7 @@ def test_every_translation_text_matches_the_complete_golden_contract() -> None:
     """Lock every user-facing string, not only representative examples."""
     expected_hashes = {
         "en": "add13fc6d7907439655c4ff63b2230235c98784602a60fa8f925ecaf014dcb0a",
-        "zh-Hans": "80ae7b06d09644afd17a4d74670a76dd6d9f824d119007068a29b454fa948b10",
+        "zh-Hans": "8eff6c38c0d66c21d73f7f9e9fc14f0fe7a7eaab19d2b77a2bf08e020b1c3210",
     }
 
     for language, expected_hash in expected_hashes.items():
@@ -166,6 +168,8 @@ def test_every_entity_description_has_a_name_translation() -> None:
         IndevoltBatterySensorEntity,
         IndevoltCapabilitySensorEntity,
         IndevoltCapabilityBinarySensorEntity,
+        IndevoltCapabilityNumberEntity,
+        IndevoltCapabilityTimeEntity,
         IndevoltNumberEntity,
         IndevoltSelectEntity,
         IndevoltSwitchEntity,
@@ -208,14 +212,16 @@ def test_public_state_and_option_values_are_unchanged() -> None:
     assert [description.options_map for description in SELECTS_GEN1] == [
         {0: "Standby", 1: "Charging", 2: "Discharging"}
     ]
-    assert [description.options_map for description in SELECTS_GEN2] == [
-        {
-            1: "Self-Consumed Prioritized",
-            4: "Real-Time Control",
-            5: "Charge/Discharge Schedule",
-        },
+    assert list(SELECTS_GEN2[0].options_map.items())[:3] == [
+        (1, "Self-Consumed Prioritized"),
+        (4, "Real-Time Control"),
+        (5, "Charge/Discharge Schedule"),
+    ]
+    assert SELECTS_GEN2[0].options_map[6] == "Custom Time Control Mode"
+    assert [description.options_map for description in SELECTS_GEN2[1:]] == [
         {0: "Standby", 1: "Charging", 2: "Discharging"},
         {1: "Smart Plug", 2: "Meter", 3: "Key Load", 4: "Custom"},
+        {0: "off", 1: "on", 2: "low_power"},
     ]
 
 

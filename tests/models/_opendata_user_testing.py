@@ -222,6 +222,8 @@ def entity_native_value(entity: Any, domain: str) -> Any:
     """Return the native value before Home Assistant serializes the state."""
     if domain == "binary_sensor":
         return entity.is_on
+    if domain == "select":
+        return entity.current_option
     return entity.native_value
 
 
@@ -465,7 +467,10 @@ async def assert_set_point_is_not_exposed_as_a_new_user_control(
         description = entity.entity_description
         if domain == "number":
             value = description.native_min_value
-            await description.set_fn(harness.coordinator.api, float(value or 0))
+            if hasattr(description, "set_fn"):
+                await description.set_fn(harness.coordinator.api, float(value or 0))
+            else:
+                await entity.async_set_native_value(float(value or 0))
         elif domain == "select":
             await description.set_fn(harness.coordinator, 0)
         elif domain == "switch":

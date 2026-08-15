@@ -143,7 +143,7 @@ async def test_user_configured_entry_and_registry_customizations_survive_restart
             "PERSISTED-SN_battery_1_9016",
         )
         assert battery_state.state == "unavailable"
-        assert len(entry_entities(hass, restored_entry)) == 15
+        assert len(entry_entities(hass, restored_entry)) == 16
         assert len(dr.async_get(hass).devices) == 2
 
 
@@ -203,7 +203,7 @@ async def test_two_entries_restore_without_crossing_or_duplicating_state(
             for unique_id, entry in restored_entries.items()
         } == original_entities
         assert set(dr.async_get(hass).devices) == original_device_ids
-        assert len(er.async_get(hass).entities) == 30
+        assert len(er.async_get(hass).entities) == 32
         assert len(dr.async_get(hass).devices) == 4
         assert (
             state_for_unique_id(
@@ -278,7 +278,7 @@ async def test_restart_retry_preserves_registries_and_recovers_without_duplicate
         assert restored_entry.state is ConfigEntryState.LOADED
         assert _entity_storage_snapshot(hass, restored_entry) == original_entities
         assert set(dr.async_get(hass).devices) == original_device_ids
-        assert len(entry_entities(hass, restored_entry)) == 15
+        assert len(entry_entities(hass, restored_entry)) == 16
         assert len(dr.async_get(hass).devices) == 2
         assert (
             state_for_unique_id(

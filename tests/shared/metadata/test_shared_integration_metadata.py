@@ -26,9 +26,11 @@ def test_constants_keep_the_existing_runtime_contract() -> None:
     assert MAX_REAL_TIME_CONTROL_POWER == 10_800
     assert PLATFORMS == [
         Platform.SENSOR,
+        Platform.BINARY_SENSOR,
         Platform.SWITCH,
         Platform.NUMBER,
         Platform.SELECT,
+        Platform.TIME,
     ]
 
 

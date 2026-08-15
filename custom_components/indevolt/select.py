@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from homeassistant.components.select import SelectEntity, SelectEntityDescription
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -25,6 +26,8 @@ class IndevoltSelectDescription(SelectEntityDescription):
     options_map: dict[int, str]
     read_point: str = ""
     entity_category: EntityCategory = EntityCategory.CONFIG
+    create_fn: Callable[[dict], bool] = lambda data: True
+    report_write_failures: bool = False
 
 
 SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
@@ -37,11 +40,15 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
             1: "Self-Consumed Prioritized",
             4: "Real-Time Control",
             5: "Charge/Discharge Schedule",
+            6: "Custom Time Control Mode",
         },
         read_point="7101",
         entity_category=EntityCategory.CONFIG,
         value_fn=lambda data: data.get("7101"),
-        set_fn=lambda c, value: c.api.set_data(point=47005, value=[value]),
+        set_fn=lambda c, value: c.api.set_data(
+            point=4 if value == 6 else 47005,
+            value=[value],
+        ),
     ),
     IndevoltSelectDescription(
         key="state_setting",
@@ -64,6 +71,19 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
         options_map={1: "Smart Plug", 2: "Meter", 3: "Key Load", 4: "Custom"},
         value_fn=lambda data: None,
         set_fn=lambda c, value: c.api.set_data(point=1, value=[value]),
+    ),
+    IndevoltSelectDescription(
+        key="led_light_strip_mode",
+        translation_key="led_light_strip_mode",
+        name="LED Light-strip Mode",
+        icon="mdi:led-strip-variant",
+        options_map={0: "off", 1: "on", 2: "low_power"},
+        read_point="7171",
+        entity_category=EntityCategory.CONFIG,
+        value_fn=lambda data: data.get("7171"),
+        set_fn=lambda c, value: c.api.set_data(point=35005, value=[value]),
+        create_fn=lambda data: data.get("7171") is not None,
+        report_write_failures=True,
     ),
 )
 
@@ -98,6 +118,7 @@ async def async_setup_entry(
         async_add_entities(
             IndevoltSelectEntity(coordinator, description)
             for description in SELECTS_GEN2
+            if description.create_fn(coordinator.data)
         )
 
 
@@ -129,7 +150,19 @@ class IndevoltSelectEntity(IndevoltEntity, SelectEntity):
             return
 
         self._attr_current_option = option
-        await self.entity_description.set_fn(self.coordinator, value)
+        try:
+            accepted = await self.entity_description.set_fn(self.coordinator, value)
+        except Exception as err:
+            if self.entity_description.report_write_failures:
+                raise HomeAssistantError(
+                    f"Unable to write OpenData select {self.entity_description.key}: "
+                    f"{err}"
+                ) from err
+            raise
+        if self.entity_description.report_write_failures and not accepted:
+            raise HomeAssistantError(
+                f"Device rejected OpenData select {self.entity_description.key}"
+            )
         await self.coordinator.async_refresh()
 
     @property

@@ -19,6 +19,13 @@ from homeassistant.const import PERCENTAGE, EntityCategory, UnitOfPower
 # valid values keep the original point 47016 and refresh flow.
 from homeassistant.exceptions import ServiceValidationError
 
+from .capabilities import SetUserCapability
+from .capabilities.runtime import (
+    async_write_control,
+    controls_for_model,
+    is_control_returned,
+)
+
 # Reason: The number metadata and runtime validation must use the same 10800 W
 # source of truth as the Action.
 # Usage: This constant supplies both the Gen2 power_setting maximum and the
@@ -188,16 +195,24 @@ NUMBERS_GEN1 = [
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    if "BK1600" in entry.data.get("device_model"):
-        async_add_entities(
+    device_model = entry.data.get("device_model")
+    if "BK1600" in device_model:
+        entities = [
             IndevoltNumberEntity(entry.runtime_data, description)
             for description in NUMBERS_GEN1
-        )
+        ]
     else:
-        async_add_entities(
+        entities = [
             IndevoltNumberEntity(entry.runtime_data, description)
             for description in NUMBERS_GEN2
+        ]
+        entities.extend(
+            IndevoltCapabilityNumberEntity(entry.runtime_data, capability)
+            for capability in controls_for_model(device_model)
+            if capability.entity_domain == "number"
+            and is_control_returned(entry.runtime_data.data, capability)
         )
+    async_add_entities(entities)
 
 
 class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
@@ -266,3 +281,47 @@ class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
 
         await self.entity_description.set_fn(self.coordinator.api, value)
         await self.coordinator.async_refresh()
+
+
+class IndevoltCapabilityNumberEntity(IndevoltEntity, NumberEntity):
+    """A new OpenData number with a matching device readback."""
+
+    _attr_has_entity_name = True
+
+    def __init__(
+        self,
+        coordinator: IndevoltDeviceUpdateCoordinator,
+        capability: SetUserCapability,
+    ) -> None:
+        super().__init__(coordinator)
+        assert capability.key is not None
+        assert capability.translation_key is not None
+        assert capability.read_point is not None
+        self.capability = capability
+        self.entity_description = NumberEntityDescription(
+            key=capability.key,
+            name=capability.name,
+            translation_key=capability.translation_key,
+            translation_placeholders=capability.translation_placeholders,
+            device_class=capability.device_class,
+            entity_category=capability.entity_category,
+            mode=capability.mode,
+            icon=capability.icon,
+            native_min_value=capability.minimum,
+            native_max_value=capability.maximum,
+            native_step=capability.step,
+            native_unit_of_measurement=capability.unit,
+            entity_registry_enabled_default=capability.enabled_by_default,
+        )
+        self._attr_unique_id = f"{coordinator.config_entry.unique_id}_{capability.key}"
+
+    @property
+    def device_info(self):
+        return self.device_info_main()
+
+    @property
+    def native_value(self) -> int | float | None:
+        return self.coordinator.data.get(str(self.capability.read_point))
+
+    async def async_set_native_value(self, value: float) -> None:
+        await async_write_control(self.coordinator, self.capability, value)

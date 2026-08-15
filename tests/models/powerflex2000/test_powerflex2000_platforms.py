@@ -58,6 +58,11 @@ async def test_powerflex2000_registers_its_own_platform_contract(
         ),
     )
     monkeypatch.setattr(
+        sensor_platform,
+        "IndevoltCapabilitySensorEntity",
+        lambda coordinator, capability: ("capability", capability.key),
+    )
+    monkeypatch.setattr(
         number_platform,
         "IndevoltNumberEntity",
         lambda coordinator, description: description.key,
@@ -93,6 +98,7 @@ async def test_powerflex2000_registers_its_own_platform_contract(
         ("battery", 3, "9054"),
         ("battery", 4, "9149"),
         ("battery", 5, "9202"),
+        ("capability", "1505"),
     }
     assert set(number_added) == {
         "backup_soc",
@@ -102,7 +108,12 @@ async def test_powerflex2000_registers_its_own_platform_contract(
         "power_setting",
         "soc_setting",
     }
-    assert set(select_added) == {"work_mode", "state_setting", "load_setting"}
+    assert set(select_added) == {
+        "work_mode",
+        "state_setting",
+        "load_setting",
+        "led_light_strip_mode",
+    }
     assert switch_added == ["light"]
 
 

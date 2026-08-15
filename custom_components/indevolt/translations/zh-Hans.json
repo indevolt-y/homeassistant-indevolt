@@ -693,13 +693,13 @@
         "name": "实时控制目标 SOC"
       },
       "simulated_load_time_slot": {
-        "name": "Simulated Load Time Slot {slot}"
+        "name": "模拟负载时段 {slot}"
       },
       "forced_full_charge_interval": {
-        "name": "Forced Full-charge Interval"
+        "name": "强制满充周期"
       },
       "forced_ac_charging_power": {
-        "name": "Forced AC Charging Power"
+        "name": "强制交流充电功率"
       }
     },
     "select": {
@@ -712,18 +712,18 @@
       "work_mode": {
         "name": "工作模式",
         "state": {
-          "Self-Consumed Prioritized": "Self-Consumed Prioritized",
-          "Real-Time Control": "Real-Time Control",
-          "Charge/Discharge Schedule": "Charge/Discharge Schedule",
-          "Custom Time Control Mode": "Custom Time Control Mode"
+          "Self-Consumed Prioritized": "自发自用优先",
+          "Real-Time Control": "实时控制",
+          "Charge/Discharge Schedule": "充放电计划",
+          "Custom Time Control Mode": "自定义定时控制模式"
         }
       },
       "led_light_strip_mode": {
-        "name": "LED Light-strip Mode",
+        "name": "LED 灯带模式",
         "state": {
-          "off": "off",
-          "on": "on",
-          "low_power": "low_power"
+          "off": "关闭",
+          "on": "开启",
+          "low_power": "低功率"
         }
       }
     },
@@ -757,13 +757,13 @@
     },
     "time": {
       "deep_sleep_start_time": {
-        "name": "Deep Sleep Start Time"
+        "name": "深度睡眠开始时间"
       },
       "deep_sleep_end_time": {
-        "name": "Deep Sleep End Time"
+        "name": "深度睡眠结束时间"
       },
       "forced_full_charge_start_time": {
-        "name": "Forced Full-charge Start Time"
+        "name": "强制满充开始时间"
       }
     }
   },

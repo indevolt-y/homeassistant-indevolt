@@ -48,6 +48,11 @@ async def test_bk1600_ultra_registers_its_own_platform_contract(
         ),
     )
     monkeypatch.setattr(
+        sensor_platform,
+        "IndevoltCapabilitySensorEntity",
+        lambda coordinator, capability: ("capability", capability.key),
+    )
+    monkeypatch.setattr(
         number_platform,
         "IndevoltNumberEntity",
         lambda coordinator, description: description.key,
@@ -76,7 +81,7 @@ async def test_bk1600_ultra_registers_its_own_platform_contract(
         None, entry, lambda entities: switch_added.extend(entities)
     )
 
-    assert sensor_added == [("main", "1664")]
+    assert sensor_added == [("main", "1664"), ("capability", "142")]
     assert set(number_added) == {"power_setting", "soc_setting"}
     assert select_added == ["state_setting"]
     assert switch_added == []

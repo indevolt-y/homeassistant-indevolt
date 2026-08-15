@@ -479,6 +479,7 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
         sample_value=0x121E,
         expected_state="18:30:00",
         entity_category=EntityCategory.CONFIG,
+        icon="mdi:clock-start",
         additional_state_cases=((0x0000, "00:00:00"),),
     ),
     GetUserCapability(
@@ -490,6 +491,7 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
         sample_value=0x061E,
         expected_state="06:30:00",
         entity_category=EntityCategory.CONFIG,
+        icon="mdi:clock-end",
         additional_state_cases=((0x173B, "23:59:00"),),
     ),
     _sensor(

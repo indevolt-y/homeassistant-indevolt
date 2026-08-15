@@ -122,8 +122,8 @@ async def test_action_targets_two_real_registry_devices_in_input_order(
         assert first.writes == [(47005, [1])]
         assert first_entry.state is ConfigEntryState.LOADED
         assert second_entry.state is ConfigEntryState.LOADED
-        assert len(entry_entities(hass, first_entry)) == 15
-        assert len(entry_entities(hass, second_entry)) == 15
+        assert len(entry_entities(hass, first_entry)) == 16
+        assert len(entry_entities(hass, second_entry)) == 16
 
 
 @pytest.mark.asyncio

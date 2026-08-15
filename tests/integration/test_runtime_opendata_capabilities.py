@@ -49,6 +49,7 @@ BASELINE_UNIQUE_IDS = {
     f"{SERIAL}_work_mode",
     f"{SERIAL}_state_setting",
     f"{SERIAL}_load_setting",
+    f"{SERIAL}_led_light_strip_mode",
     f"{SERIAL}_light",
     f"{SERIAL}_grid",
     f"{SERIAL}_bypass",
@@ -222,6 +223,7 @@ async def test_modbus_version_does_not_unlock_unreturned_capabilities(
             "Self-Consumed Prioritized",
             "Real-Time Control",
             "Charge/Discharge Schedule",
+            "Custom Time Control Mode",
         )
 
 

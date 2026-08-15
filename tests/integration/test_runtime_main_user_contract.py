@@ -26,6 +26,7 @@ MAIN_CONTRACT_PATH = (
     Path(__file__).parents[1] / "fixtures" / "main_user_visible_contract.json"
 )
 ALLOWED_NON_DESTRUCTIVE_ENTITY_FIELDS = frozenset({"translation_key"})
+ALLOWED_WORK_MODE_OPTION = "Custom Time Control Mode"
 DESTRUCTIVE_CHANGE_RECORD_FIELDS = frozenset(
     {
         "scope",
@@ -276,6 +277,16 @@ def _main_initial_view(
             actual["entities"], expected["entities"]
         ).items()
     }
+    for unique_id, entity in view["entities"].items():
+        if not unique_id.endswith("_work_mode"):
+            continue
+        expected_entity = expected["entities"][unique_id]
+        for field in ("attributes", "capabilities"):
+            entity[field] = dict(entity[field])
+            main_options = expected_entity[field].get("options")
+            current_options = entity[field].get("options")
+            if current_options == [*main_options, ALLOWED_WORK_MODE_OPTION]:
+                entity[field]["options"] = main_options
     view["polling"] = dict(actual["polling"])
     main_batch_count = len(expected["polling"]["batches"])
     view["polling"]["batches"] = actual["polling"]["batches"][:main_batch_count]
@@ -297,11 +308,18 @@ def test_each_non_destructive_exception_is_narrow_and_explained() -> None:
     """Compatibility exclusions must remain explicit and reviewable."""
     allowed = _load_main_contract()["allowed_non_destructive_changes"]
 
-    assert set(allowed) == {"entity_translation_key"}
+    assert set(allowed) == {
+        "entity_translation_key",
+        "work_mode_custom_time_option",
+    }
     translation = allowed["entity_translation_key"]
     assert set(translation) == {"reason", "separate_test"}
     assert translation["reason"].strip()
     assert (Path(__file__).parents[2] / translation["separate_test"]).is_file()
+    work_mode = allowed["work_mode_custom_time_option"]
+    assert set(work_mode) == {"reason", "separate_test"}
+    assert work_mode["reason"].strip()
+    assert (Path(__file__).parents[2] / work_mode["separate_test"]).is_file()
 
 
 @pytest.mark.parametrize("scenario_name", ["bk", "default", "fallback"])
