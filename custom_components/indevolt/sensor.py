@@ -1,4 +1,7 @@
+import logging
+
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.const import EntityCategory
 
 from .capabilities import GetUserCapability
 from .capabilities.runtime import (
@@ -11,6 +14,15 @@ from .sensor_descriptions.battery_pack import BATTERY_PACK_SENSORS
 from .sensor_descriptions.entity_description import IndevoltSensorEntityDescription
 from .sensor_descriptions.gen1 import SENSORS_GEN1
 from .sensor_descriptions.gen2 import SENSORS_GEN2
+
+_LOGGER = logging.getLogger(__name__)
+
+P_FILE_VERSION_SENSOR = IndevoltSensorEntityDescription(
+    key="p_ver",
+    name="P-file Version",
+    translation_key="p_file_version",
+    entity_category=EntityCategory.DIAGNOSTIC,
+)
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
@@ -51,6 +63,28 @@ async def async_setup_entry(hass, entry, async_add_entities):
         and is_returned(entry.runtime_data.data, capability)
     )
     async_add_entities(entities)
+
+    if hass is not None:
+        entry.async_create_background_task(
+            hass,
+            _async_add_p_file_version(entry.runtime_data, async_add_entities),
+            "Load optional INDEVOLT P-file version",
+        )
+
+
+async def _async_add_p_file_version(coordinator, async_add_entities) -> None:
+    """Add the optional Sys.GetConfig P-file version without blocking setup."""
+    try:
+        config = await coordinator.api.get_config()
+        value = config.get("device", {}).get("p_ver")
+    except Exception as err:
+        _LOGGER.debug("Optional P-file version is unavailable: %s", err)
+        return
+
+    if value is None:
+        return
+
+    async_add_entities([IndevoltPFileVersionSensorEntity(coordinator, value)])
 
 
 class IndevoltSensorEntity(IndevoltEntity, SensorEntity):
@@ -100,6 +134,26 @@ class IndevoltBatterySensorEntity(IndevoltEntity, SensorEntity):
         return self.entity_description.value_fn(
             self.coordinator.data.get(self.entity_description.key)
         )
+
+
+class IndevoltPFileVersionSensorEntity(IndevoltEntity, SensorEntity):
+    """The optional P-file version returned by Sys.GetConfig."""
+
+    _attr_has_entity_name = True
+    entity_description = P_FILE_VERSION_SENSOR
+
+    def __init__(self, coordinator, value) -> None:
+        super().__init__(coordinator)
+        self._value = value
+        self._attr_unique_id = f"{coordinator.config_entry.unique_id}_p_ver"
+
+    @property
+    def device_info(self):
+        return self.device_info_main()
+
+    @property
+    def native_value(self):
+        return self._value
 
 
 class IndevoltCapabilitySensorEntity(IndevoltEntity, SensorEntity):

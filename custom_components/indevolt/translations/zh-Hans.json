@@ -259,6 +259,9 @@
       "firmware_pg2000_series_pcs": {
         "name": "PG2000 系列 PCS 固件版本"
       },
+      "p_file_version": {
+        "name": "P-file 版本"
+      },
       "grid_frequency": {
         "name": "电网频率"
       },

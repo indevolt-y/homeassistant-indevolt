@@ -30,6 +30,7 @@ from custom_components.indevolt.select import (
     IndevoltSelectEntity,
 )
 from custom_components.indevolt.sensor import (
+    P_FILE_VERSION_SENSOR,
     IndevoltBatterySensorEntity,
     IndevoltCapabilitySensorEntity,
     IndevoltSensorEntity,
@@ -103,8 +104,8 @@ def test_translation_files_have_identical_contracts() -> None:
 def test_every_translation_text_matches_the_complete_golden_contract() -> None:
     """Lock every user-facing string, not only representative examples."""
     expected_hashes = {
-        "en": "add13fc6d7907439655c4ff63b2230235c98784602a60fa8f925ecaf014dcb0a",
-        "zh-Hans": "8eff6c38c0d66c21d73f7f9e9fc14f0fe7a7eaab19d2b77a2bf08e020b1c3210",
+        "en": "852111280c195bc5af714ed89c14ac5225489ba8a482bba4b0f22e183a7a3b4b",
+        "zh-Hans": "4af176105bf170fc9f06d06a5689f1b566cc35e89f69113cd4fb0621d9299ec1",
     }
 
     for language, expected_hash in expected_hashes.items():
@@ -126,7 +127,12 @@ def test_every_entity_description_has_a_name_translation() -> None:
         for description in sensors
     )
     descriptions_by_platform = {
-        "sensor": (*SENSORS_GEN1, *SENSORS_GEN2, *battery_sensors),
+        "sensor": (
+            *SENSORS_GEN1,
+            *SENSORS_GEN2,
+            *battery_sensors,
+            P_FILE_VERSION_SENSOR,
+        ),
         "number": (*NUMBERS_GEN1, *NUMBERS_GEN2),
         "select": (*SELECTS_GEN1, *SELECTS_GEN2),
         "switch": tuple(SWITCHES),

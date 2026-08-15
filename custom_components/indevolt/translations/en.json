@@ -259,6 +259,9 @@
       "firmware_pg2000_series_pcs": {
         "name": "Firmware PG2000Series PCS"
       },
+      "p_file_version": {
+        "name": "P-file Version"
+      },
       "grid_frequency": {
         "name": "Grid Frequency"
       },
