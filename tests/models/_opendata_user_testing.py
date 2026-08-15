@@ -3,19 +3,26 @@
 from __future__ import annotations
 
 import importlib
+import json
 from dataclasses import dataclass, field
+from functools import cache
+from pathlib import Path
 from types import ModuleType, SimpleNamespace
 from typing import Any
 
 from custom_components.indevolt.const import DOMAIN
 
 from .opendata_capabilities import (
+    BK_GET_USER_CAPABILITIES,
     GET_USER_CAPABILITIES,
     GetUserCapability,
     SetUserCapability,
 )
 
 SERIAL = "CAPABILITY-USER-SN"
+TRANSLATIONS_ROOT = (
+    Path(__file__).parents[2] / "custom_components" / "indevolt" / "translations"
+)
 PACK_SERIAL_POINTS = {
     1: "9032",
     2: "9051",
@@ -64,9 +71,12 @@ class FakeCoordinator:
                 "fw_version": "capability-test",
             },
         )
+        capabilities = (
+            BK_GET_USER_CAPABILITIES if "BK1600" in model else GET_USER_CAPABILITIES
+        )
         self.data = {
             str(capability.point): capability.sample_value
-            for capability in GET_USER_CAPABILITIES
+            for capability in capabilities
         }
         self.data.update(
             {point: f"PACK-{pack_id}" for pack_id, point in PACK_SERIAL_POINTS.items()}
@@ -152,6 +162,8 @@ def _optional_integration_platform(domain: str) -> ModuleType | None:
 def entity_state(entity: Any, domain: str) -> str:
     """Render a directly constructed entity as a user-visible HA state."""
     if domain == "binary_sensor":
+        if entity.is_on is None:
+            return "unknown"
         return "on" if entity.is_on else "off"
     if domain == "select":
         return entity.current_option or "unknown"
@@ -171,6 +183,39 @@ def entity_unit(entity: Any) -> str | None:
 
 def entity_enabled_by_default(entity: Any) -> bool:
     return entity.entity_description.entity_registry_enabled_default
+
+
+@cache
+def _translations(language: str) -> dict[str, Any]:
+    return json.loads((TRANSLATIONS_ROOT / f"{language}.json").read_text())["entity"]
+
+
+def assert_entity_translation(
+    platform: str,
+    translation_key: str,
+    expected_english_name: str,
+    placeholders: dict[str, str] | None,
+    options: tuple[str, ...] = (),
+) -> None:
+    """Assert HA can translate a new entity name and any machine states."""
+    english = _translations("en")[platform][translation_key]
+    chinese = _translations("zh-Hans")[platform][translation_key]
+    format_values = placeholders or {}
+
+    assert english["name"].format(**format_values) == expected_english_name
+    assert chinese["name"].format(**format_values)
+    if options:
+        assert set(english["state"]) == set(options)
+        assert set(chinese["state"]) == set(options)
+        assert all(english["state"].values())
+        assert all(chinese["state"].values())
+
+
+def entity_native_value(entity: Any, domain: str) -> Any:
+    """Return the native value before Home Assistant serializes the state."""
+    if domain == "binary_sensor":
+        return entity.is_on
+    return entity.native_value
 
 
 def expected_device_identifier(capability: GetUserCapability) -> tuple[str, str]:
@@ -208,14 +253,92 @@ async def assert_get_user_capability(
         f"point {capability.point} should register {capability.domain}."
         f"{capability.key} for {model}"
     )
+    assert entity.unique_id == capability.unique_id(SERIAL)
     assert entity.entity_description.name == capability.name
-    assert entity_state(entity, capability.domain) == capability.expected_state
+    assert entity.entity_description.translation_key == capability.translation_key
+    assert entity.entity_description.translation_placeholders == (
+        capability.translation_placeholders
+    )
+    assert entity.entity_description.device_class == capability.device_class
+    assert getattr(entity.entity_description, "state_class", None) == (
+        capability.state_class
+    )
+    assert entity.entity_description.entity_category == capability.entity_category
+    assert getattr(entity.entity_description, "suggested_display_precision", None) == (
+        capability.suggested_display_precision
+    )
+    assert entity.entity_description.icon == capability.icon
+    assert tuple(getattr(entity.entity_description, "options", ()) or ()) == (
+        capability.options
+    )
+    assert entity.has_entity_name is True
+    assert_entity_translation(
+        capability.domain,
+        capability.translation_key,
+        capability.name,
+        dict(capability.translation_placeholders or {}),
+        capability.options,
+    )
     assert entity_unit(entity) == capability.unit
     assert entity_enabled_by_default(entity) is capability.enabled_by_default
     assert expected_device_identifier(capability) in entity.device_info["identifiers"]
 
     if capability.scope.startswith("battery_"):
         assert entity.device_info["via_device"] == (DOMAIN, SERIAL)
+
+    for raw_value, expected_state in capability.state_cases:
+        harness.coordinator.data[str(capability.point)] = raw_value
+        assert isinstance(
+            entity_native_value(entity, capability.domain),
+            capability.native_value_type,
+        )
+        assert entity_state(entity, capability.domain) == expected_state
+
+
+async def assert_get_point_is_not_exposed_as_an_entity(
+    model: str,
+    point: int,
+) -> None:
+    """Assert a documented non-user read creates no independent HA entity."""
+    harness = ModelUserHarness(model)
+    harness.coordinator.data[str(point)] = "NON-USER-VALUE"
+    await harness.set_up_platforms()
+
+    point_unique_id = f"{SERIAL}_{point}"
+    assert point_unique_id not in {unique_id for _domain, unique_id in harness.entities}
+
+
+async def assert_get_user_capability_missing_value_behavior(
+    model: str,
+    capability: GetUserCapability,
+) -> None:
+    """Assert one point follows HA unknown, unavailable, and recovery semantics."""
+    missing_at_setup = ModelUserHarness(model)
+    missing_at_setup.coordinator.data.pop(str(capability.point), None)
+    await missing_at_setup.set_up_platforms()
+    if capability.create_requires_value:
+        assert missing_at_setup.entity_for_get(capability) is None
+
+    changes_later = ModelUserHarness(model)
+    await changes_later.set_up_platforms()
+    entity = changes_later.entity_for_get(capability)
+    assert entity is not None
+
+    changes_later.coordinator.data[str(capability.point)] = None
+    assert entity.available is True
+    assert entity_state(entity, capability.domain) == "unknown"
+
+    changes_later.coordinator.data.pop(str(capability.point), None)
+    assert entity.available is True
+    assert entity_state(entity, capability.domain) == "unknown"
+
+    changes_later.coordinator.last_update_success = False
+    assert entity.available is False
+
+    changes_later.coordinator.last_update_success = True
+    changes_later.coordinator.data[str(capability.point)] = capability.sample_value
+    assert entity.available is True
+    assert entity_state(entity, capability.domain) == capability.expected_state
 
 
 async def assert_set_user_capability(
@@ -232,11 +355,35 @@ async def assert_set_user_capability(
         f"point {capability.point} should be operable through "
         f"{capability.entity_domain}.{capability.key} for {model}"
     )
+    assert entity.unique_id == f"{SERIAL}_{capability.key}"
     assert entity.entity_description.name == capability.name
+    assert entity.entity_description.translation_key == capability.translation_key
+    assert entity.entity_description.translation_placeholders == (
+        capability.translation_placeholders
+    )
+    assert entity.entity_description.device_class == capability.device_class
+    assert entity.entity_description.entity_category == capability.entity_category
+    assert entity.entity_description.icon == capability.icon
+    assert getattr(entity.entity_description, "mode", None) == capability.mode
+    assert entity.has_entity_name is True
+    assert capability.translation_key is not None
+    assert capability.entity_domain is not None
+    assert_entity_translation(
+        capability.entity_domain,
+        capability.translation_key,
+        capability.name,
+        dict(capability.translation_placeholders or {}),
+        capability.options if capability.exposure == "select" else (),
+    )
     assert entity_enabled_by_default(entity) is capability.enabled_by_default
+    assert isinstance(
+        entity_native_value(entity, capability.entity_domain),
+        capability.native_value_type,
+    )
     assert entity_state(entity, capability.entity_domain) == (
         capability.expected_initial_state
     )
+    assert (DOMAIN, SERIAL) in entity.device_info["identifiers"]
 
     if capability.entity_domain == "number":
         assert entity.native_min_value == capability.minimum
@@ -252,6 +399,46 @@ async def assert_set_user_capability(
         (capability.point, [capability.wire_value])
     ]
     assert harness.coordinator.refreshes + harness.coordinator.request_refreshes == 1
+
+
+async def assert_set_user_capability_missing_value_behavior(
+    model: str,
+    capability: SetUserCapability,
+) -> None:
+    """Assert one control follows HA unknown, unavailable, and recovery semantics."""
+    assert capability.user_visible
+    assert capability.read_point is not None
+
+    missing_at_setup = ModelUserHarness(model)
+    missing_at_setup.coordinator.data.pop(str(capability.read_point), None)
+    await missing_at_setup.set_up_platforms()
+    if capability.create_requires_read_value:
+        assert missing_at_setup.entity_for_set(capability) is None
+
+    changes_later = ModelUserHarness(model)
+    await changes_later.set_up_platforms()
+    entity = changes_later.entity_for_set(capability)
+    assert entity is not None
+
+    changes_later.coordinator.data[str(capability.read_point)] = None
+    assert entity.available is True
+    assert entity_state(entity, capability.entity_domain) == "unknown"
+
+    changes_later.coordinator.data.pop(str(capability.read_point), None)
+    assert entity.available is True
+    assert entity_state(entity, capability.entity_domain) == "unknown"
+
+    changes_later.coordinator.last_update_success = False
+    assert entity.available is False
+
+    changes_later.coordinator.last_update_success = True
+    changes_later.coordinator.data[str(capability.read_point)] = (
+        capability.read_sample_value
+    )
+    assert entity.available is True
+    assert entity_state(entity, capability.entity_domain) == (
+        capability.expected_initial_state
+    )
 
 
 async def assert_set_point_is_not_exposed_as_a_new_user_control(

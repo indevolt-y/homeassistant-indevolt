@@ -7,7 +7,8 @@ import pytest
 from custom_components.indevolt.coordinator import IndevoltDeviceUpdateCoordinator
 from tests.models._opendata_point_additions import (
     ADDITIONAL_DEFAULT_READ_POINTS,
-    REMAINING_BK_READ_POINTS,
+    BK_NON_USER_READ_POINTS,
+    REMAINING_BK_USER_READ_POINTS,
 )
 
 MODEL = "BK1600/BK1600Ultra"
@@ -42,7 +43,7 @@ async def test_bk1600_polls_its_own_point_contract() -> None:
 
 @pytest.mark.parametrize(
     "point",
-    REMAINING_BK_READ_POINTS,
+    REMAINING_BK_USER_READ_POINTS,
     ids=lambda point: f"point_{point}",
 )
 @pytest.mark.asyncio
@@ -58,3 +59,17 @@ async def test_bk1600_polls_each_remaining_documented_read_point(
 
     assert point in {requested for batch in api.batches for requested in batch}
     assert data[str(point)] == point
+
+
+@pytest.mark.parametrize("point", BK_NON_USER_READ_POINTS)
+@pytest.mark.asyncio
+async def test_bk1600_does_not_poll_non_user_read_points(point: int) -> None:
+    api = RecordingAPI()
+    coordinator = object.__new__(IndevoltDeviceUpdateCoordinator)
+    coordinator.config = {"device_model": MODEL}
+    coordinator.api = api
+
+    data = await coordinator._async_update_data()
+
+    assert point not in {requested for batch in api.batches for requested in batch}
+    assert str(point) not in data

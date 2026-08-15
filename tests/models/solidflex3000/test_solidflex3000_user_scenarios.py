@@ -7,6 +7,7 @@ from itertools import cycle
 
 import pytest
 from homeassistant.config_entries import ConfigEntryState
+from homeassistant.const import EntityCategory
 from homeassistant.helpers import device_registry as dr
 
 from custom_components.indevolt.const import DOMAIN
@@ -21,6 +22,7 @@ from tests.integration._support import (
     install_fake_devices,
     make_entry,
 )
+from tests.models._opendata_user_testing import assert_entity_translation
 
 MODEL = "SolidFlex/PowerFlex2000"
 REPORTED_MODEL = "CMS-SF2000"
@@ -228,7 +230,54 @@ async def test_f_01_user_sees_the_fixed_sf3000_firmware_set(
         assert require_state(hass, entry, f"{SERIAL}_1109").state == "1.20.08"
         assert require_state(hass, entry, f"{SERIAL}_1119").state == "3.21"
         assert require_state(hass, entry, f"{SERIAL}_1120").state == "1.40.15"
-        assert require_named_state(hass, "P-file Version").state == pfile
+        pfile_entity = require_registry_entity(hass, entry, f"{SERIAL}_p_ver")
+        assert pfile_entity.domain == "sensor"
+        assert pfile_entity.translation_key == "p_file_version"
+        assert pfile_entity.entity_category is EntityCategory.DIAGNOSTIC
+        assert pfile_entity.has_entity_name is True
+        assert pfile_entity.device_id == device.id
+
+        pfile_state = hass.states.get(pfile_entity.entity_id)
+        assert pfile_state is not None
+        assert pfile_state.state == pfile
+        assert pfile_state.attributes["friendly_name"].endswith("P-file Version")
+        assert pfile_state.attributes.get("device_class") is None
+        assert pfile_state.attributes.get("state_class") is None
+        assert pfile_state.attributes.get("unit_of_measurement") is None
+        assert_entity_translation(
+            "sensor",
+            "p_file_version",
+            "P-file Version",
+            None,
+        )
+
+
+@pytest.mark.asyncio
+async def test_f_01_missing_pfile_version_creates_no_placeholder_entity(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """F-01: an omitted optional P-file value never becomes a fake entity."""
+    backend = FakeDevice(
+        scenario_data(),
+        config={
+            "device": {
+                "type": REPORTED_MODEL,
+                "sn": SERIAL,
+                "f_ver": "V1.4.0C_R020.092_M4801_00000036",
+            }
+        },
+    )
+    install_fake_devices(monkeypatch, {HOST: backend})
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        result = await configure_user_flow(hass, host=HOST)
+        await hass.async_block_till_done()
+        assert result["type"] == "create_entry"
+
+        entry = hass.config_entries.async_entry_for_domain_unique_id(DOMAIN, SERIAL)
+        assert entry is not None
+        assert f"{SERIAL}_p_ver" not in entry_entities(hass, entry)
 
 
 @pytest.mark.asyncio

@@ -10,7 +10,7 @@ from homeassistant.helpers.update_coordinator import UpdateFailed
 
 from custom_components.indevolt.coordinator import IndevoltDeviceUpdateCoordinator
 
-BK_96CA128_POINTS = (
+BK_MAIN_POINTS = (
     1501,
     1502,
     1505,
@@ -32,7 +32,7 @@ BK_96CA128_POINTS = (
     21028,
 )
 
-DEFAULT_96CA128_POINTS = (
+DEFAULT_MAIN_POINTS = (
     142,
     606,
     667,
@@ -135,7 +135,7 @@ DEFAULT_96CA128_POINTS = (
 
 
 def expected_batches(points: tuple[int, ...]) -> list[list[int]]:
-    """Copy the unchanged eight-point batching used by commit 96ca128."""
+    """Copy the unchanged eight-point batching used by local MAIN."""
     return [list(points[offset : offset + 8]) for offset in range(0, len(points), 8)]
 
 
@@ -171,14 +171,14 @@ def make_coordinator(
 @pytest.mark.parametrize(
     ("device_model", "expected_points"),
     [
-        ("BK1600/BK1600Ultra", BK_96CA128_POINTS),
-        ("prefix-BK1600-suffix", BK_96CA128_POINTS),
-        ("SolidFlex/PowerFlex2000", DEFAULT_96CA128_POINTS),
-        ("value-without-the-BK-marker", DEFAULT_96CA128_POINTS),
+        ("BK1600/BK1600Ultra", BK_MAIN_POINTS),
+        ("prefix-BK1600-suffix", BK_MAIN_POINTS),
+        ("SolidFlex/PowerFlex2000", DEFAULT_MAIN_POINTS),
+        ("value-without-the-BK-marker", DEFAULT_MAIN_POINTS),
     ],
 )
 @pytest.mark.asyncio
-async def test_coordinator_requests_and_merges_exactly_as_96ca128(
+async def test_coordinator_requests_and_merges_exactly_as_main(
     device_model: str, expected_points: tuple[int, ...]
 ) -> None:
     api = RecordingAPI()
@@ -194,7 +194,7 @@ async def test_coordinator_requests_and_merges_exactly_as_96ca128(
 
 
 @pytest.mark.asyncio
-async def test_coordinator_stops_at_the_same_failing_batch_as_96ca128() -> None:
+async def test_coordinator_stops_at_the_same_failing_batch_as_main() -> None:
     api = RecordingAPI(fail_on_request=2)
     coordinator = make_coordinator({"device_model": "SolidFlex/PowerFlex2000"}, api)
 
@@ -202,7 +202,7 @@ async def test_coordinator_stops_at_the_same_failing_batch_as_96ca128() -> None:
         await coordinator._async_update_data()
 
     assert isinstance(error.value.__cause__, RuntimeError)
-    assert api.batches == expected_batches(DEFAULT_96CA128_POINTS)[:2]
+    assert api.batches == expected_batches(DEFAULT_MAIN_POINTS)[:2]
 
 
 @pytest.mark.parametrize(

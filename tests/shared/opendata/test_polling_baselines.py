@@ -1,4 +1,4 @@
-"""Contracts for the ordered polling baselines copied from commit 96ca128."""
+"""Contracts for the ordered polling baselines copied from local MAIN."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ BK_POLLING_BASELINE = polling.BK_POLLING_BASELINE
 DEFAULT_POLLING_BASELINE = polling.DEFAULT_POLLING_BASELINE
 PollingField = polling.PollingField
 
-BK_96CA128_POINTS = (
+BK_MAIN_POINTS = (
     1501,
     1502,
     1505,
@@ -46,7 +46,7 @@ BK_96CA128_POINTS = (
     21028,
 )
 
-DEFAULT_96CA128_POINTS = (
+DEFAULT_MAIN_POINTS = (
     142,
     606,
     667,
@@ -211,11 +211,11 @@ assert len(DEFAULT_POLLING_BASELINE) == 98
 @pytest.mark.parametrize(
     ("baseline", "expected_points"),
     [
-        (BK_POLLING_BASELINE, BK_96CA128_POINTS),
-        (DEFAULT_POLLING_BASELINE, DEFAULT_96CA128_POINTS),
+        (BK_POLLING_BASELINE, BK_MAIN_POINTS),
+        (DEFAULT_POLLING_BASELINE, DEFAULT_MAIN_POINTS),
     ],
 )
-def test_each_baseline_preserves_the_96ca128_polling_order(
+def test_each_baseline_preserves_the_main_polling_order(
     baseline: tuple[PollingField, ...],
     expected_points: tuple[int, ...],
 ) -> None:
@@ -223,9 +223,9 @@ def test_each_baseline_preserves_the_96ca128_polling_order(
     assert len(set(points(baseline))) == len(baseline)
 
 
-def test_baselines_preserve_the_96ca128_eight_point_batches() -> None:
-    assert batches(points(BK_POLLING_BASELINE)) == batches(BK_96CA128_POINTS)
-    assert batches(points(DEFAULT_POLLING_BASELINE)) == batches(DEFAULT_96CA128_POINTS)
+def test_baselines_preserve_the_main_eight_point_batches() -> None:
+    assert batches(points(BK_POLLING_BASELINE)) == batches(BK_MAIN_POINTS)
+    assert batches(points(DEFAULT_POLLING_BASELINE)) == batches(DEFAULT_MAIN_POINTS)
     assert tuple(map(len, batches(points(BK_POLLING_BASELINE)))) == (8, 8, 3)
     assert tuple(map(len, batches(points(DEFAULT_POLLING_BASELINE)))) == (
         8,

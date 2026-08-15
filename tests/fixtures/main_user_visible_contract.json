@@ -1,0 +1,3954 @@
+{
+  "baseline": {
+    "branch": "main",
+    "commit": "ee30e641e62c4a831df58ff31761e9e89d0426d6",
+    "rule": "Existing user data, entities, automations, states, and controls must remain compatible. Additive and explicitly non-destructive changes are allowed."
+  },
+  "approved_destructive_changes": [],
+  "allowed_non_destructive_changes": {
+    "entity_translation_key": {
+      "reason": "Home Assistant localization metadata may change the translated display name, but it does not change an existing entity's unique ID, entity ID, device assignment, state value, option value, or control request. Existing user-assigned names remain registry data rather than translation output.",
+      "separate_test": "tests/shared/localization/test_shared_translations.py"
+    }
+  },
+  "routes": {
+    "bk": {
+      "complete": {
+        "failed_states": {
+          "{serial}_1501": "unavailable",
+          "{serial}_1502": "unavailable",
+          "{serial}_1505": "unavailable",
+          "{serial}_1664": "unavailable",
+          "{serial}_1665": "unavailable",
+          "{serial}_2101": "unavailable",
+          "{serial}_21028": "unavailable",
+          "{serial}_2107": "unavailable",
+          "{serial}_2108": "unavailable",
+          "{serial}_6000": "unavailable",
+          "{serial}_6001": "unavailable",
+          "{serial}_6002": "unavailable",
+          "{serial}_6004": "unavailable",
+          "{serial}_6005": "unavailable",
+          "{serial}_6006": "unavailable",
+          "{serial}_6007": "unavailable",
+          "{serial}_6105": "unavailable",
+          "{serial}_7101": "unavailable",
+          "{serial}_7120": "unavailable",
+          "{serial}_power_setting": "unavailable",
+          "{serial}_soc_setting": "unavailable",
+          "{serial}_state_setting": "unavailable"
+        },
+        "initial": {
+          "config_entry": {
+            "data": {
+              "device_model": "{model}",
+              "fw_version": "{firmware}",
+              "host": "{host}",
+              "port": 8080,
+              "scan_interval": 30,
+              "sn": "{serial}"
+            },
+            "minor_version": 1,
+            "options": {},
+            "pref_disable_new_entities": false,
+            "pref_disable_polling": false,
+            "source": "user",
+            "state": "loaded",
+            "title": "INDEVOLT {model} ({host})",
+            "unique_id": "{serial}",
+            "version": 1
+          },
+          "devices": {
+            "indevolt:{serial}": {
+              "area_id": null,
+              "configuration_url": null,
+              "disabled_by": null,
+              "entry_type": null,
+              "hw_version": null,
+              "identifiers": [
+                [
+                  "indevolt",
+                  "{serial}"
+                ]
+              ],
+              "manufacturer": "INDEVOLT",
+              "model": "{model}",
+              "model_id": null,
+              "name": "{model} ({serial})",
+              "name_by_user": null,
+              "serial_number": "{serial}",
+              "sw_version": "{firmware}",
+              "via_identifiers": null
+            }
+          },
+          "entities": {
+            "{serial}_1501": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Total DC Output Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_dc_output_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Total DC Output Power",
+              "state": "1501",
+              "translation_key": null
+            },
+            "{serial}_1502": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Daily Production",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_daily_production",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Daily Production",
+              "state": "1502",
+              "translation_key": null
+            },
+            "{serial}_1505": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Cumulative Production",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_cumulative_production",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Cumulative Production",
+              "state": "2.5",
+              "translation_key": null
+            },
+            "{serial}_1664": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) DC Input Power1",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_power1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "DC Input Power1",
+              "state": "1664",
+              "translation_key": null
+            },
+            "{serial}_1665": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) DC Input Power2",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_power2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "DC Input Power2",
+              "state": "1665",
+              "translation_key": null
+            },
+            "{serial}_2101": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Total AC Input Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_ac_input_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Total AC Input Power",
+              "state": "2101",
+              "translation_key": null
+            },
+            "{serial}_21028": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Meter Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_meter_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Meter Power",
+              "state": "21028",
+              "translation_key": null
+            },
+            "{serial}_2107": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Total AC Input Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_ac_input_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Total AC Input Energy",
+              "state": "2107",
+              "translation_key": null
+            },
+            "{serial}_2108": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Total AC Output Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_ac_output_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Total AC Output Power",
+              "state": "2108",
+              "translation_key": null
+            },
+            "{serial}_6000": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Battery Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Battery Power",
+              "state": "6000",
+              "translation_key": null
+            },
+            "{serial}_6001": {
+              "attributes": {
+                "device_class": "enum",
+                "friendly_name": "{model} ({serial}) Battery Charge/Discharge State"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_charge_discharge_state",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "enum",
+              "original_icon": null,
+              "original_name": "Battery Charge/Discharge State",
+              "state": "Charging",
+              "translation_key": null
+            },
+            "{serial}_6002": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "{model} ({serial}) Battery SOC",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_soc",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC",
+              "state": "6002",
+              "translation_key": null
+            },
+            "{serial}_6004": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Daily Charging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_daily_charging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Daily Charging Energy",
+              "state": "6004",
+              "translation_key": null
+            },
+            "{serial}_6005": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Daily Discharging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_daily_discharging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Daily Discharging Energy",
+              "state": "6005",
+              "translation_key": null
+            },
+            "{serial}_6006": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Total Charging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_total_charging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Total Charging Energy",
+              "state": "6006",
+              "translation_key": null
+            },
+            "{serial}_6007": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Total Discharging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_total_discharging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Total Discharging Energy",
+              "state": "6007",
+              "translation_key": null
+            },
+            "{serial}_6105": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "{model} ({serial}) Emergency power supply",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_emergency_power_supply",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Emergency power supply",
+              "state": "55",
+              "translation_key": null
+            },
+            "{serial}_7101": {
+              "attributes": {
+                "device_class": "enum",
+                "friendly_name": "{model} ({serial}) Working mode"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_working_mode",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "enum",
+              "original_icon": null,
+              "original_name": "Working mode",
+              "state": "Self-consumed Prioritized",
+              "translation_key": null
+            },
+            "{serial}_7120": {
+              "attributes": {
+                "device_class": "enum",
+                "friendly_name": "{model} ({serial}) Meter Connection Status"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_meter_connection_status",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "enum",
+              "original_icon": null,
+              "original_name": "Meter Connection Status",
+              "state": "ON",
+              "translation_key": null
+            },
+            "{serial}_power_setting": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Power (Real-time control)",
+                "max": 1200,
+                "min": 0,
+                "mode": "slider",
+                "step": 1,
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "max": 1200,
+                "min": 0,
+                "mode": "slider",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_power_real_time_control",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Power (Real-time control)",
+              "state": "unknown",
+              "translation_key": null
+            },
+            "{serial}_soc_setting": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "{model} ({serial}) Target SOC (Real-time control)",
+                "max": 100,
+                "min": 0,
+                "mode": "auto",
+                "step": 1,
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "max": 100,
+                "min": 0,
+                "mode": "auto",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_target_soc_real_time_control",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Target SOC (Real-time control)",
+              "state": "unknown",
+              "translation_key": null
+            },
+            "{serial}_state_setting": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) State (Real-time control)",
+                "icon": "mdi:cog",
+                "options": [
+                  "Standby",
+                  "Charging",
+                  "Discharging"
+                ]
+              },
+              "capabilities": {
+                "options": [
+                  "Standby",
+                  "Charging",
+                  "Discharging"
+                ]
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "select",
+              "entity_category": "config",
+              "entity_id": "select.{model_slug}_{serial_slug}_state_real_time_control",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": "mdi:cog",
+              "original_name": "State (Real-time control)",
+              "state": "Charging",
+              "translation_key": null
+            }
+          },
+          "polling": {
+            "batches": [
+              [
+                1501,
+                1502,
+                1505,
+                1664,
+                1665,
+                2101,
+                2107,
+                2108
+              ],
+              [
+                6000,
+                6001,
+                6002,
+                6004,
+                6005,
+                6006,
+                6007,
+                6105
+              ],
+              [
+                7101,
+                7120,
+                21028
+              ]
+            ],
+            "interval_seconds": 30.0
+          },
+          "registered_actions": [
+            "set_bk1600_work_mode",
+            "set_solidflex_powerflex_work_mode"
+          ]
+        },
+        "initial_response": {
+          "1098": 12345,
+          "1099": 12345,
+          "11009": 1000,
+          "11010": 800,
+          "11011": 1200,
+          "1109": 12345,
+          "1118": 12345,
+          "1119": 12345,
+          "1120": 12345,
+          "1136": 12345,
+          "1137": 12345,
+          "1138": 12345,
+          "1139": 12345,
+          "1140": 12345,
+          "1141": 12345,
+          "1142": 12345,
+          "1143": 12345,
+          "1501": 1501,
+          "1502": 1502,
+          "1505": 2500,
+          "1664": 1664,
+          "1665": 1665,
+          "2101": 2101,
+          "21028": 21028,
+          "2107": 2107,
+          "2108": 2108,
+          "2618": 1001,
+          "6000": 6000,
+          "6001": 1001,
+          "6002": 6002,
+          "6004": 6004,
+          "6005": 6005,
+          "6006": 6006,
+          "6007": 6007,
+          "606": "1000",
+          "6105": 55,
+          "680": 1,
+          "7101": 1,
+          "7120": 1000,
+          "7171": 1,
+          "9032": "PACK-1",
+          "9051": "PACK-2",
+          "9070": "PACK-3",
+          "9165": "PACK-4",
+          "9218": "PACK-5"
+        },
+        "missing_states": {
+          "{serial}_1501": "unknown",
+          "{serial}_1502": "unknown",
+          "{serial}_1505": "unavailable",
+          "{serial}_1664": "unknown",
+          "{serial}_1665": "unknown",
+          "{serial}_2101": "unknown",
+          "{serial}_21028": "unknown",
+          "{serial}_2107": "unknown",
+          "{serial}_2108": "unknown",
+          "{serial}_6000": "unknown",
+          "{serial}_6001": "unknown",
+          "{serial}_6002": "unknown",
+          "{serial}_6004": "unknown",
+          "{serial}_6005": "unknown",
+          "{serial}_6006": "unknown",
+          "{serial}_6007": "unknown",
+          "{serial}_6105": "unknown",
+          "{serial}_7101": "unknown",
+          "{serial}_7120": "unknown",
+          "{serial}_power_setting": "unknown",
+          "{serial}_soc_setting": "unknown",
+          "{serial}_state_setting": "unavailable"
+        },
+        "updated_response": {
+          "1098": 23456,
+          "1099": 23456,
+          "11009": 1100,
+          "11010": 900,
+          "11011": 1300,
+          "1109": 23456,
+          "1118": 23456,
+          "1119": 23456,
+          "1120": 23456,
+          "1136": 23456,
+          "1137": 23456,
+          "1138": 23456,
+          "1139": 23456,
+          "1140": 23456,
+          "1141": 23456,
+          "1142": 23456,
+          "1143": 23456,
+          "1501": 1501.5,
+          "1502": 1502.5,
+          "1505": 4000,
+          "1664": 1664.5,
+          "1665": 1665.5,
+          "2101": 2101.5,
+          "21028": 21028.5,
+          "2107": 2107.5,
+          "2108": 2108.5,
+          "2618": 1000,
+          "6000": 6000.5,
+          "6001": 1002,
+          "6002": 6002.5,
+          "6004": 6004.5,
+          "6005": 6005.5,
+          "6006": 6006.5,
+          "6007": 6007.5,
+          "606": "1001",
+          "6105": 65,
+          "680": 0,
+          "7101": 5,
+          "7120": 1001,
+          "7171": 0,
+          "9032": "PACK-1",
+          "9051": "PACK-2",
+          "9070": "PACK-3",
+          "9165": "PACK-4",
+          "9218": "PACK-5"
+        },
+        "updated_states": {
+          "{serial}_1501": "1501.5",
+          "{serial}_1502": "1502.5",
+          "{serial}_1505": "4.0",
+          "{serial}_1664": "1664.5",
+          "{serial}_1665": "1665.5",
+          "{serial}_2101": "2101.5",
+          "{serial}_21028": "21028.5",
+          "{serial}_2107": "2107.5",
+          "{serial}_2108": "2108.5",
+          "{serial}_6000": "6000.5",
+          "{serial}_6001": "Discharging",
+          "{serial}_6002": "6002.5",
+          "{serial}_6004": "6004.5",
+          "{serial}_6005": "6005.5",
+          "{serial}_6006": "6006.5",
+          "{serial}_6007": "6007.5",
+          "{serial}_6105": "65",
+          "{serial}_7101": "Charge/Discharge Schedule",
+          "{serial}_7120": "OFF",
+          "{serial}_power_setting": "unknown",
+          "{serial}_soc_setting": "unknown",
+          "{serial}_state_setting": "Discharging"
+        }
+      },
+      "first_refresh": {
+        "empty": {
+          "response": {},
+          "states": {
+            "{serial}_power_setting": "unknown",
+            "{serial}_soc_setting": "unknown",
+            "{serial}_state_setting": null
+          }
+        },
+        "null": {
+          "response": {
+            "1501": null,
+            "1502": null,
+            "1505": null,
+            "1664": null,
+            "1665": null,
+            "2101": null,
+            "21028": null,
+            "2107": null,
+            "2108": null,
+            "6000": null,
+            "6001": null,
+            "6002": null,
+            "6004": null,
+            "6005": null,
+            "6006": null,
+            "6007": null,
+            "6105": null,
+            "7101": null,
+            "7120": null
+          },
+          "states": {
+            "{serial}_power_setting": "unknown",
+            "{serial}_soc_setting": "unknown",
+            "{serial}_state_setting": null
+          }
+        }
+      }
+    },
+    "default": {
+      "complete": {
+        "failed_states": {
+          "{serial}_11016": "unavailable",
+          "{serial}_11034": "unavailable",
+          "{serial}_1109": "unavailable",
+          "{serial}_1118": "unavailable",
+          "{serial}_1119": "unavailable",
+          "{serial}_1120": "unavailable",
+          "{serial}_142": "unavailable",
+          "{serial}_1501": "unavailable",
+          "{serial}_1502": "unavailable",
+          "{serial}_1600": "unavailable",
+          "{serial}_1601": "unavailable",
+          "{serial}_1602": "unavailable",
+          "{serial}_1603": "unavailable",
+          "{serial}_1632": "unavailable",
+          "{serial}_1633": "unavailable",
+          "{serial}_1634": "unavailable",
+          "{serial}_1635": "unavailable",
+          "{serial}_1664": "unavailable",
+          "{serial}_1665": "unavailable",
+          "{serial}_1666": "unavailable",
+          "{serial}_1667": "unavailable",
+          "{serial}_2101": "unavailable",
+          "{serial}_2104": "unavailable",
+          "{serial}_2105": "unavailable",
+          "{serial}_2107": "unavailable",
+          "{serial}_2108": "unavailable",
+          "{serial}_2600": "unavailable",
+          "{serial}_2612": "unavailable",
+          "{serial}_6000": "unavailable",
+          "{serial}_6002": "unavailable",
+          "{serial}_6004": "unavailable",
+          "{serial}_6005": "unavailable",
+          "{serial}_6006": "unavailable",
+          "{serial}_6007": "unavailable",
+          "{serial}_606": "unavailable",
+          "{serial}_667": "unavailable",
+          "{serial}_7120": "unavailable",
+          "{serial}_9000": "unavailable",
+          "{serial}_9004": "unavailable",
+          "{serial}_9008": "unavailable",
+          "{serial}_9009": "unavailable",
+          "{serial}_9011": "unavailable",
+          "{serial}_9012": "unavailable",
+          "{serial}_9013": "unavailable",
+          "{serial}_backup_soc": "unavailable",
+          "{serial}_battery_1_1136": "2.34.56",
+          "{serial}_battery_1_1137": "2.34.56",
+          "{serial}_battery_1_19173": "19173.5",
+          "{serial}_battery_1_9016": "9016.5",
+          "{serial}_battery_1_9020": "9020.5",
+          "{serial}_battery_1_9021": "9021.5",
+          "{serial}_battery_1_9023": "9023.5",
+          "{serial}_battery_1_9030": "9030.5",
+          "{serial}_battery_2_1138": "2.34.56",
+          "{serial}_battery_2_1139": "2.34.56",
+          "{serial}_battery_2_19174": "19174.5",
+          "{serial}_battery_2_9035": "9035.5",
+          "{serial}_battery_2_9039": "9039.5",
+          "{serial}_battery_2_9040": "9040.5",
+          "{serial}_battery_2_9042": "9042.5",
+          "{serial}_battery_2_9049": "9049.5",
+          "{serial}_battery_3_1140": "2.34.56",
+          "{serial}_battery_3_1141": "2.34.56",
+          "{serial}_battery_3_19175": "19175.5",
+          "{serial}_battery_3_9054": "9054.5",
+          "{serial}_battery_3_9058": "9058.5",
+          "{serial}_battery_3_9059": "9059.5",
+          "{serial}_battery_3_9061": "9061.5",
+          "{serial}_battery_3_9068": "9068.5",
+          "{serial}_battery_4_1142": "2.34.56",
+          "{serial}_battery_4_1143": "2.34.56",
+          "{serial}_battery_4_19176": "19176.5",
+          "{serial}_battery_4_9149": "9149.5",
+          "{serial}_battery_4_9153": "9153.5",
+          "{serial}_battery_4_9154": "9154.5",
+          "{serial}_battery_4_9156": "9156.5",
+          "{serial}_battery_4_9163": "9163.5",
+          "{serial}_battery_5_1098": "2.34.56",
+          "{serial}_battery_5_1099": "2.34.56",
+          "{serial}_battery_5_19177": "19177.5",
+          "{serial}_battery_5_9202": "9202.5",
+          "{serial}_battery_5_9206": "9206.5",
+          "{serial}_battery_5_9216": "9216.5",
+          "{serial}_battery_5_9219": "9219.5",
+          "{serial}_battery_5_9222": "9222.5",
+          "{serial}_bypass": "unavailable",
+          "{serial}_feed_in_power_limit": "unavailable",
+          "{serial}_grid": "unavailable",
+          "{serial}_inverter_input_limit": "unavailable",
+          "{serial}_light": "unavailable",
+          "{serial}_load_setting": "unavailable",
+          "{serial}_max_output_power": "unavailable",
+          "{serial}_power_setting": "unavailable",
+          "{serial}_soc_setting": "unavailable",
+          "{serial}_state_setting": "unavailable",
+          "{serial}_work_mode": "unavailable"
+        },
+        "initial": {
+          "config_entry": {
+            "data": {
+              "device_model": "{model}",
+              "fw_version": "{firmware}",
+              "host": "{host}",
+              "port": 8080,
+              "scan_interval": 30,
+              "sn": "{serial}"
+            },
+            "minor_version": 1,
+            "options": {},
+            "pref_disable_new_entities": false,
+            "pref_disable_polling": false,
+            "source": "user",
+            "state": "loaded",
+            "title": "INDEVOLT {model} ({host})",
+            "unique_id": "{serial}",
+            "version": 1
+          },
+          "devices": {
+            "indevolt:battery_1_PACK-1": {
+              "area_id": null,
+              "configuration_url": null,
+              "disabled_by": null,
+              "entry_type": null,
+              "hw_version": null,
+              "identifiers": [
+                [
+                  "indevolt",
+                  "battery_1_PACK-1"
+                ]
+              ],
+              "manufacturer": "INDEVOLT",
+              "model": "Battery Pack",
+              "model_id": null,
+              "name": "SFA/PFA Battery Pack 1 (PACK-1)",
+              "name_by_user": null,
+              "serial_number": "PACK-1",
+              "sw_version": null,
+              "via_identifiers": [
+                [
+                  "indevolt",
+                  "{serial}"
+                ]
+              ]
+            },
+            "indevolt:battery_2_PACK-2": {
+              "area_id": null,
+              "configuration_url": null,
+              "disabled_by": null,
+              "entry_type": null,
+              "hw_version": null,
+              "identifiers": [
+                [
+                  "indevolt",
+                  "battery_2_PACK-2"
+                ]
+              ],
+              "manufacturer": "INDEVOLT",
+              "model": "Battery Pack",
+              "model_id": null,
+              "name": "SFA/PFA Battery Pack 2 (PACK-2)",
+              "name_by_user": null,
+              "serial_number": "PACK-2",
+              "sw_version": null,
+              "via_identifiers": [
+                [
+                  "indevolt",
+                  "{serial}"
+                ]
+              ]
+            },
+            "indevolt:battery_3_PACK-3": {
+              "area_id": null,
+              "configuration_url": null,
+              "disabled_by": null,
+              "entry_type": null,
+              "hw_version": null,
+              "identifiers": [
+                [
+                  "indevolt",
+                  "battery_3_PACK-3"
+                ]
+              ],
+              "manufacturer": "INDEVOLT",
+              "model": "Battery Pack",
+              "model_id": null,
+              "name": "SFA/PFA Battery Pack 3 (PACK-3)",
+              "name_by_user": null,
+              "serial_number": "PACK-3",
+              "sw_version": null,
+              "via_identifiers": [
+                [
+                  "indevolt",
+                  "{serial}"
+                ]
+              ]
+            },
+            "indevolt:battery_4_PACK-4": {
+              "area_id": null,
+              "configuration_url": null,
+              "disabled_by": null,
+              "entry_type": null,
+              "hw_version": null,
+              "identifiers": [
+                [
+                  "indevolt",
+                  "battery_4_PACK-4"
+                ]
+              ],
+              "manufacturer": "INDEVOLT",
+              "model": "Battery Pack",
+              "model_id": null,
+              "name": "SFA/PFA Battery Pack 4 (PACK-4)",
+              "name_by_user": null,
+              "serial_number": "PACK-4",
+              "sw_version": null,
+              "via_identifiers": [
+                [
+                  "indevolt",
+                  "{serial}"
+                ]
+              ]
+            },
+            "indevolt:battery_5_PACK-5": {
+              "area_id": null,
+              "configuration_url": null,
+              "disabled_by": null,
+              "entry_type": null,
+              "hw_version": null,
+              "identifiers": [
+                [
+                  "indevolt",
+                  "battery_5_PACK-5"
+                ]
+              ],
+              "manufacturer": "INDEVOLT",
+              "model": "Battery Pack",
+              "model_id": null,
+              "name": "SFA/PFA Battery Pack 5 (PACK-5)",
+              "name_by_user": null,
+              "serial_number": "PACK-5",
+              "sw_version": null,
+              "via_identifiers": [
+                [
+                  "indevolt",
+                  "{serial}"
+                ]
+              ]
+            },
+            "indevolt:{serial}": {
+              "area_id": null,
+              "configuration_url": null,
+              "disabled_by": null,
+              "entry_type": null,
+              "hw_version": null,
+              "identifiers": [
+                [
+                  "indevolt",
+                  "{serial}"
+                ]
+              ],
+              "manufacturer": "INDEVOLT",
+              "model": "{model}",
+              "model_id": null,
+              "name": "{model} ({serial})",
+              "name_by_user": null,
+              "serial_number": "{serial}",
+              "sw_version": "{firmware}",
+              "via_identifiers": null
+            }
+          },
+          "entities": {
+            "{serial}_11016": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Meter Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_meter_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Meter Power",
+              "state": "11016",
+              "translation_key": null
+            },
+            "{serial}_11034": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Bypass Input Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "Wh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_bypass_input_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Bypass Input Energy",
+              "state": "11034",
+              "translation_key": null
+            },
+            "{serial}_1109": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) Firmware PG2000Series BMS-MB"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_firmware_pg2000series_bms_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware PG2000Series BMS-MB",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_1118": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) Firmware PG2000Series EMS"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_firmware_pg2000series_ems",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware PG2000Series EMS",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_1119": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) Firmware PG2000Series PCS"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_firmware_pg2000series_pcs",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware PG2000Series PCS",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_1120": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) Firmware PG2000Series DCDC"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_firmware_pg2000series_dcdc",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware PG2000Series DCDC",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_142": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Rated Capacity",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_rated_capacity",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Rated Capacity",
+              "state": "142",
+              "translation_key": null
+            },
+            "{serial}_1501": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Total DC Output Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_dc_output_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Total DC Output Power",
+              "state": "1501",
+              "translation_key": null
+            },
+            "{serial}_1502": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Daily Production",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_daily_production",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Daily Production",
+              "state": "1502",
+              "translation_key": null
+            },
+            "{serial}_1600": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) DC Input Voltage 1",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_voltage_1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "DC Input Voltage 1",
+              "state": "1600",
+              "translation_key": null
+            },
+            "{serial}_1601": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) DC Input Voltage 2",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_voltage_2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "DC Input Voltage 2",
+              "state": "1601",
+              "translation_key": null
+            },
+            "{serial}_1602": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) DC Input Voltage 3",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_voltage_3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "DC Input Voltage 3",
+              "state": "1602",
+              "translation_key": null
+            },
+            "{serial}_1603": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) DC Input Voltage 4",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_voltage_4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "DC Input Voltage 4",
+              "state": "1603",
+              "translation_key": null
+            },
+            "{serial}_1632": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "{model} ({serial}) DC Input Current 1",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_current_1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "DC Input Current 1",
+              "state": "1632",
+              "translation_key": null
+            },
+            "{serial}_1633": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "{model} ({serial}) DC Input Current 2",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_current_2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "DC Input Current 2",
+              "state": "1633",
+              "translation_key": null
+            },
+            "{serial}_1634": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "{model} ({serial}) DC Input Current 3",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_current_3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "DC Input Current 3",
+              "state": "1634",
+              "translation_key": null
+            },
+            "{serial}_1635": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "{model} ({serial}) DC Input Current 4",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_current_4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "DC Input Current 4",
+              "state": "1635",
+              "translation_key": null
+            },
+            "{serial}_1664": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) DC Input Power 1",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_power_1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "DC Input Power 1",
+              "state": "1664",
+              "translation_key": null
+            },
+            "{serial}_1665": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) DC Input Power 2",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_power_2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "DC Input Power 2",
+              "state": "1665",
+              "translation_key": null
+            },
+            "{serial}_1666": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) DC Input Power 3",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_power_3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "DC Input Power 3",
+              "state": "1666",
+              "translation_key": null
+            },
+            "{serial}_1667": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) DC Input Power 4",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_dc_input_power_4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "DC Input Power 4",
+              "state": "1667",
+              "translation_key": null
+            },
+            "{serial}_2101": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Total AC Input Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_ac_input_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Total AC Input Power",
+              "state": "2101",
+              "translation_key": null
+            },
+            "{serial}_2104": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Total AC Output Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_ac_output_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Total AC Output Energy",
+              "state": "2104",
+              "translation_key": null
+            },
+            "{serial}_2105": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Off-grid Output Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_off_grid_output_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Off-grid Output Energy",
+              "state": "2105",
+              "translation_key": null
+            },
+            "{serial}_2107": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Total AC Input Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_ac_input_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Total AC Input Energy",
+              "state": "2107",
+              "translation_key": null
+            },
+            "{serial}_2108": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Total AC Output Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_total_ac_output_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Total AC Output Power",
+              "state": "2108",
+              "translation_key": null
+            },
+            "{serial}_2600": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) Grid Voltage",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_grid_voltage",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Grid Voltage",
+              "state": "2600",
+              "translation_key": null
+            },
+            "{serial}_2612": {
+              "attributes": {
+                "device_class": "frequency",
+                "friendly_name": "{model} ({serial}) Grid Frequency",
+                "state_class": "measurement",
+                "unit_of_measurement": "Hz"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_grid_frequency",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "frequency",
+              "original_icon": null,
+              "original_name": "Grid Frequency",
+              "state": "2612",
+              "translation_key": null
+            },
+            "{serial}_6000": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Battery Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Battery Power",
+              "state": "6000",
+              "translation_key": null
+            },
+            "{serial}_6002": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "{model} ({serial}) Battery SOC Total",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_soc_total",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC Total",
+              "state": "6002",
+              "translation_key": null
+            },
+            "{serial}_6004": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Daily Charging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_daily_charging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Daily Charging Energy",
+              "state": "6004",
+              "translation_key": null
+            },
+            "{serial}_6005": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Daily Discharging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_daily_discharging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Daily Discharging Energy",
+              "state": "6005",
+              "translation_key": null
+            },
+            "{serial}_6006": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Total Charging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_total_charging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Total Charging Energy",
+              "state": "6006",
+              "translation_key": null
+            },
+            "{serial}_6007": {
+              "attributes": {
+                "device_class": "energy",
+                "friendly_name": "{model} ({serial}) Battery Total Discharging Energy",
+                "state_class": "total_increasing",
+                "unit_of_measurement": "kWh"
+              },
+              "capabilities": {
+                "state_class": "total_increasing"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_total_discharging_energy",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "energy",
+              "original_icon": null,
+              "original_name": "Battery Total Discharging Energy",
+              "state": "6007",
+              "translation_key": null
+            },
+            "{serial}_606": {
+              "attributes": {
+                "device_class": "enum",
+                "friendly_name": "{model} ({serial}) Master-Slave Identification"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_master_slave_identification",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "enum",
+              "original_icon": null,
+              "original_name": "Master-Slave Identification",
+              "state": "Master",
+              "translation_key": null
+            },
+            "{serial}_667": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Bypass Power",
+                "state_class": "measurement",
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_bypass_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Bypass Power",
+              "state": "667",
+              "translation_key": null
+            },
+            "{serial}_7120": {
+              "attributes": {
+                "device_class": "enum",
+                "friendly_name": "{model} ({serial}) Meter Connection Status"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_meter_connection_status",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "enum",
+              "original_icon": null,
+              "original_name": "Meter Connection Status",
+              "state": "ON",
+              "translation_key": null
+            },
+            "{serial}_9000": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "{model} ({serial}) Battery SOC-MB",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_soc_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC-MB",
+              "state": "9000",
+              "translation_key": null
+            },
+            "{serial}_9004": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) Battery V-MB",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_v_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery V-MB",
+              "state": "9004",
+              "translation_key": null
+            },
+            "{serial}_9008": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) Battery SN-MB"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_sn_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Battery SN-MB",
+              "state": "9008",
+              "translation_key": null
+            },
+            "{serial}_9009": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) Battery Cell1 V-MB",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_cell1_v_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell1 V-MB",
+              "state": "9009",
+              "translation_key": null
+            },
+            "{serial}_9011": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "{model} ({serial}) Battery Cell2 V-MB",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_cell2_v_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell2 V-MB",
+              "state": "9011",
+              "translation_key": null
+            },
+            "{serial}_9012": {
+              "attributes": {
+                "device_class": "temperature",
+                "friendly_name": "{model} ({serial}) Battery Temp-MB",
+                "state_class": "measurement",
+                "unit_of_measurement": "°C"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_temp_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "temperature",
+              "original_icon": null,
+              "original_name": "Battery Temp-MB",
+              "state": "9012",
+              "translation_key": null
+            },
+            "{serial}_9013": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "{model} ({serial}) Battery I-MB",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.{model_slug}_{serial_slug}_battery_i_mb",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "Battery I-MB",
+              "state": "9013",
+              "translation_key": null
+            },
+            "{serial}_backup_soc": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "{model} ({serial}) Backup SOC",
+                "max": 100,
+                "min": 5,
+                "mode": "auto",
+                "step": 1,
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "max": 100,
+                "min": 5,
+                "mode": "auto",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_backup_soc",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Backup SOC",
+              "state": "55",
+              "translation_key": null
+            },
+            "{serial}_battery_1_1136": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Firmware SFA/PFA DCDC1"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_firmware_sfa_pfa_dcdc1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA DCDC1",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_1_1137": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Firmware SFA/PFA BMS1"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_firmware_sfa_pfa_bms1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA BMS1",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_1_19173": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Battery I-Pack1",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_battery_i_pack1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "Battery I-Pack1",
+              "state": "19173",
+              "translation_key": null
+            },
+            "{serial}_battery_1_9016": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Battery SOC-Pack1",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_battery_soc_pack1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC-Pack1",
+              "state": "9016",
+              "translation_key": null
+            },
+            "{serial}_battery_1_9020": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Battery V-Pack1",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_battery_v_pack1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery V-Pack1",
+              "state": "9020",
+              "translation_key": null
+            },
+            "{serial}_battery_1_9021": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Battery Cell1 V-Pack1",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_battery_cell1_v_pack1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell1 V-Pack1",
+              "state": "9021",
+              "translation_key": null
+            },
+            "{serial}_battery_1_9023": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Battery Cell2 V-Pack1",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_battery_cell2_v_pack1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell2 V-Pack1",
+              "state": "9023",
+              "translation_key": null
+            },
+            "{serial}_battery_1_9030": {
+              "attributes": {
+                "device_class": "temperature",
+                "friendly_name": "SFA/PFA Battery Pack 1 (PACK-1) Battery Temp-Pack1",
+                "state_class": "measurement",
+                "unit_of_measurement": "°C"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_1_PACK-1",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_1_pack_1_battery_temp_pack1",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "temperature",
+              "original_icon": null,
+              "original_name": "Battery Temp-Pack1",
+              "state": "9030",
+              "translation_key": null
+            },
+            "{serial}_battery_2_1138": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Firmware SFA/PFA DCDC2"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_firmware_sfa_pfa_dcdc2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA DCDC2",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_2_1139": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Firmware SFA/PFA BMS2"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_firmware_sfa_pfa_bms2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA BMS2",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_2_19174": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Battery I-Pack2",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_battery_i_pack2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "Battery I-Pack2",
+              "state": "19174",
+              "translation_key": null
+            },
+            "{serial}_battery_2_9035": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Battery SOC-Pack2",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_battery_soc_pack2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC-Pack2",
+              "state": "9035",
+              "translation_key": null
+            },
+            "{serial}_battery_2_9039": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Battery V-Pack2",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_battery_v_pack2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery V-Pack2",
+              "state": "9039",
+              "translation_key": null
+            },
+            "{serial}_battery_2_9040": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Battery Cell1 V-Pack2",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_battery_cell1_v_pack2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell1 V-Pack2",
+              "state": "9040",
+              "translation_key": null
+            },
+            "{serial}_battery_2_9042": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Battery Cell2 V-Pack2",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_battery_cell2_v_pack2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell2 V-Pack2",
+              "state": "9042",
+              "translation_key": null
+            },
+            "{serial}_battery_2_9049": {
+              "attributes": {
+                "device_class": "temperature",
+                "friendly_name": "SFA/PFA Battery Pack 2 (PACK-2) Battery Temp-Pack2",
+                "state_class": "measurement",
+                "unit_of_measurement": "°C"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_2_PACK-2",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_2_pack_2_battery_temp_pack2",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "temperature",
+              "original_icon": null,
+              "original_name": "Battery Temp-Pack2",
+              "state": "9049",
+              "translation_key": null
+            },
+            "{serial}_battery_3_1140": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Firmware SFA/PFA DCDC3"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_firmware_sfa_pfa_dcdc3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA DCDC3",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_3_1141": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Firmware SFA/PFA BMS3"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_firmware_sfa_pfa_bms3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA BMS3",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_3_19175": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Battery I-Pack3",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_battery_i_pack3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "Battery I-Pack3",
+              "state": "19175",
+              "translation_key": null
+            },
+            "{serial}_battery_3_9054": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Battery SOC-Pack3",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_battery_soc_pack3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC-Pack3",
+              "state": "9054",
+              "translation_key": null
+            },
+            "{serial}_battery_3_9058": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Battery V-Pack3",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_battery_v_pack3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery V-Pack3",
+              "state": "9058",
+              "translation_key": null
+            },
+            "{serial}_battery_3_9059": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Battery Cell1 V-Pack3",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_battery_cell1_v_pack3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell1 V-Pack3",
+              "state": "9059",
+              "translation_key": null
+            },
+            "{serial}_battery_3_9061": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Battery Cell2 V-Pack3",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_battery_cell2_v_pack3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell2 V-Pack3",
+              "state": "9061",
+              "translation_key": null
+            },
+            "{serial}_battery_3_9068": {
+              "attributes": {
+                "device_class": "temperature",
+                "friendly_name": "SFA/PFA Battery Pack 3 (PACK-3) Battery Temp-Pack3",
+                "state_class": "measurement",
+                "unit_of_measurement": "°C"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_3_PACK-3",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_3_pack_3_battery_temp_pack3",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "temperature",
+              "original_icon": null,
+              "original_name": "Battery Temp-Pack3",
+              "state": "9068",
+              "translation_key": null
+            },
+            "{serial}_battery_4_1142": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Firmware SFA/PFA DCDC4"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_firmware_sfa_pfa_dcdc4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA DCDC4",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_4_1143": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Firmware SFA/PFA BMS4"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_firmware_sfa_pfa_bms4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA BMS4",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_4_19176": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Battery I-Pack4",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_battery_i_pack4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "Battery I-Pack4",
+              "state": "19176",
+              "translation_key": null
+            },
+            "{serial}_battery_4_9149": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Battery SOC-Pack4",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_battery_soc_pack4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC-Pack4",
+              "state": "9149",
+              "translation_key": null
+            },
+            "{serial}_battery_4_9153": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Battery V-Pack4",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_battery_v_pack4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery V-Pack4",
+              "state": "9153",
+              "translation_key": null
+            },
+            "{serial}_battery_4_9154": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Battery Cell1 V-Pack4",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_battery_cell1_v_pack4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell1 V-Pack4",
+              "state": "9154",
+              "translation_key": null
+            },
+            "{serial}_battery_4_9156": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Battery Cell2 V-Pack4",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_battery_cell2_v_pack4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell2 V-Pack4",
+              "state": "9156",
+              "translation_key": null
+            },
+            "{serial}_battery_4_9163": {
+              "attributes": {
+                "device_class": "temperature",
+                "friendly_name": "SFA/PFA Battery Pack 4 (PACK-4) Battery Temp-Pack4",
+                "state_class": "measurement",
+                "unit_of_measurement": "°C"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_4_PACK-4",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_4_pack_4_battery_temp_pack4",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "temperature",
+              "original_icon": null,
+              "original_name": "Battery Temp-Pack4",
+              "state": "9163",
+              "translation_key": null
+            },
+            "{serial}_battery_5_1098": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Firmware SFA/PFA DCDC5"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_firmware_sfa_pfa_dcdc5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA DCDC5",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_5_1099": {
+              "attributes": {
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Firmware SFA/PFA BMS5"
+              },
+              "capabilities": null,
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": "diagnostic",
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_firmware_sfa_pfa_bms5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": null,
+              "original_name": "Firmware SFA/PFA BMS5",
+              "state": "1.23.45",
+              "translation_key": null
+            },
+            "{serial}_battery_5_19177": {
+              "attributes": {
+                "device_class": "current",
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Battery I-Pack5",
+                "state_class": "measurement",
+                "unit_of_measurement": "A"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_battery_i_pack5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "current",
+              "original_icon": null,
+              "original_name": "Battery I-Pack5",
+              "state": "19177",
+              "translation_key": null
+            },
+            "{serial}_battery_5_9202": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Battery SOC-Pack5",
+                "state_class": "measurement",
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_battery_soc_pack5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Battery SOC-Pack5",
+              "state": "9202",
+              "translation_key": null
+            },
+            "{serial}_battery_5_9206": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Battery V-Pack5",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_battery_v_pack5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery V-Pack5",
+              "state": "9206",
+              "translation_key": null
+            },
+            "{serial}_battery_5_9216": {
+              "attributes": {
+                "device_class": "temperature",
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Battery Temp-Pack5",
+                "state_class": "measurement",
+                "unit_of_measurement": "°C"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_battery_temp_pack5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "temperature",
+              "original_icon": null,
+              "original_name": "Battery Temp-Pack5",
+              "state": "9216",
+              "translation_key": null
+            },
+            "{serial}_battery_5_9219": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Battery Cell1 V-Pack5",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_battery_cell1_v_pack5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell1 V-Pack5",
+              "state": "9219",
+              "translation_key": null
+            },
+            "{serial}_battery_5_9222": {
+              "attributes": {
+                "device_class": "voltage",
+                "friendly_name": "SFA/PFA Battery Pack 5 (PACK-5) Battery Cell2 V-Pack5",
+                "state_class": "measurement",
+                "unit_of_measurement": "V"
+              },
+              "capabilities": {
+                "state_class": "measurement"
+              },
+              "device": "indevolt:battery_5_PACK-5",
+              "disabled_by": null,
+              "domain": "sensor",
+              "entity_category": null,
+              "entity_id": "sensor.sfa_pfa_battery_pack_5_pack_5_battery_cell2_v_pack5",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "voltage",
+              "original_icon": null,
+              "original_name": "Battery Cell2 V-Pack5",
+              "state": "9222",
+              "translation_key": null
+            },
+            "{serial}_bypass": {
+              "attributes": {
+                "device_class": "outlet",
+                "friendly_name": "{model} ({serial}) Bypass"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "switch",
+              "entity_category": null,
+              "entity_id": "switch.{model_slug}_{serial_slug}_bypass",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "outlet",
+              "original_icon": null,
+              "original_name": "Bypass",
+              "state": "on",
+              "translation_key": null
+            },
+            "{serial}_feed_in_power_limit": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Feed-in Power Limit",
+                "max": 2400,
+                "min": 50,
+                "mode": "auto",
+                "step": 1,
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "max": 2400,
+                "min": 50,
+                "mode": "auto",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_feed_in_power_limit",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Feed-in Power Limit",
+              "state": "800",
+              "translation_key": null
+            },
+            "{serial}_grid": {
+              "attributes": {
+                "device_class": "outlet",
+                "friendly_name": "{model} ({serial}) Grid Charging"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "switch",
+              "entity_category": null,
+              "entity_id": "switch.{model_slug}_{serial_slug}_grid_charging",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "outlet",
+              "original_icon": null,
+              "original_name": "Grid Charging",
+              "state": "on",
+              "translation_key": null
+            },
+            "{serial}_inverter_input_limit": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Inverter Input Limit",
+                "max": 2400,
+                "min": 50,
+                "mode": "auto",
+                "step": 1,
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "max": 2400,
+                "min": 50,
+                "mode": "auto",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_inverter_input_limit",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Inverter Input Limit",
+              "state": "1000",
+              "translation_key": null
+            },
+            "{serial}_light": {
+              "attributes": {
+                "device_class": "switch",
+                "friendly_name": "{model} ({serial}) Light",
+                "icon": "mdi:led-on"
+              },
+              "capabilities": null,
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "switch",
+              "entity_category": null,
+              "entity_id": "switch.{model_slug}_{serial_slug}_light",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "switch",
+              "original_icon": "mdi:led-on",
+              "original_name": "Light",
+              "state": "on",
+              "translation_key": null
+            },
+            "{serial}_load_setting": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) Load Setting",
+                "icon": "mdi:cog",
+                "options": [
+                  "Smart Plug",
+                  "Meter",
+                  "Key Load",
+                  "Custom"
+                ]
+              },
+              "capabilities": {
+                "options": [
+                  "Smart Plug",
+                  "Meter",
+                  "Key Load",
+                  "Custom"
+                ]
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "select",
+              "entity_category": "config",
+              "entity_id": "select.{model_slug}_{serial_slug}_load_setting",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": "mdi:cog",
+              "original_name": "Load Setting",
+              "state": "unknown",
+              "translation_key": null
+            },
+            "{serial}_max_output_power": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Max AC Output Power",
+                "max": 2400,
+                "min": 50,
+                "mode": "auto",
+                "step": 1,
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "max": 2400,
+                "min": 50,
+                "mode": "auto",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_max_ac_output_power",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Max AC Output Power",
+              "state": "1200",
+              "translation_key": null
+            },
+            "{serial}_power_setting": {
+              "attributes": {
+                "device_class": "power",
+                "friendly_name": "{model} ({serial}) Power (Real-time control)",
+                "max": 10800,
+                "min": 50,
+                "mode": "auto",
+                "step": 1,
+                "unit_of_measurement": "W"
+              },
+              "capabilities": {
+                "max": 10800,
+                "min": 50,
+                "mode": "auto",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_power_real_time_control",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "power",
+              "original_icon": null,
+              "original_name": "Power (Real-time control)",
+              "state": "unknown",
+              "translation_key": null
+            },
+            "{serial}_soc_setting": {
+              "attributes": {
+                "device_class": "battery",
+                "friendly_name": "{model} ({serial}) Target SOC (Real-time control)",
+                "max": 100,
+                "min": 5,
+                "mode": "auto",
+                "step": 1,
+                "unit_of_measurement": "%"
+              },
+              "capabilities": {
+                "max": 100,
+                "min": 5,
+                "mode": "auto",
+                "step": 1
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "number",
+              "entity_category": "config",
+              "entity_id": "number.{model_slug}_{serial_slug}_target_soc_real_time_control",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": "battery",
+              "original_icon": null,
+              "original_name": "Target SOC (Real-time control)",
+              "state": "unknown",
+              "translation_key": null
+            },
+            "{serial}_state_setting": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) State (Real-time control)",
+                "icon": "mdi:cog",
+                "options": [
+                  "Standby",
+                  "Charging",
+                  "Discharging"
+                ]
+              },
+              "capabilities": {
+                "options": [
+                  "Standby",
+                  "Charging",
+                  "Discharging"
+                ]
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "select",
+              "entity_category": "config",
+              "entity_id": "select.{model_slug}_{serial_slug}_state_real_time_control",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": "mdi:cog",
+              "original_name": "State (Real-time control)",
+              "state": "Charging",
+              "translation_key": null
+            },
+            "{serial}_work_mode": {
+              "attributes": {
+                "friendly_name": "{model} ({serial}) Work Mode",
+                "icon": "mdi:cog",
+                "options": [
+                  "Self-Consumed Prioritized",
+                  "Real-Time Control",
+                  "Charge/Discharge Schedule"
+                ]
+              },
+              "capabilities": {
+                "options": [
+                  "Self-Consumed Prioritized",
+                  "Real-Time Control",
+                  "Charge/Discharge Schedule"
+                ]
+              },
+              "device": "indevolt:{serial}",
+              "disabled_by": null,
+              "domain": "select",
+              "entity_category": "config",
+              "entity_id": "select.{model_slug}_{serial_slug}_work_mode",
+              "has_entity_name": true,
+              "hidden_by": null,
+              "original_device_class": null,
+              "original_icon": "mdi:cog",
+              "original_name": "Work Mode",
+              "state": "Self-Consumed Prioritized",
+              "translation_key": null
+            }
+          },
+          "polling": {
+            "batches": [
+              [
+                142,
+                606,
+                667,
+                680,
+                1118,
+                1109,
+                1119,
+                1120
+              ],
+              [
+                1136,
+                1137,
+                1138,
+                1139,
+                1140,
+                1141,
+                1142,
+                1143
+              ],
+              [
+                1098,
+                1099,
+                1501,
+                1502,
+                1600,
+                1601,
+                1602,
+                1603
+              ],
+              [
+                1632,
+                1633,
+                1634,
+                1635,
+                1664,
+                1665,
+                1666,
+                1667
+              ],
+              [
+                2101,
+                2104,
+                2105,
+                2107,
+                2108,
+                2600,
+                2612,
+                2618
+              ],
+              [
+                6000,
+                6001,
+                6002,
+                6004,
+                6005,
+                6006,
+                6007,
+                6105
+              ],
+              [
+                7101,
+                7120,
+                7171,
+                9000,
+                9004,
+                9008,
+                9009,
+                9011
+              ],
+              [
+                9012,
+                9013,
+                9016,
+                9020,
+                9021,
+                9023,
+                9030,
+                9032
+              ],
+              [
+                9035,
+                9039,
+                9040,
+                9042,
+                9049,
+                9051,
+                9054,
+                9058
+              ],
+              [
+                9059,
+                9061,
+                9068,
+                9070,
+                9149,
+                9153,
+                9154,
+                9156
+              ],
+              [
+                9163,
+                9165,
+                9202,
+                9206,
+                9216,
+                9218,
+                9219,
+                9222
+              ],
+              [
+                11009,
+                11010,
+                11011,
+                11016,
+                11034,
+                19173,
+                19174,
+                19175
+              ],
+              [
+                19176,
+                19177
+              ]
+            ],
+            "interval_seconds": 30.0
+          },
+          "registered_actions": [
+            "set_bk1600_work_mode",
+            "set_solidflex_powerflex_work_mode"
+          ]
+        },
+        "initial_response": {
+          "1098": 12345,
+          "1099": 12345,
+          "11009": 1000,
+          "11010": 800,
+          "11011": 1200,
+          "11016": 11016,
+          "11034": 11034,
+          "1109": 12345,
+          "1118": 12345,
+          "1119": 12345,
+          "1120": 12345,
+          "1136": 12345,
+          "1137": 12345,
+          "1138": 12345,
+          "1139": 12345,
+          "1140": 12345,
+          "1141": 12345,
+          "1142": 12345,
+          "1143": 12345,
+          "142": 142,
+          "1501": 1501,
+          "1502": 1502,
+          "1505": 2500,
+          "1600": 1600,
+          "1601": 1601,
+          "1602": 1602,
+          "1603": 1603,
+          "1632": 1632,
+          "1633": 1633,
+          "1634": 1634,
+          "1635": 1635,
+          "1664": 1664,
+          "1665": 1665,
+          "1666": 1666,
+          "1667": 1667,
+          "19173": 19173,
+          "19174": 19174,
+          "19175": 19175,
+          "19176": 19176,
+          "19177": 19177,
+          "2101": 2101,
+          "2104": 2104,
+          "2105": 2105,
+          "2107": 2107,
+          "2108": 2108,
+          "2600": 2600,
+          "2612": 2612,
+          "2618": 1001,
+          "6000": 6000,
+          "6001": 1001,
+          "6002": 6002,
+          "6004": 6004,
+          "6005": 6005,
+          "6006": 6006,
+          "6007": 6007,
+          "606": "1000",
+          "6105": 55,
+          "667": 667,
+          "680": 1,
+          "7101": 1,
+          "7120": 1000,
+          "7171": 1,
+          "9000": 9000,
+          "9004": 9004,
+          "9008": 9008,
+          "9009": 9009,
+          "9011": 9011,
+          "9012": 9012,
+          "9013": 9013,
+          "9016": 9016,
+          "9020": 9020,
+          "9021": 9021,
+          "9023": 9023,
+          "9030": 9030,
+          "9032": "PACK-1",
+          "9035": 9035,
+          "9039": 9039,
+          "9040": 9040,
+          "9042": 9042,
+          "9049": 9049,
+          "9051": "PACK-2",
+          "9054": 9054,
+          "9058": 9058,
+          "9059": 9059,
+          "9061": 9061,
+          "9068": 9068,
+          "9070": "PACK-3",
+          "9149": 9149,
+          "9153": 9153,
+          "9154": 9154,
+          "9156": 9156,
+          "9163": 9163,
+          "9165": "PACK-4",
+          "9202": 9202,
+          "9206": 9206,
+          "9216": 9216,
+          "9218": "PACK-5",
+          "9219": 9219,
+          "9222": 9222
+        },
+        "missing_states": {
+          "{serial}_11016": "unknown",
+          "{serial}_11034": "unknown",
+          "{serial}_1109": "None",
+          "{serial}_1118": "None",
+          "{serial}_1119": "None",
+          "{serial}_1120": "None",
+          "{serial}_142": "unknown",
+          "{serial}_1501": "unknown",
+          "{serial}_1502": "unknown",
+          "{serial}_1600": "unknown",
+          "{serial}_1601": "unknown",
+          "{serial}_1602": "unknown",
+          "{serial}_1603": "unknown",
+          "{serial}_1632": "unknown",
+          "{serial}_1633": "unknown",
+          "{serial}_1634": "unknown",
+          "{serial}_1635": "unknown",
+          "{serial}_1664": "unknown",
+          "{serial}_1665": "unknown",
+          "{serial}_1666": "unknown",
+          "{serial}_1667": "unknown",
+          "{serial}_2101": "unknown",
+          "{serial}_2104": "unknown",
+          "{serial}_2105": "unknown",
+          "{serial}_2107": "unknown",
+          "{serial}_2108": "unknown",
+          "{serial}_2600": "unknown",
+          "{serial}_2612": "unknown",
+          "{serial}_6000": "unknown",
+          "{serial}_6002": "unknown",
+          "{serial}_6004": "unknown",
+          "{serial}_6005": "unknown",
+          "{serial}_6006": "unknown",
+          "{serial}_6007": "unknown",
+          "{serial}_606": "unknown",
+          "{serial}_667": "unknown",
+          "{serial}_7120": "unknown",
+          "{serial}_9000": "unknown",
+          "{serial}_9004": "unknown",
+          "{serial}_9008": "unknown",
+          "{serial}_9009": "unknown",
+          "{serial}_9011": "unknown",
+          "{serial}_9012": "unknown",
+          "{serial}_9013": "unknown",
+          "{serial}_backup_soc": "unknown",
+          "{serial}_battery_1_1136": "unavailable",
+          "{serial}_battery_1_1137": "unavailable",
+          "{serial}_battery_1_19173": "unavailable",
+          "{serial}_battery_1_9016": "unavailable",
+          "{serial}_battery_1_9020": "unavailable",
+          "{serial}_battery_1_9021": "unavailable",
+          "{serial}_battery_1_9023": "unavailable",
+          "{serial}_battery_1_9030": "unavailable",
+          "{serial}_battery_2_1138": "unavailable",
+          "{serial}_battery_2_1139": "unavailable",
+          "{serial}_battery_2_19174": "unavailable",
+          "{serial}_battery_2_9035": "unavailable",
+          "{serial}_battery_2_9039": "unavailable",
+          "{serial}_battery_2_9040": "unavailable",
+          "{serial}_battery_2_9042": "unavailable",
+          "{serial}_battery_2_9049": "unavailable",
+          "{serial}_battery_3_1140": "unavailable",
+          "{serial}_battery_3_1141": "unavailable",
+          "{serial}_battery_3_19175": "unavailable",
+          "{serial}_battery_3_9054": "unavailable",
+          "{serial}_battery_3_9058": "unavailable",
+          "{serial}_battery_3_9059": "unavailable",
+          "{serial}_battery_3_9061": "unavailable",
+          "{serial}_battery_3_9068": "unavailable",
+          "{serial}_battery_4_1142": "unavailable",
+          "{serial}_battery_4_1143": "unavailable",
+          "{serial}_battery_4_19176": "unavailable",
+          "{serial}_battery_4_9149": "unavailable",
+          "{serial}_battery_4_9153": "unavailable",
+          "{serial}_battery_4_9154": "unavailable",
+          "{serial}_battery_4_9156": "unavailable",
+          "{serial}_battery_4_9163": "unavailable",
+          "{serial}_battery_5_1098": "unavailable",
+          "{serial}_battery_5_1099": "unavailable",
+          "{serial}_battery_5_19177": "unavailable",
+          "{serial}_battery_5_9202": "unavailable",
+          "{serial}_battery_5_9206": "unavailable",
+          "{serial}_battery_5_9216": "unavailable",
+          "{serial}_battery_5_9219": "unavailable",
+          "{serial}_battery_5_9222": "unavailable",
+          "{serial}_bypass": "unavailable",
+          "{serial}_feed_in_power_limit": "unknown",
+          "{serial}_grid": "unavailable",
+          "{serial}_inverter_input_limit": "unknown",
+          "{serial}_light": "unavailable",
+          "{serial}_load_setting": "unknown",
+          "{serial}_max_output_power": "unknown",
+          "{serial}_power_setting": "unknown",
+          "{serial}_soc_setting": "unknown",
+          "{serial}_state_setting": "unknown",
+          "{serial}_work_mode": "unknown"
+        },
+        "updated_response": {
+          "1098": 23456,
+          "1099": 23456,
+          "11009": 1100,
+          "11010": 900,
+          "11011": 1300,
+          "11016": 11016.5,
+          "11034": 11034.5,
+          "1109": 23456,
+          "1118": 23456,
+          "1119": 23456,
+          "1120": 23456,
+          "1136": 23456,
+          "1137": 23456,
+          "1138": 23456,
+          "1139": 23456,
+          "1140": 23456,
+          "1141": 23456,
+          "1142": 23456,
+          "1143": 23456,
+          "142": 142.5,
+          "1501": 1501.5,
+          "1502": 1502.5,
+          "1505": 4000,
+          "1600": 1600.5,
+          "1601": 1601.5,
+          "1602": 1602.5,
+          "1603": 1603.5,
+          "1632": 1632.5,
+          "1633": 1633.5,
+          "1634": 1634.5,
+          "1635": 1635.5,
+          "1664": 1664.5,
+          "1665": 1665.5,
+          "1666": 1666.5,
+          "1667": 1667.5,
+          "19173": 19173.5,
+          "19174": 19174.5,
+          "19175": 19175.5,
+          "19176": 19176.5,
+          "19177": 19177.5,
+          "2101": 2101.5,
+          "2104": 2104.5,
+          "2105": 2105.5,
+          "2107": 2107.5,
+          "2108": 2108.5,
+          "2600": 2600.5,
+          "2612": 2612.5,
+          "2618": 1000,
+          "6000": 6000.5,
+          "6001": 1002,
+          "6002": 6002.5,
+          "6004": 6004.5,
+          "6005": 6005.5,
+          "6006": 6006.5,
+          "6007": 6007.5,
+          "606": "1001",
+          "6105": 65,
+          "667": 667.5,
+          "680": 0,
+          "7101": 5,
+          "7120": 1001,
+          "7171": 0,
+          "9000": 9000.5,
+          "9004": 9004.5,
+          "9008": 9008.5,
+          "9009": 9009.5,
+          "9011": 9011.5,
+          "9012": 9012.5,
+          "9013": 9013.5,
+          "9016": 9016.5,
+          "9020": 9020.5,
+          "9021": 9021.5,
+          "9023": 9023.5,
+          "9030": 9030.5,
+          "9032": "PACK-1",
+          "9035": 9035.5,
+          "9039": 9039.5,
+          "9040": 9040.5,
+          "9042": 9042.5,
+          "9049": 9049.5,
+          "9051": "PACK-2",
+          "9054": 9054.5,
+          "9058": 9058.5,
+          "9059": 9059.5,
+          "9061": 9061.5,
+          "9068": 9068.5,
+          "9070": "PACK-3",
+          "9149": 9149.5,
+          "9153": 9153.5,
+          "9154": 9154.5,
+          "9156": 9156.5,
+          "9163": 9163.5,
+          "9165": "PACK-4",
+          "9202": 9202.5,
+          "9206": 9206.5,
+          "9216": 9216.5,
+          "9218": "PACK-5",
+          "9219": 9219.5,
+          "9222": 9222.5
+        },
+        "updated_states": {
+          "{serial}_11016": "11016.5",
+          "{serial}_11034": "11034.5",
+          "{serial}_1109": "2.34.56",
+          "{serial}_1118": "2.34.56",
+          "{serial}_1119": "2.34.56",
+          "{serial}_1120": "2.34.56",
+          "{serial}_142": "142.5",
+          "{serial}_1501": "1501.5",
+          "{serial}_1502": "1502.5",
+          "{serial}_1600": "1600.5",
+          "{serial}_1601": "1601.5",
+          "{serial}_1602": "1602.5",
+          "{serial}_1603": "1603.5",
+          "{serial}_1632": "1632.5",
+          "{serial}_1633": "1633.5",
+          "{serial}_1634": "1634.5",
+          "{serial}_1635": "1635.5",
+          "{serial}_1664": "1664.5",
+          "{serial}_1665": "1665.5",
+          "{serial}_1666": "1666.5",
+          "{serial}_1667": "1667.5",
+          "{serial}_2101": "2101.5",
+          "{serial}_2104": "2104.5",
+          "{serial}_2105": "2105.5",
+          "{serial}_2107": "2107.5",
+          "{serial}_2108": "2108.5",
+          "{serial}_2600": "2600.5",
+          "{serial}_2612": "2612.5",
+          "{serial}_6000": "6000.5",
+          "{serial}_6002": "6002.5",
+          "{serial}_6004": "6004.5",
+          "{serial}_6005": "6005.5",
+          "{serial}_6006": "6006.5",
+          "{serial}_6007": "6007.5",
+          "{serial}_606": "Slave",
+          "{serial}_667": "667.5",
+          "{serial}_7120": "OFF",
+          "{serial}_9000": "9000.5",
+          "{serial}_9004": "9004.5",
+          "{serial}_9008": "9008.5",
+          "{serial}_9009": "9009.5",
+          "{serial}_9011": "9011.5",
+          "{serial}_9012": "9012.5",
+          "{serial}_9013": "9013.5",
+          "{serial}_backup_soc": "65",
+          "{serial}_battery_1_1136": "2.34.56",
+          "{serial}_battery_1_1137": "2.34.56",
+          "{serial}_battery_1_19173": "19173.5",
+          "{serial}_battery_1_9016": "9016.5",
+          "{serial}_battery_1_9020": "9020.5",
+          "{serial}_battery_1_9021": "9021.5",
+          "{serial}_battery_1_9023": "9023.5",
+          "{serial}_battery_1_9030": "9030.5",
+          "{serial}_battery_2_1138": "2.34.56",
+          "{serial}_battery_2_1139": "2.34.56",
+          "{serial}_battery_2_19174": "19174.5",
+          "{serial}_battery_2_9035": "9035.5",
+          "{serial}_battery_2_9039": "9039.5",
+          "{serial}_battery_2_9040": "9040.5",
+          "{serial}_battery_2_9042": "9042.5",
+          "{serial}_battery_2_9049": "9049.5",
+          "{serial}_battery_3_1140": "2.34.56",
+          "{serial}_battery_3_1141": "2.34.56",
+          "{serial}_battery_3_19175": "19175.5",
+          "{serial}_battery_3_9054": "9054.5",
+          "{serial}_battery_3_9058": "9058.5",
+          "{serial}_battery_3_9059": "9059.5",
+          "{serial}_battery_3_9061": "9061.5",
+          "{serial}_battery_3_9068": "9068.5",
+          "{serial}_battery_4_1142": "2.34.56",
+          "{serial}_battery_4_1143": "2.34.56",
+          "{serial}_battery_4_19176": "19176.5",
+          "{serial}_battery_4_9149": "9149.5",
+          "{serial}_battery_4_9153": "9153.5",
+          "{serial}_battery_4_9154": "9154.5",
+          "{serial}_battery_4_9156": "9156.5",
+          "{serial}_battery_4_9163": "9163.5",
+          "{serial}_battery_5_1098": "2.34.56",
+          "{serial}_battery_5_1099": "2.34.56",
+          "{serial}_battery_5_19177": "19177.5",
+          "{serial}_battery_5_9202": "9202.5",
+          "{serial}_battery_5_9206": "9206.5",
+          "{serial}_battery_5_9216": "9216.5",
+          "{serial}_battery_5_9219": "9219.5",
+          "{serial}_battery_5_9222": "9222.5",
+          "{serial}_bypass": "off",
+          "{serial}_feed_in_power_limit": "900",
+          "{serial}_grid": "off",
+          "{serial}_inverter_input_limit": "1100",
+          "{serial}_light": "off",
+          "{serial}_load_setting": "unknown",
+          "{serial}_max_output_power": "1300",
+          "{serial}_power_setting": "unknown",
+          "{serial}_soc_setting": "unknown",
+          "{serial}_state_setting": "Discharging",
+          "{serial}_work_mode": "Charge/Discharge Schedule"
+        }
+      },
+      "first_refresh": {
+        "empty": {
+          "response": {},
+          "states": {
+            "{serial}_backup_soc": "unknown",
+            "{serial}_feed_in_power_limit": "unknown",
+            "{serial}_inverter_input_limit": "unknown",
+            "{serial}_load_setting": "unknown",
+            "{serial}_max_output_power": "unknown",
+            "{serial}_power_setting": "unknown",
+            "{serial}_soc_setting": "unknown",
+            "{serial}_state_setting": "unknown",
+            "{serial}_work_mode": "unknown"
+          }
+        },
+        "null": {
+          "response": {
+            "1098": null,
+            "1099": null,
+            "11009": null,
+            "11010": null,
+            "11011": null,
+            "11016": null,
+            "11034": null,
+            "1109": null,
+            "1118": null,
+            "1119": null,
+            "1120": null,
+            "1136": null,
+            "1137": null,
+            "1138": null,
+            "1139": null,
+            "1140": null,
+            "1141": null,
+            "1142": null,
+            "1143": null,
+            "142": null,
+            "1501": null,
+            "1502": null,
+            "1600": null,
+            "1601": null,
+            "1602": null,
+            "1603": null,
+            "1632": null,
+            "1633": null,
+            "1634": null,
+            "1635": null,
+            "1664": null,
+            "1665": null,
+            "1666": null,
+            "1667": null,
+            "19173": null,
+            "19174": null,
+            "19175": null,
+            "19176": null,
+            "19177": null,
+            "2101": null,
+            "2104": null,
+            "2105": null,
+            "2107": null,
+            "2108": null,
+            "2600": null,
+            "2612": null,
+            "2618": null,
+            "6000": null,
+            "6001": null,
+            "6002": null,
+            "6004": null,
+            "6005": null,
+            "6006": null,
+            "6007": null,
+            "606": null,
+            "6105": null,
+            "667": null,
+            "680": null,
+            "7101": null,
+            "7120": null,
+            "7171": null,
+            "9000": null,
+            "9004": null,
+            "9008": null,
+            "9009": null,
+            "9011": null,
+            "9012": null,
+            "9013": null,
+            "9016": null,
+            "9020": null,
+            "9021": null,
+            "9023": null,
+            "9030": null,
+            "9032": null,
+            "9035": null,
+            "9039": null,
+            "9040": null,
+            "9042": null,
+            "9049": null,
+            "9051": null,
+            "9054": null,
+            "9058": null,
+            "9059": null,
+            "9061": null,
+            "9068": null,
+            "9070": null,
+            "9149": null,
+            "9153": null,
+            "9154": null,
+            "9156": null,
+            "9163": null,
+            "9165": null,
+            "9202": null,
+            "9206": null,
+            "9216": null,
+            "9218": null,
+            "9219": null,
+            "9222": null
+          },
+          "states": {
+            "{serial}_backup_soc": "unknown",
+            "{serial}_bypass": "unavailable",
+            "{serial}_feed_in_power_limit": "unknown",
+            "{serial}_grid": "unavailable",
+            "{serial}_inverter_input_limit": "unknown",
+            "{serial}_light": "unavailable",
+            "{serial}_load_setting": "unknown",
+            "{serial}_max_output_power": "unknown",
+            "{serial}_power_setting": "unknown",
+            "{serial}_soc_setting": "unknown",
+            "{serial}_state_setting": "unknown",
+            "{serial}_work_mode": "unknown"
+          }
+        }
+      }
+    }
+  },
+  "scenarios": {
+    "bk": {
+      "firmware": "1.2.3",
+      "host": "192.0.2.201",
+      "model": "BK1600/BK1600Ultra",
+      "route": "bk",
+      "serial": "MAIN-BK-SN"
+    },
+    "default": {
+      "firmware": "1.2.3",
+      "host": "192.0.2.202",
+      "model": "SolidFlex/PowerFlex2000",
+      "route": "default",
+      "serial": "MAIN-DEFAULT-SN"
+    },
+    "fallback": {
+      "firmware": "1.2.3",
+      "host": "192.0.2.203",
+      "model": "FutureModel",
+      "route": "default",
+      "serial": "MAIN-FALLBACK-SN"
+    }
+  }
+}

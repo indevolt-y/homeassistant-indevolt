@@ -186,21 +186,28 @@ DEFAULT_CAPABILITY_POINT_BATCHES = (
     ADDITIONAL_DEFAULT_POINT_BATCHES + CONTROL_STATE_POINT_BATCHES
 )
 
-# Documented GetData points that are outside both the current polling baseline
-# and the user-capability definitions above.  Keep them explicit so every point
-# has an executable expectation even before production support exists.
-REMAINING_DEFAULT_READ_POINTS: tuple[int, ...] = (
+# Documented GetData points that should become user-visible HA entities but are
+# still outside the current polling baseline. Keep the transport expectation in
+# addition to the entity-level acceptance tests: receiving a value is necessary,
+# but it is not the user-facing result by itself.
+REMAINING_DEFAULT_USER_READ_POINTS: tuple[int, ...] = (
     9284,
     9285,
     11035,
     11039,
     11037,
-    0,
     1505,
 )
 
-REMAINING_BK_READ_POINTS: tuple[int, ...] = (
-    0,
+# Point 0 repeats the serial number already presented through Sys.GetConfig and
+# must not create a duplicate entity or an extra polling requirement.
+DEFAULT_NON_USER_READ_POINTS: tuple[int, ...] = (0,)
+
+REMAINING_DEFAULT_READ_POINTS: tuple[int, ...] = (
+    REMAINING_DEFAULT_USER_READ_POINTS + DEFAULT_NON_USER_READ_POINTS
+)
+
+REMAINING_BK_USER_READ_POINTS: tuple[int, ...] = (
     1118,
     1107,
     1119,
@@ -212,7 +219,6 @@ REMAINING_BK_READ_POINTS: tuple[int, ...] = (
     2619,
     680,
     7170,
-    667,
     7620,
     10112,
     10113,
@@ -229,6 +235,15 @@ REMAINING_BK_READ_POINTS: tuple[int, ...] = (
     1600,
     1633,
     1601,
+)
+
+# Point 0 duplicates the configured device serial. Point 667 is explicitly
+# documented as not applicable to BK1600. Their HA expectation is therefore no
+# independent entity and no BK polling request.
+BK_NON_USER_READ_POINTS: tuple[int, ...] = (0, 667)
+
+REMAINING_BK_READ_POINTS: tuple[int, ...] = (
+    REMAINING_BK_USER_READ_POINTS + BK_NON_USER_READ_POINTS
 )
 
 

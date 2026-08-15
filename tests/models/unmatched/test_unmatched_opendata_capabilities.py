@@ -4,10 +4,14 @@ from __future__ import annotations
 
 import pytest
 
+from tests.models._opendata_point_additions import DEFAULT_NON_USER_READ_POINTS
 from tests.models._opendata_user_testing import (
+    assert_get_point_is_not_exposed_as_an_entity,
     assert_get_user_capability,
+    assert_get_user_capability_missing_value_behavior,
     assert_set_point_is_not_exposed_as_a_new_user_control,
     assert_set_user_capability,
+    assert_set_user_capability_missing_value_behavior,
 )
 from tests.models.opendata_capabilities import (
     GET_USER_CAPABILITIES,
@@ -40,6 +44,26 @@ async def test_unmatched_model_keeps_default_route_for_each_new_value(
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "capability",
+    GET_USER_CAPABILITIES,
+    ids=lambda capability: f"missing-{capability.point}-{capability.domain}",
+)
+async def test_unmatched_model_handles_each_new_value_disappearing(
+    capability: GetUserCapability,
+) -> None:
+    await assert_get_user_capability_missing_value_behavior(MODEL, capability)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("point", DEFAULT_NON_USER_READ_POINTS)
+async def test_unmatched_model_does_not_duplicate_non_user_read_points(
+    point: int,
+) -> None:
+    await assert_get_point_is_not_exposed_as_an_entity(MODEL, point)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "capability",
     VISIBLE_SET_CAPABILITIES,
     ids=lambda capability: f"set-{capability.point}-{capability.entity_domain}",
 )
@@ -47,6 +71,18 @@ async def test_unmatched_model_keeps_default_route_for_each_new_control(
     capability: SetUserCapability,
 ) -> None:
     await assert_set_user_capability(MODEL, capability)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "capability",
+    VISIBLE_SET_CAPABILITIES,
+    ids=lambda capability: f"missing-{capability.point}-{capability.entity_domain}",
+)
+async def test_unmatched_model_handles_each_new_control_readback_disappearing(
+    capability: SetUserCapability,
+) -> None:
+    await assert_set_user_capability_missing_value_behavior(MODEL, capability)
 
 
 @pytest.mark.asyncio
