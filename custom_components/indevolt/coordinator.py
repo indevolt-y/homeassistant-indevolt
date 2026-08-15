@@ -11,6 +11,10 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from .const import DEFAULT_SCAN_INTERVAL, DOMAIN
 from .opendata import IndevoltAPI
+from .opendata.additional_points import (
+    BK_ADDITIONAL_READ_GROUPS,
+    DEFAULT_ADDITIONAL_READ_GROUPS,
+)
 from .opendata.polling import BK_POLLING_BASELINE, DEFAULT_POLLING_BASELINE
 
 _LOGGER = logging.getLogger(__name__)
@@ -41,16 +45,18 @@ class IndevoltDeviceUpdateCoordinator(DataUpdateCoordinator):
         try:
             if "BK1600" in self.config["device_model"]:
                 polling_baseline = BK_POLLING_BASELINE
+                additional_groups = BK_ADDITIONAL_READ_GROUPS
             else:
                 polling_baseline = DEFAULT_POLLING_BASELINE
-
-            keys = [field.point for field in polling_baseline]
+                additional_groups = DEFAULT_ADDITIONAL_READ_GROUPS
 
             data: Dict[str, Any] = {}
 
-            for batch in _chunked(keys, 8):
-                result = await self.api.fetch_data(batch)
-                data.update(result)
+            baseline_points = [field.point for field in polling_baseline]
+            for point_group in (baseline_points, *additional_groups):
+                for batch in _chunked(list(point_group), 8):
+                    result = await self.api.fetch_data(batch)
+                    data.update(result)
 
             _LOGGER.debug("Coordinator update finished (%d keys)", len(data))
 

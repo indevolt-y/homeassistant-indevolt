@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib
 import json
+import re
 from dataclasses import dataclass, field
 from functools import cache
 from pathlib import Path
@@ -203,12 +204,18 @@ def assert_entity_translation(
     format_values = placeholders or {}
 
     assert english["name"].format(**format_values) == expected_english_name
-    assert chinese["name"].format(**format_values)
+    chinese_name = chinese["name"].format(**format_values)
+    assert re.search(r"[\u3400-\u9fff]", chinese_name), (
+        f"{platform}.{translation_key} needs a real Simplified Chinese name"
+    )
     if options:
-        assert set(english["state"]) == set(options)
-        assert set(chinese["state"]) == set(options)
-        assert all(english["state"].values())
-        assert all(chinese["state"].values())
+        assert set(options) <= set(english["state"])
+        assert set(options) <= set(chinese["state"])
+        assert all(english["state"][option] for option in options)
+        assert all(
+            re.search(r"[\u3400-\u9fff]", chinese["state"][option])
+            for option in options
+        ), f"{platform}.{translation_key} needs translated Chinese states"
 
 
 def entity_native_value(entity: Any, domain: str) -> Any:

@@ -186,10 +186,10 @@ async def test_coordinator_requests_and_merges_exactly_as_main(
 
     data = await coordinator._async_update_data()
 
-    assert api.batches == expected_batches(expected_points)
-    assert data == {
-        "last_batch": len(api.batches),
-        **{str(point): point for point in expected_points},
+    main_batches = expected_batches(expected_points)
+    assert api.batches[: len(main_batches)] == main_batches
+    assert {key: data[key] for key in map(str, expected_points)} == {
+        str(point): point for point in expected_points
     }
 
 

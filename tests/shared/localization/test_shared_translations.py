@@ -15,6 +15,9 @@ from homeassistant import loader
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.translation import async_get_translations
 
+from custom_components.indevolt.binary_sensor import (
+    IndevoltCapabilityBinarySensorEntity,
+)
 from custom_components.indevolt.number import (
     NUMBERS_GEN1,
     NUMBERS_GEN2,
@@ -27,6 +30,7 @@ from custom_components.indevolt.select import (
 )
 from custom_components.indevolt.sensor import (
     IndevoltBatterySensorEntity,
+    IndevoltCapabilitySensorEntity,
     IndevoltSensorEntity,
 )
 from custom_components.indevolt.sensor_descriptions.battery_pack import (
@@ -35,6 +39,11 @@ from custom_components.indevolt.sensor_descriptions.battery_pack import (
 from custom_components.indevolt.sensor_descriptions.gen1 import SENSORS_GEN1
 from custom_components.indevolt.sensor_descriptions.gen2 import SENSORS_GEN2
 from custom_components.indevolt.switch import SWITCHES, IndevoltSwitchEntity
+from tests.models.opendata_capabilities import (
+    BK_GET_USER_CAPABILITIES,
+    GET_USER_CAPABILITIES,
+    SET_USER_CAPABILITIES,
+)
 
 REPOSITORY_ROOT = Path(__file__).parents[3]
 INTEGRATION_ROOT = REPOSITORY_ROOT / "custom_components" / "indevolt"
@@ -92,8 +101,8 @@ def test_translation_files_have_identical_contracts() -> None:
 def test_every_translation_text_matches_the_complete_golden_contract() -> None:
     """Lock every user-facing string, not only representative examples."""
     expected_hashes = {
-        "en": "18c07802d5d56d63f34ee14054ae9aa3b2783c28f3f78c82d2ffbab3c05f4b72",
-        "zh-Hans": "812b1d16b2edf66316d54d2de378eaa177e4f0b9b4ad1ee7a23158a8b6830a4a",
+        "en": "add13fc6d7907439655c4ff63b2230235c98784602a60fa8f925ecaf014dcb0a",
+        "zh-Hans": "80ae7b06d09644afd17a4d74670a76dd6d9f824d119007068a29b454fa948b10",
     }
 
     for language, expected_hash in expected_hashes.items():
@@ -119,22 +128,44 @@ def test_every_entity_description_has_a_name_translation() -> None:
         "number": (*NUMBERS_GEN1, *NUMBERS_GEN2),
         "select": (*SELECTS_GEN1, *SELECTS_GEN2),
         "switch": tuple(SWITCHES),
+        "binary_sensor": (),
+        "time": (),
     }
+    get_capabilities = (*GET_USER_CAPABILITIES, *BK_GET_USER_CAPABILITIES)
 
-    for platform, descriptions in descriptions_by_platform.items():
+    for platform, existing_descriptions in descriptions_by_platform.items():
+        descriptions = (
+            *existing_descriptions,
+            *(item for item in get_capabilities if item.domain == platform),
+            *(
+                item
+                for item in SET_USER_CAPABILITIES
+                if item.entity_domain == platform and item.translation_key is not None
+            ),
+        )
         expected_keys = _translation_keys(descriptions)
         assert set(english[platform]) == expected_keys
         assert set(chinese[platform]) == expected_keys
-        assert all(value.keys() == {"name"} for value in english[platform].values())
-        assert all(value.keys() == {"name"} for value in chinese[platform].values())
+        assert all("name" in value for value in english[platform].values())
+        assert all("name" in value for value in chinese[platform].values())
         for description in descriptions:
-            assert english[platform][description.translation_key]["name"] == (
-                description.name
+            placeholders = dict(
+                getattr(description, "translation_placeholders", None) or {}
             )
+            translation = english[platform][description.translation_key]
+            assert translation["name"].format(**placeholders) == description.name
+            options = tuple(getattr(description, "options", ()) or ())
+            if options:
+                assert set(options) <= set(translation["state"])
+                assert set(options) <= set(
+                    chinese[platform][description.translation_key]["state"]
+                )
 
     for entity_class in (
         IndevoltSensorEntity,
         IndevoltBatterySensorEntity,
+        IndevoltCapabilitySensorEntity,
+        IndevoltCapabilityBinarySensorEntity,
         IndevoltNumberEntity,
         IndevoltSelectEntity,
         IndevoltSwitchEntity,

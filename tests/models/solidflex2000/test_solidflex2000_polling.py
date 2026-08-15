@@ -35,7 +35,11 @@ async def test_solidflex2000_polls_its_own_point_contract() -> None:
 
     data = await coordinator._async_update_data()
 
-    expected_batches = BASELINE_DEFAULT_POINT_BATCHES + DEFAULT_CAPABILITY_POINT_BATCHES
+    expected_batches = (
+        BASELINE_DEFAULT_POINT_BATCHES
+        + DEFAULT_CAPABILITY_POINT_BATCHES
+        + (REMAINING_DEFAULT_USER_READ_POINTS,)
+    )
     points = tuple(point for batch in api.batches for point in batch)
     assert api.batches == [list(batch) for batch in expected_batches]
     assert points == flattened(expected_batches)

@@ -35,7 +35,11 @@ async def test_unmatched_model_polls_the_gen2_fallback_contract() -> None:
 
     data = await coordinator._async_update_data()
 
-    expected_batches = BASELINE_DEFAULT_POINT_BATCHES + DEFAULT_CAPABILITY_POINT_BATCHES
+    expected_batches = (
+        BASELINE_DEFAULT_POINT_BATCHES
+        + DEFAULT_CAPABILITY_POINT_BATCHES
+        + (REMAINING_DEFAULT_USER_READ_POINTS,)
+    )
     points = tuple(point for batch in api.batches for point in batch)
     assert api.batches == [list(batch) for batch in expected_batches]
     assert points == flattened(expected_batches)

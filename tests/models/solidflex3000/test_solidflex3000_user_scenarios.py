@@ -393,10 +393,10 @@ async def test_f_06_wired_parallel_topology_accepts_3600_w_feed_in(
         )
         assert require_state(hass, slave_entry, "WIRED-SLAVE-SN_606").state == ("Slave")
         assert require_state(hass, master_entry, "WIRED-MASTER-SN_669").state == (
-            "Centralized"
+            "centralized"
         )
         assert require_state(hass, slave_entry, "WIRED-SLAVE-SN_669").state == (
-            "Centralized"
+            "centralized"
         )
 
         await set_number(hass, master_entry, "feed_in_power_limit", 3600)
@@ -434,10 +434,10 @@ async def test_f_07_wireless_parallel_topology_accepts_10800_w_feed_in(
         )
         assert require_state(hass, slave_entry, "RADIO-SLAVE-SN_606").state == ("Slave")
         assert require_state(hass, master_entry, "RADIO-MASTER-SN_669").state == (
-            "Coordinated"
+            "coordinated"
         )
         assert require_state(hass, slave_entry, "RADIO-SLAVE-SN_669").state == (
-            "Coordinated"
+            "coordinated"
         )
 
         await set_number(hass, master_entry, "feed_in_power_limit", 10_800)
@@ -834,7 +834,7 @@ async def test_f_19_fixed_power_and_energy_values_have_correct_units(
         ("Daily Production", "0.696", "kWh"),
         ("Off-grid Output Energy", "0.53", "kWh"),
         ("Daily Off-grid Discharge Energy", "530", "Wh"),
-        ("Total Microinverter Energy Generation", "527", "Wh"),
+        ("Bypass Input Energy", "527", "Wh"),
         ("Daily Microinverter Energy Generation", "527", "Wh"),
         ("Total Bypass Port Discharge Energy", "177", "Wh"),
         ("Daily Bypass Discharge Energy", "177", "Wh"),
@@ -916,14 +916,14 @@ async def test_f_21_pv_undervoltage_and_recovery_update_the_same_entities(
         stable_ids = (status.id, alarm.id)
 
         await refresh_with(hass, entry, backend, {7119: 2, 8138: 21, 1600: 12.6})
-        assert require_state(hass, entry, f"{SERIAL}_7119").state == "Sleep"
+        assert require_state(hass, entry, f"{SERIAL}_7119").state == "sleep"
         assert require_state(hass, entry, f"{SERIAL}_8138").state == (
-            "PV Input Undervoltage"
+            "pv_input_undervoltage"
         )
         assert require_state(hass, entry, f"{SERIAL}_1600").state == "12.6"
 
         await refresh_with(hass, entry, backend, {7119: 4, 8138: 0, 1600: 30.0})
-        assert require_state(hass, entry, f"{SERIAL}_7119").state == "Running"
+        assert require_state(hass, entry, f"{SERIAL}_7119").state == "running"
         assert require_state(hass, entry, f"{SERIAL}_8138").state == "unknown"
         assert stable_ids == (
             require_registry_entity(hass, entry, f"{SERIAL}_7119").id,

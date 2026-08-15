@@ -20,6 +20,27 @@ from tests.models.opendata_capabilities import (
 )
 
 MODEL = "BK1600/BK1600Ultra"
+BK_EXISTING_READ_POINTS = {
+    1501,
+    1502,
+    1505,
+    1664,
+    1665,
+    2101,
+    2107,
+    2108,
+    6000,
+    6001,
+    6002,
+    6004,
+    6005,
+    6006,
+    6007,
+    6105,
+    7101,
+    7120,
+    21028,
+}
 
 
 @pytest.mark.asyncio
@@ -28,7 +49,10 @@ async def test_bk1600_never_exposes_default_route_capability_capabilities() -> N
     await harness.set_up_platforms()
     registered_unique_ids = {unique_id for _, unique_id in harness.entities}
     default_route_capability_unique_ids = {
-        capability.unique_id(SERIAL) for capability in GET_USER_CAPABILITIES
+        capability.unique_id(SERIAL)
+        for capability in GET_USER_CAPABILITIES
+        if capability.point not in BK_EXISTING_READ_POINTS
+        and capability.point not in {item.point for item in BK_GET_USER_CAPABILITIES}
     } | {
         f"{SERIAL}_{capability.key}"
         for capability in SET_USER_CAPABILITIES

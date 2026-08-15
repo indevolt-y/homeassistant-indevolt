@@ -20,6 +20,7 @@ DEFAULT_SCAN_INTERVAL = 30
 MAX_REAL_TIME_CONTROL_POWER = 10800
 PLATFORMS = [
     Platform.SENSOR,
+    Platform.BINARY_SENSOR,
     Platform.SWITCH,
     Platform.NUMBER,
     Platform.SELECT,

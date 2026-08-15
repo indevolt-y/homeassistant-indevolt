@@ -16,6 +16,7 @@ from custom_components.indevolt.const import DOMAIN
 from tests.models._opendata_point_additions import (
     BASELINE_DEFAULT_POINT_BATCHES,
     DEFAULT_CAPABILITY_POINT_BATCHES,
+    REMAINING_DEFAULT_USER_READ_POINTS,
 )
 from tests.models._opendata_user_testing import PACK_SERIAL_POINTS
 from tests.models.opendata_capabilities import (
@@ -507,7 +508,11 @@ async def test_ha_08_expanded_polling_is_atomic_serialized_and_recovers(
     backend = FakeDevice(_complete_backend_data())
     install_fake_devices(monkeypatch, {HOST: backend})
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
-    expected_batches = BASELINE_DEFAULT_POINT_BATCHES + DEFAULT_CAPABILITY_POINT_BATCHES
+    expected_batches = (
+        BASELINE_DEFAULT_POINT_BATCHES
+        + DEFAULT_CAPABILITY_POINT_BATCHES
+        + (REMAINING_DEFAULT_USER_READ_POINTS,)
+    )
 
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, entry)

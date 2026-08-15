@@ -297,6 +297,380 @@
       },
       "working_mode": {
         "name": "工作模式"
+      },
+      "total_ac_power": {
+        "name": "总交流功率"
+      },
+      "rated_on_grid_power": {
+        "name": "额定并网功率"
+      },
+      "maximum_battery_modules": {
+        "name": "最大电池模块数"
+      },
+      "maximum_charge_power": {
+        "name": "最大充电功率"
+      },
+      "maximum_discharge_power": {
+        "name": "最大放电功率"
+      },
+      "remaining_charging_time": {
+        "name": "剩余充电时间"
+      },
+      "remaining_discharging_time": {
+        "name": "剩余放电时间"
+      },
+      "master_battery_cycle_count": {
+        "name": "主电池循环次数"
+      },
+      "cycle_count": {
+        "name": "循环次数"
+      },
+      "master_battery_soh": {
+        "name": "主电池健康度"
+      },
+      "soh": {
+        "name": "电池健康度"
+      },
+      "minimum_cell_temperature": {
+        "name": "最低电芯温度"
+      },
+      "master_battery_heater_temperature": {
+        "name": "主电池加热器温度"
+      },
+      "master_battery_heater_power": {
+        "name": "主电池加热器功率"
+      },
+      "heater_temperature": {
+        "name": "加热器温度"
+      },
+      "heater_power": {
+        "name": "加热器功率"
+      },
+      "uplink_current": {
+        "name": "上行电流"
+      },
+      "system_soc": {
+        "name": "系统电量"
+      },
+      "master_battery_dc_dc_status": {
+        "name": "主电池 DC/DC 状态",
+        "state": {
+          "standby": "待机",
+          "charging": "充电",
+          "discharging": "放电",
+          "protection": "保护"
+        }
+      },
+      "dc_dc_status": {
+        "name": "DC/DC 状态",
+        "state": {
+          "standby": "待机",
+          "charging": "充电",
+          "discharging": "放电",
+          "protection": "保护"
+        }
+      },
+      "parallel_type": {
+        "name": "并机类型",
+        "state": {
+          "centralized": "集中式",
+          "coordinated": "协同式"
+        }
+      },
+      "rated_output_power": {
+        "name": "额定输出功率"
+      },
+      "maximum_active_power": {
+        "name": "最大有功功率"
+      },
+      "rated_off_grid_voltage": {
+        "name": "额定离网电压"
+      },
+      "rated_off_grid_frequency": {
+        "name": "额定离网频率"
+      },
+      "rated_off_grid_power": {
+        "name": "额定离网功率"
+      },
+      "inverter_input_output_current": {
+        "name": "逆变器输入／输出电流"
+      },
+      "inverter_input_output_voltage": {
+        "name": "逆变器输入／输出电压"
+      },
+      "inverter_input_output_frequency": {
+        "name": "逆变器输入／输出频率"
+      },
+      "inverter_apparent_power": {
+        "name": "逆变器视在功率"
+      },
+      "inverter_reactive_power": {
+        "name": "逆变器无功功率"
+      },
+      "inverter_power_factor": {
+        "name": "逆变器功率因数"
+      },
+      "directional_inverter_power": {
+        "name": "逆变器方向功率"
+      },
+      "inverter_fault": {
+        "name": "逆变器故障",
+        "state": {
+          "dc_side_overvoltage": "直流侧过压",
+          "ac_connection_disconnected": "交流连接断开",
+          "dc_connection_disconnected": "直流连接断开",
+          "grid_connection_disconnected": "电网连接断开",
+          "ground_fault": "接地故障",
+          "ac_output_short_circuit": "交流输出短路",
+          "inverter_overtemperature": "逆变器温度过高",
+          "inverter_overfrequency": "逆变器频率过高",
+          "inverter_underfrequency": "逆变器频率过低",
+          "ac_input_overvoltage": "交流输入过压",
+          "ac_input_undervoltage": "交流输入欠压",
+          "inverter_input_short_circuit": "逆变器输入短路",
+          "inverter_low_temperature": "逆变器温度过低",
+          "off_grid_inverter_phase_a_overvoltage": "离网逆变器 A 相过压",
+          "off_grid_inverter_phase_a_undervoltage": "离网逆变器 A 相欠压",
+          "off_grid_inverter_phase_a_overcurrent_overload": "离网逆变器 A 相过流或过载"
+        }
+      },
+      "total_inverter_input_energy": {
+        "name": "逆变器总输入电量"
+      },
+      "daily_grid_connected_discharge_energy": {
+        "name": "当日并网放电量"
+      },
+      "home_load_power": {
+        "name": "家庭负载功率"
+      },
+      "maximum_mppt_channels": {
+        "name": "最大 MPPT 路数"
+      },
+      "rated_mppt_power": {
+        "name": "MPPT 额定功率"
+      },
+      "total_pv_charging_power": {
+        "name": "光伏总充电功率"
+      },
+      "pv_1_operating_status": {
+        "name": "光伏 1 运行状态",
+        "state": {
+          "powered_off": "已关机",
+          "sleep": "休眠",
+          "starting": "启动中",
+          "running": "运行中",
+          "power_limited_operation": "限功率运行",
+          "shutting_down": "关机中",
+          "fault": "故障",
+          "standby": "待机",
+          "test_mode": "测试模式"
+        }
+      },
+      "pv_2_operating_status": {
+        "name": "光伏 2 运行状态",
+        "state": {
+          "powered_off": "已关机",
+          "sleep": "休眠",
+          "starting": "启动中",
+          "running": "运行中",
+          "power_limited_operation": "限功率运行",
+          "shutting_down": "关机中",
+          "fault": "故障",
+          "standby": "待机",
+          "test_mode": "测试模式"
+        }
+      },
+      "pv_3_operating_status": {
+        "name": "光伏 3 运行状态",
+        "state": {
+          "powered_off": "已关机",
+          "sleep": "休眠",
+          "starting": "启动中",
+          "running": "运行中",
+          "power_limited_operation": "限功率运行",
+          "shutting_down": "关机中",
+          "fault": "故障",
+          "standby": "待机",
+          "test_mode": "测试模式"
+        }
+      },
+      "pv_4_operating_status": {
+        "name": "光伏 4 运行状态",
+        "state": {
+          "powered_off": "已关机",
+          "sleep": "休眠",
+          "starting": "启动中",
+          "running": "运行中",
+          "power_limited_operation": "限功率运行",
+          "shutting_down": "关机中",
+          "fault": "故障",
+          "standby": "待机",
+          "test_mode": "测试模式"
+        }
+      },
+      "pv_1_alarm": {
+        "name": "光伏 1 告警",
+        "state": {
+          "pv_input_overvoltage": "光伏输入过压",
+          "pv_input_disconnected": "光伏输入断开",
+          "pv_module_input_short_circuit": "光伏组件输入短路",
+          "pv_module_low_temperature": "光伏组件温度过低",
+          "pv_input_reverse_polarity": "光伏输入极性反接",
+          "pv_input_undervoltage": "光伏输入欠压"
+        }
+      },
+      "pv_2_alarm": {
+        "name": "光伏 2 告警",
+        "state": {
+          "pv_input_overvoltage": "光伏输入过压",
+          "pv_input_disconnected": "光伏输入断开",
+          "pv_module_input_short_circuit": "光伏组件输入短路",
+          "pv_module_low_temperature": "光伏组件温度过低",
+          "pv_input_reverse_polarity": "光伏输入极性反接",
+          "pv_input_undervoltage": "光伏输入欠压"
+        }
+      },
+      "pv_3_alarm": {
+        "name": "光伏 3 告警",
+        "state": {
+          "pv_input_overvoltage": "光伏输入过压",
+          "pv_input_disconnected": "光伏输入断开",
+          "pv_module_input_short_circuit": "光伏组件输入短路",
+          "pv_module_low_temperature": "光伏组件温度过低",
+          "pv_input_reverse_polarity": "光伏输入极性反接",
+          "pv_input_undervoltage": "光伏输入欠压"
+        }
+      },
+      "pv_4_alarm": {
+        "name": "光伏 4 告警",
+        "state": {
+          "pv_input_overvoltage": "光伏输入过压",
+          "pv_input_disconnected": "光伏输入断开",
+          "pv_module_input_short_circuit": "光伏组件输入短路",
+          "pv_module_low_temperature": "光伏组件温度过低",
+          "pv_input_reverse_polarity": "光伏输入极性反接",
+          "pv_input_undervoltage": "光伏输入欠压"
+        }
+      },
+      "modbus_version": {
+        "name": "Modbus 版本"
+      },
+      "system_operating_status": {
+        "name": "系统运行状态",
+        "state": {
+          "powered_off": "已关机",
+          "sleep": "休眠",
+          "starting": "启动中",
+          "mppt_operating": "MPPT 运行",
+          "current_limiting": "限流运行",
+          "shutting_down": "关机中",
+          "inverter_fault": "逆变器故障",
+          "standby": "待机",
+          "grid_charging": "并网充电",
+          "grid_discharging": "并网放电",
+          "off_grid_charging": "离网充电",
+          "off_grid_discharging": "离网放电",
+          "low_battery_charging": "低电量充电",
+          "deep_sleep": "深度休眠",
+          "scheduled_full_charge": "定时满充",
+          "off_grid_deep_sleep": "离网深度休眠"
+        }
+      },
+      "device_date_and_time": {
+        "name": "设备日期与时间"
+      },
+      "standby_timeout": {
+        "name": "待机超时时间"
+      },
+      "real_time_control_order": {
+        "name": "实时控制指令",
+        "state": {
+          "standby": "待机",
+          "charge": "充电",
+          "discharge": "放电"
+        }
+      },
+      "real_time_control_power": {
+        "name": "实时控制功率"
+      },
+      "real_time_control_end_soc": {
+        "name": "实时控制目标电量"
+      },
+      "total_bypass_port_discharge_energy": {
+        "name": "旁路端口总放电量"
+      },
+      "daily_bypass_discharge_energy": {
+        "name": "当日旁路放电量"
+      },
+      "daily_microinverter_energy_generation": {
+        "name": "当日微型逆变器发电量"
+      },
+      "bypass_mode": {
+        "name": "旁路模式",
+        "state": {
+          "eps_mode": "备电模式",
+          "microinverter_mode": "微型逆变器模式"
+        }
+      },
+      "daily_off_grid_discharge_energy": {
+        "name": "当日离网放电量"
+      },
+      "bk1600_series_ems_version": {
+        "name": "BK1600 系列 EMS 版本"
+      },
+      "bk1600_series_bms_version": {
+        "name": "BK1600 系列 BMS 版本"
+      },
+      "bk1600_series_pcs_version": {
+        "name": "BK1600 系列 PCS 版本"
+      },
+      "bk1600_series_mppt_version": {
+        "name": "BK1600 系列 MPPT 版本"
+      },
+      "feed_in_power_limit": {
+        "name": "馈网功率上限"
+      },
+      "maximum_ac_output_power": {
+        "name": "最大交流输出功率"
+      },
+      "maximum_ac_input_power": {
+        "name": "最大交流输入功率"
+      },
+      "battery_temperature": {
+        "name": "电池温度"
+      },
+      "cell_1_voltage": {
+        "name": "电芯 1 电压"
+      },
+      "cell_2_voltage": {
+        "name": "电芯 2 电压"
+      },
+      "cell_3_voltage": {
+        "name": "电芯 3 电压"
+      },
+      "cell_4_voltage": {
+        "name": "电芯 4 电压"
+      },
+      "cell_5_voltage": {
+        "name": "电芯 5 电压"
+      },
+      "cell_6_voltage": {
+        "name": "电芯 6 电压"
+      },
+      "cell_7_voltage": {
+        "name": "电芯 7 电压"
+      },
+      "cell_8_voltage": {
+        "name": "电芯 8 电压"
+      },
+      "cell_9_voltage": {
+        "name": "电芯 9 电压"
+      },
+      "cell_10_voltage": {
+        "name": "电芯 10 电压"
+      },
+      "cell_11_voltage": {
+        "name": "电芯 11 电压"
       }
     },
     "number": {
@@ -317,6 +691,15 @@
       },
       "real_time_control_target_soc": {
         "name": "实时控制目标 SOC"
+      },
+      "simulated_load_time_slot": {
+        "name": "Simulated Load Time Slot {slot}"
+      },
+      "forced_full_charge_interval": {
+        "name": "Forced Full-charge Interval"
+      },
+      "forced_ac_charging_power": {
+        "name": "Forced AC Charging Power"
       }
     },
     "select": {
@@ -327,7 +710,21 @@
         "name": "实时控制状态"
       },
       "work_mode": {
-        "name": "工作模式"
+        "name": "工作模式",
+        "state": {
+          "Self-Consumed Prioritized": "Self-Consumed Prioritized",
+          "Real-Time Control": "Real-Time Control",
+          "Charge/Discharge Schedule": "Charge/Discharge Schedule",
+          "Custom Time Control Mode": "Custom Time Control Mode"
+        }
+      },
+      "led_light_strip_mode": {
+        "name": "LED Light-strip Mode",
+        "state": {
+          "off": "off",
+          "on": "on",
+          "low_power": "low_power"
+        }
       }
     },
     "switch": {
@@ -339,6 +736,34 @@
       },
       "light": {
         "name": "灯光"
+      }
+    },
+    "binary_sensor": {
+      "master_battery_heater": {
+        "name": "主电池加热器"
+      },
+      "heater": {
+        "name": "加热器"
+      },
+      "critical_load_enabled": {
+        "name": "关键负载已启用"
+      },
+      "grid_charging": {
+        "name": "电网充电"
+      },
+      "bypass": {
+        "name": "旁路"
+      }
+    },
+    "time": {
+      "deep_sleep_start_time": {
+        "name": "Deep Sleep Start Time"
+      },
+      "deep_sleep_end_time": {
+        "name": "Deep Sleep End Time"
+      },
+      "forced_full_charge_start_time": {
+        "name": "Forced Full-charge Start Time"
       }
     }
   },

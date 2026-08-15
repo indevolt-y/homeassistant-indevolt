@@ -1,5 +1,11 @@
 from homeassistant.components.sensor import SensorEntity
 
+from .capabilities import GetUserCapability
+from .capabilities.runtime import (
+    capabilities_for_model,
+    capability_value,
+    is_returned,
+)
 from .entity import IndevoltEntity
 from .sensor_descriptions.battery_pack import BATTERY_PACK_SENSORS
 from .sensor_descriptions.entity_description import IndevoltSensorEntityDescription
@@ -15,12 +21,13 @@ async def async_setup_entry(hass, entry, async_add_entities):
     It creates sensor entities for each defined sensor description.
     """
     # Create an entity for each sensor description.
-    if "BK1600" in entry.data.get("device_model"):
-        async_add_entities(
+    device_model = entry.data.get("device_model")
+    if "BK1600" in device_model:
+        entities = [
             IndevoltSensorEntity(entry.runtime_data, description)
             for description in SENSORS_GEN1
             if entry.runtime_data.data.get(description.key) is not None
-        )
+        ]
     else:
         entities = []
 
@@ -37,7 +44,13 @@ async def async_setup_entry(hass, entry, async_add_entities):
                         )
                     )
 
-        async_add_entities(entities)
+    entities.extend(
+        IndevoltCapabilitySensorEntity(entry.runtime_data, capability)
+        for capability in capabilities_for_model(device_model)
+        if capability.domain == "sensor"
+        and is_returned(entry.runtime_data.data, capability)
+    )
+    async_add_entities(entities)
 
 
 class IndevoltSensorEntity(IndevoltEntity, SensorEntity):
@@ -87,3 +100,49 @@ class IndevoltBatterySensorEntity(IndevoltEntity, SensorEntity):
         return self.entity_description.value_fn(
             self.coordinator.data.get(self.entity_description.key)
         )
+
+
+class IndevoltCapabilitySensorEntity(IndevoltEntity, SensorEntity):
+    """A newly documented OpenData sensor."""
+
+    _attr_has_entity_name = True
+
+    def __init__(self, coordinator, capability: GetUserCapability) -> None:
+        super().__init__(coordinator)
+        self.capability = capability
+        self.entity_description = IndevoltSensorEntityDescription(
+            key=capability.key,
+            name=capability.name,
+            translation_key=capability.translation_key,
+            translation_placeholders=capability.translation_placeholders,
+            native_unit_of_measurement=capability.unit,
+            device_class=capability.device_class,
+            state_class=capability.state_class,
+            entity_category=capability.entity_category,
+            suggested_display_precision=capability.suggested_display_precision,
+            icon=capability.icon,
+            options=capability.options or None,
+            entity_registry_enabled_default=capability.enabled_by_default,
+        )
+        serial = coordinator.config_entry.unique_id
+        self._attr_unique_id = capability.unique_id(serial)
+
+    @property
+    def available(self) -> bool:
+        if not super().available:
+            return False
+        if not self.capability.scope.startswith("battery_"):
+            return True
+        return bool(self.device_info.get("serial_number"))
+
+    @property
+    def device_info(self):
+        if self.capability.scope == "main":
+            return self.device_info_main()
+        pack_id = int(self.capability.scope.removeprefix("battery_"))
+        return self.device_info_battery(pack_id)
+
+    @property
+    def native_value(self):
+        raw_value = self.coordinator.data.get(str(self.capability.point))
+        return capability_value(self.capability, raw_value)

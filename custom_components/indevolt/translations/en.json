@@ -297,6 +297,380 @@
       },
       "working_mode": {
         "name": "Working mode"
+      },
+      "total_ac_power": {
+        "name": "Total AC Power"
+      },
+      "rated_on_grid_power": {
+        "name": "Rated On-grid Power"
+      },
+      "maximum_battery_modules": {
+        "name": "Maximum Battery Modules"
+      },
+      "maximum_charge_power": {
+        "name": "Maximum Charge Power"
+      },
+      "maximum_discharge_power": {
+        "name": "Maximum Discharge Power"
+      },
+      "remaining_charging_time": {
+        "name": "Remaining Charging Time"
+      },
+      "remaining_discharging_time": {
+        "name": "Remaining Discharging Time"
+      },
+      "master_battery_cycle_count": {
+        "name": "Master Battery Cycle Count"
+      },
+      "cycle_count": {
+        "name": "Cycle Count"
+      },
+      "master_battery_soh": {
+        "name": "Master Battery SOH"
+      },
+      "soh": {
+        "name": "SOH"
+      },
+      "minimum_cell_temperature": {
+        "name": "Minimum Cell Temperature"
+      },
+      "master_battery_heater_temperature": {
+        "name": "Master Battery Heater Temperature"
+      },
+      "master_battery_heater_power": {
+        "name": "Master Battery Heater Power"
+      },
+      "heater_temperature": {
+        "name": "Heater Temperature"
+      },
+      "heater_power": {
+        "name": "Heater Power"
+      },
+      "uplink_current": {
+        "name": "Uplink Current"
+      },
+      "system_soc": {
+        "name": "System SOC"
+      },
+      "master_battery_dc_dc_status": {
+        "name": "Master Battery DC/DC Status",
+        "state": {
+          "standby": "Standby",
+          "charging": "Charging",
+          "discharging": "Discharging",
+          "protection": "Protection"
+        }
+      },
+      "dc_dc_status": {
+        "name": "DC/DC Status",
+        "state": {
+          "standby": "Standby",
+          "charging": "Charging",
+          "discharging": "Discharging",
+          "protection": "Protection"
+        }
+      },
+      "parallel_type": {
+        "name": "Parallel Type",
+        "state": {
+          "centralized": "Centralized",
+          "coordinated": "Coordinated"
+        }
+      },
+      "rated_output_power": {
+        "name": "Rated Output Power"
+      },
+      "maximum_active_power": {
+        "name": "Maximum Active Power"
+      },
+      "rated_off_grid_voltage": {
+        "name": "Rated Off-grid Voltage"
+      },
+      "rated_off_grid_frequency": {
+        "name": "Rated Off-grid Frequency"
+      },
+      "rated_off_grid_power": {
+        "name": "Rated Off-grid Power"
+      },
+      "inverter_input_output_current": {
+        "name": "Inverter Input/Output Current"
+      },
+      "inverter_input_output_voltage": {
+        "name": "Inverter Input/Output Voltage"
+      },
+      "inverter_input_output_frequency": {
+        "name": "Inverter Input/Output Frequency"
+      },
+      "inverter_apparent_power": {
+        "name": "Inverter Apparent Power"
+      },
+      "inverter_reactive_power": {
+        "name": "Inverter Reactive Power"
+      },
+      "inverter_power_factor": {
+        "name": "Inverter Power Factor"
+      },
+      "directional_inverter_power": {
+        "name": "Directional Inverter Power"
+      },
+      "inverter_fault": {
+        "name": "Inverter Fault",
+        "state": {
+          "dc_side_overvoltage": "Dc Side Overvoltage",
+          "ac_connection_disconnected": "Ac Connection Disconnected",
+          "dc_connection_disconnected": "Dc Connection Disconnected",
+          "grid_connection_disconnected": "Grid Connection Disconnected",
+          "ground_fault": "Ground Fault",
+          "ac_output_short_circuit": "Ac Output Short Circuit",
+          "inverter_overtemperature": "Inverter Overtemperature",
+          "inverter_overfrequency": "Inverter Overfrequency",
+          "inverter_underfrequency": "Inverter Underfrequency",
+          "ac_input_overvoltage": "Ac Input Overvoltage",
+          "ac_input_undervoltage": "Ac Input Undervoltage",
+          "inverter_input_short_circuit": "Inverter Input Short Circuit",
+          "inverter_low_temperature": "Inverter Low Temperature",
+          "off_grid_inverter_phase_a_overvoltage": "Off Grid Inverter Phase A Overvoltage",
+          "off_grid_inverter_phase_a_undervoltage": "Off Grid Inverter Phase A Undervoltage",
+          "off_grid_inverter_phase_a_overcurrent_overload": "Off Grid Inverter Phase A Overcurrent Overload"
+        }
+      },
+      "total_inverter_input_energy": {
+        "name": "Total Inverter Input Energy"
+      },
+      "daily_grid_connected_discharge_energy": {
+        "name": "Daily Grid-connected Discharge Energy"
+      },
+      "home_load_power": {
+        "name": "Home Load Power"
+      },
+      "maximum_mppt_channels": {
+        "name": "Maximum MPPT Channels"
+      },
+      "rated_mppt_power": {
+        "name": "Rated MPPT Power"
+      },
+      "total_pv_charging_power": {
+        "name": "Total PV Charging Power"
+      },
+      "pv_1_operating_status": {
+        "name": "PV 1 Operating Status",
+        "state": {
+          "powered_off": "Powered Off",
+          "sleep": "Sleep",
+          "starting": "Starting",
+          "running": "Running",
+          "power_limited_operation": "Power Limited Operation",
+          "shutting_down": "Shutting Down",
+          "fault": "Fault",
+          "standby": "Standby",
+          "test_mode": "Test Mode"
+        }
+      },
+      "pv_2_operating_status": {
+        "name": "PV 2 Operating Status",
+        "state": {
+          "powered_off": "Powered Off",
+          "sleep": "Sleep",
+          "starting": "Starting",
+          "running": "Running",
+          "power_limited_operation": "Power Limited Operation",
+          "shutting_down": "Shutting Down",
+          "fault": "Fault",
+          "standby": "Standby",
+          "test_mode": "Test Mode"
+        }
+      },
+      "pv_3_operating_status": {
+        "name": "PV 3 Operating Status",
+        "state": {
+          "powered_off": "Powered Off",
+          "sleep": "Sleep",
+          "starting": "Starting",
+          "running": "Running",
+          "power_limited_operation": "Power Limited Operation",
+          "shutting_down": "Shutting Down",
+          "fault": "Fault",
+          "standby": "Standby",
+          "test_mode": "Test Mode"
+        }
+      },
+      "pv_4_operating_status": {
+        "name": "PV 4 Operating Status",
+        "state": {
+          "powered_off": "Powered Off",
+          "sleep": "Sleep",
+          "starting": "Starting",
+          "running": "Running",
+          "power_limited_operation": "Power Limited Operation",
+          "shutting_down": "Shutting Down",
+          "fault": "Fault",
+          "standby": "Standby",
+          "test_mode": "Test Mode"
+        }
+      },
+      "pv_1_alarm": {
+        "name": "PV 1 Alarm",
+        "state": {
+          "pv_input_overvoltage": "Pv Input Overvoltage",
+          "pv_input_disconnected": "Pv Input Disconnected",
+          "pv_module_input_short_circuit": "Pv Module Input Short Circuit",
+          "pv_module_low_temperature": "Pv Module Low Temperature",
+          "pv_input_reverse_polarity": "Pv Input Reverse Polarity",
+          "pv_input_undervoltage": "Pv Input Undervoltage"
+        }
+      },
+      "pv_2_alarm": {
+        "name": "PV 2 Alarm",
+        "state": {
+          "pv_input_overvoltage": "Pv Input Overvoltage",
+          "pv_input_disconnected": "Pv Input Disconnected",
+          "pv_module_input_short_circuit": "Pv Module Input Short Circuit",
+          "pv_module_low_temperature": "Pv Module Low Temperature",
+          "pv_input_reverse_polarity": "Pv Input Reverse Polarity",
+          "pv_input_undervoltage": "Pv Input Undervoltage"
+        }
+      },
+      "pv_3_alarm": {
+        "name": "PV 3 Alarm",
+        "state": {
+          "pv_input_overvoltage": "Pv Input Overvoltage",
+          "pv_input_disconnected": "Pv Input Disconnected",
+          "pv_module_input_short_circuit": "Pv Module Input Short Circuit",
+          "pv_module_low_temperature": "Pv Module Low Temperature",
+          "pv_input_reverse_polarity": "Pv Input Reverse Polarity",
+          "pv_input_undervoltage": "Pv Input Undervoltage"
+        }
+      },
+      "pv_4_alarm": {
+        "name": "PV 4 Alarm",
+        "state": {
+          "pv_input_overvoltage": "Pv Input Overvoltage",
+          "pv_input_disconnected": "Pv Input Disconnected",
+          "pv_module_input_short_circuit": "Pv Module Input Short Circuit",
+          "pv_module_low_temperature": "Pv Module Low Temperature",
+          "pv_input_reverse_polarity": "Pv Input Reverse Polarity",
+          "pv_input_undervoltage": "Pv Input Undervoltage"
+        }
+      },
+      "modbus_version": {
+        "name": "Modbus Version"
+      },
+      "system_operating_status": {
+        "name": "System Operating Status",
+        "state": {
+          "powered_off": "Powered Off",
+          "sleep": "Sleep",
+          "starting": "Starting",
+          "mppt_operating": "Mppt Operating",
+          "current_limiting": "Current Limiting",
+          "shutting_down": "Shutting Down",
+          "inverter_fault": "Inverter Fault",
+          "standby": "Standby",
+          "grid_charging": "Grid Charging",
+          "grid_discharging": "Grid Discharging",
+          "off_grid_charging": "Off Grid Charging",
+          "off_grid_discharging": "Off Grid Discharging",
+          "low_battery_charging": "Low Battery Charging",
+          "deep_sleep": "Deep Sleep",
+          "scheduled_full_charge": "Scheduled Full Charge",
+          "off_grid_deep_sleep": "Off Grid Deep Sleep"
+        }
+      },
+      "device_date_and_time": {
+        "name": "Device Date and Time"
+      },
+      "standby_timeout": {
+        "name": "Standby Timeout"
+      },
+      "real_time_control_order": {
+        "name": "Real-time Control Order",
+        "state": {
+          "standby": "Standby",
+          "charge": "Charge",
+          "discharge": "Discharge"
+        }
+      },
+      "real_time_control_power": {
+        "name": "Real-time Control Power"
+      },
+      "real_time_control_end_soc": {
+        "name": "Real-time Control End SOC"
+      },
+      "total_bypass_port_discharge_energy": {
+        "name": "Total Bypass Port Discharge Energy"
+      },
+      "daily_bypass_discharge_energy": {
+        "name": "Daily Bypass Discharge Energy"
+      },
+      "daily_microinverter_energy_generation": {
+        "name": "Daily Microinverter Energy Generation"
+      },
+      "bypass_mode": {
+        "name": "Bypass Mode",
+        "state": {
+          "eps_mode": "Eps Mode",
+          "microinverter_mode": "Microinverter Mode"
+        }
+      },
+      "daily_off_grid_discharge_energy": {
+        "name": "Daily Off-grid Discharge Energy"
+      },
+      "bk1600_series_ems_version": {
+        "name": "BK1600 Series EMS Version"
+      },
+      "bk1600_series_bms_version": {
+        "name": "BK1600 Series BMS Version"
+      },
+      "bk1600_series_pcs_version": {
+        "name": "BK1600 Series PCS Version"
+      },
+      "bk1600_series_mppt_version": {
+        "name": "BK1600 Series MPPT Version"
+      },
+      "feed_in_power_limit": {
+        "name": "Feed-in Power Limit"
+      },
+      "maximum_ac_output_power": {
+        "name": "Maximum AC Output Power"
+      },
+      "maximum_ac_input_power": {
+        "name": "Maximum AC Input Power"
+      },
+      "battery_temperature": {
+        "name": "Battery Temperature"
+      },
+      "cell_1_voltage": {
+        "name": "Cell 1 Voltage"
+      },
+      "cell_2_voltage": {
+        "name": "Cell 2 Voltage"
+      },
+      "cell_3_voltage": {
+        "name": "Cell 3 Voltage"
+      },
+      "cell_4_voltage": {
+        "name": "Cell 4 Voltage"
+      },
+      "cell_5_voltage": {
+        "name": "Cell 5 Voltage"
+      },
+      "cell_6_voltage": {
+        "name": "Cell 6 Voltage"
+      },
+      "cell_7_voltage": {
+        "name": "Cell 7 Voltage"
+      },
+      "cell_8_voltage": {
+        "name": "Cell 8 Voltage"
+      },
+      "cell_9_voltage": {
+        "name": "Cell 9 Voltage"
+      },
+      "cell_10_voltage": {
+        "name": "Cell 10 Voltage"
+      },
+      "cell_11_voltage": {
+        "name": "Cell 11 Voltage"
       }
     },
     "number": {
@@ -317,6 +691,15 @@
       },
       "real_time_control_target_soc": {
         "name": "Target SOC (Real-time control)"
+      },
+      "simulated_load_time_slot": {
+        "name": "Simulated Load Time Slot {slot}"
+      },
+      "forced_full_charge_interval": {
+        "name": "Forced Full-charge Interval"
+      },
+      "forced_ac_charging_power": {
+        "name": "Forced AC Charging Power"
       }
     },
     "select": {
@@ -327,7 +710,21 @@
         "name": "State (Real-time control)"
       },
       "work_mode": {
-        "name": "Work Mode"
+        "name": "Work Mode",
+        "state": {
+          "Self-Consumed Prioritized": "Self-Consumed Prioritized",
+          "Real-Time Control": "Real-Time Control",
+          "Charge/Discharge Schedule": "Charge/Discharge Schedule",
+          "Custom Time Control Mode": "Custom Time Control Mode"
+        }
+      },
+      "led_light_strip_mode": {
+        "name": "LED Light-strip Mode",
+        "state": {
+          "off": "off",
+          "on": "on",
+          "low_power": "low_power"
+        }
       }
     },
     "switch": {
@@ -339,6 +736,34 @@
       },
       "light": {
         "name": "Light"
+      }
+    },
+    "binary_sensor": {
+      "master_battery_heater": {
+        "name": "Master Battery Heater"
+      },
+      "heater": {
+        "name": "Heater"
+      },
+      "critical_load_enabled": {
+        "name": "Critical Load Enabled"
+      },
+      "grid_charging": {
+        "name": "Grid Charging"
+      },
+      "bypass": {
+        "name": "Bypass"
+      }
+    },
+    "time": {
+      "deep_sleep_start_time": {
+        "name": "Deep Sleep Start Time"
+      },
+      "deep_sleep_end_time": {
+        "name": "Deep Sleep End Time"
+      },
+      "forced_full_charge_start_time": {
+        "name": "Forced Full-charge Start Time"
       }
     }
   },
