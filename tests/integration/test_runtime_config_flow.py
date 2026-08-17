@@ -63,13 +63,6 @@ async def test_real_config_flow_creates_and_loads_entry(
         assert len(entry_entities(hass, created_entry)) == 16
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Config Flow catches Home Assistant's AbortFlow in its generic Exception "
-        "handler and returns unknown instead of already_configured"
-    ),
-)
 @pytest.mark.asyncio
 async def test_real_config_flow_blocks_duplicate_serial(
     monkeypatch,

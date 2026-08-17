@@ -3,6 +3,7 @@ import logging
 
 import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow
+from homeassistant.data_entry_flow import AbortFlow
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DEFAULT_PORT, DEFAULT_SCAN_INTERVAL, DOMAIN
@@ -58,6 +59,8 @@ class IndevoltConfigFlow(ConfigFlow, domain=DOMAIN):
                     },
                 )
 
+            except AbortFlow:
+                raise
             except asyncio.TimeoutError:
                 errors["base"] = "timeout"
             except Exception as e:
