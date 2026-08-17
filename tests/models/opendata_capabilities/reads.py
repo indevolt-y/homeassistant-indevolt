@@ -263,6 +263,7 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
     _pack_sensor(3, 9066, "Battery Pack 3 Minimum Cell Temperature", unit="°C"),
     _pack_sensor(4, 9151, "Battery Pack 4 SOH", unit="%"),
     _pack_sensor(4, 9161, "Battery Pack 4 Minimum Cell Temperature", unit="°C"),
+    # Companion Modbus registers 6594/6595 define x1 °C and x1 W.
     _sensor(9081, "Master Battery Heater Temperature", unit="°C"),
     _sensor(9082, "Master Battery Heater Power", unit="W"),
     _pack_sensor(1, 9097, "Battery Pack 1 Heater Temperature", unit="°C"),
@@ -274,6 +275,7 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
     _pack_sensor(4, 9145, "Battery Pack 4 Heater Temperature", unit="°C"),
     _pack_sensor(4, 9146, "Battery Pack 4 Heater Power", unit="W"),
     _pack_sensor(5, 9204, "Battery Pack 5 SOH", unit="%"),
+    # Companion Modbus register 6741 defines an x1 Celsius temperature.
     _pack_sensor(5, 9214, "Battery Pack 5 Minimum Cell Temperature", unit="°C"),
     _pack_sensor(
         5,
@@ -399,6 +401,7 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
     _sensor(5000, "Home Load Power", unit="W"),
     _sensor(120, "Maximum MPPT Channels"),
     _sensor(11031, "Rated MPPT Power", unit="W"),
+    # Companion Modbus register 2250 defines x1 W total PV charging power.
     _sensor(8500, "Total PV Charging Power", unit="W"),
     _sensor(
         7119,

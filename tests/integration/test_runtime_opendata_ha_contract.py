@@ -204,6 +204,32 @@ async def test_ha_02_raw_values_are_interpreted_as_ha_states(
 
 
 @pytest.mark.asyncio
+async def test_ha_02_companion_register_units_reach_home_assistant(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """HTTP points use the physical units confirmed by companion registers."""
+    backend = FakeDevice(_complete_backend_data())
+    install_fake_devices(monkeypatch, {HOST: backend})
+    entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        expected = {
+            9081: ("°C", SensorDeviceClass.TEMPERATURE),
+            9082: ("W", SensorDeviceClass.POWER),
+            9214: ("°C", SensorDeviceClass.TEMPERATURE),
+            8500: ("W", SensorDeviceClass.POWER),
+        }
+
+        for point, (unit, device_class) in expected.items():
+            state = state_for_unique_id(hass, entry, _get_unique_id(point))
+            assert state.attributes["unit_of_measurement"] == unit
+            assert state.attributes["device_class"] == device_class
+            assert state.attributes["state_class"] == SensorStateClass.MEASUREMENT
+
+
+@pytest.mark.asyncio
 async def test_ha_03_controls_validate_input_and_report_write_failures(
     monkeypatch,
     tmp_path,
