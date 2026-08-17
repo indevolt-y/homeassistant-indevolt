@@ -8,6 +8,7 @@ from datetime import time
 import pytest
 import voluptuous as vol
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
+from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import STATE_UNAVAILABLE, STATE_UNKNOWN
 from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from homeassistant.helpers import entity_registry as er
@@ -532,11 +533,13 @@ async def test_ha_08_expanded_polling_is_atomic_serialized_and_recovers(
         backend.before_fetch = fail_one_later_batch
         await _refresh(hass, entry)
         assert failure_raised is True
-        assert coordinator.last_update_success is False
-        assert coordinator.data == original_data
+        assert coordinator.last_update_success is True
+        assert coordinator.data != original_data
+        assert "2278" not in coordinator.data
         assert state_for_unique_id(hass, entry, _get_unique_id(2278)).state == (
-            STATE_UNAVAILABLE
+            STATE_UNKNOWN
         )
+        assert state_for_unique_id(hass, entry, f"{SERIAL}_142").state == "2048"
 
         backend.fetches.clear()
         active_fetches = 0
@@ -558,6 +561,61 @@ async def test_ha_08_expanded_polling_is_atomic_serialized_and_recovers(
         assert maximum_active_fetches == 1
         assert coordinator.last_update_success is True
         assert state_for_unique_id(hass, entry, _get_unique_id(2278)).state == "777"
+
+
+@pytest.mark.parametrize(
+    ("model", "host", "serial", "added_point", "existing_unique_id"),
+    [
+        (
+            "BK1600/BK1600Ultra",
+            "192.0.2.194",
+            "OLD-BK-SN",
+            1107,
+            "OLD-BK-SN_6001",
+        ),
+        (
+            "SolidFlex/PowerFlex2000",
+            "192.0.2.195",
+            "OLD-SF-SN",
+            2278,
+            "OLD-SF-SN_142",
+        ),
+        (
+            "FutureModel",
+            "192.0.2.196",
+            "OLD-FALLBACK-SN",
+            2278,
+            "OLD-FALLBACK-SN_142",
+        ),
+    ],
+)
+@pytest.mark.asyncio
+async def test_added_batch_failure_does_not_block_existing_device_setup(
+    monkeypatch,
+    tmp_path,
+    model: str,
+    host: str,
+    serial: str,
+    added_point: int,
+    existing_unique_id: str,
+) -> None:
+    backend = FakeDevice(dict(DEFAULT_DATA))
+
+    async def reject_added_batch(keys: list[int]) -> None:
+        if added_point in keys:
+            raise RuntimeError("old firmware rejects an added batch")
+
+    backend.before_fetch = reject_added_batch
+    install_fake_devices(monkeypatch, {host: backend})
+    entry = make_entry(host=host, serial=serial, model=model, firmware="old-firmware")
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+
+        assert entry.state is ConfigEntryState.LOADED
+        existing_state = state_for_unique_id(hass, entry, existing_unique_id)
+        assert existing_state is not None
+        assert existing_state.state != STATE_UNAVAILABLE
 
 
 @pytest.mark.asyncio

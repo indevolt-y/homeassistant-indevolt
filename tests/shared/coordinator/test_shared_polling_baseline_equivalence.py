@@ -206,6 +206,31 @@ async def test_coordinator_stops_at_the_same_failing_batch_as_main() -> None:
 
 
 @pytest.mark.parametrize(
+    ("device_model", "baseline_points"),
+    [
+        ("BK1600/BK1600Ultra", BK_MAIN_POINTS),
+        ("SolidFlex/PowerFlex2000", DEFAULT_MAIN_POINTS),
+    ],
+)
+@pytest.mark.asyncio
+async def test_additional_batch_failure_keeps_complete_baseline_snapshot(
+    device_model: str,
+    baseline_points: tuple[int, ...],
+) -> None:
+    baseline_batches = expected_batches(baseline_points)
+    api = RecordingAPI(fail_on_request=len(baseline_batches) + 2)
+    coordinator = make_coordinator({"device_model": device_model}, api)
+
+    data = await coordinator._async_update_data()
+
+    assert api.batches[: len(baseline_batches)] == baseline_batches
+    assert data == {
+        "last_batch": len(baseline_batches),
+        **{str(point): point for point in baseline_points},
+    }
+
+
+@pytest.mark.parametrize(
     ("config", "cause_type"),
     [
         ({}, KeyError),

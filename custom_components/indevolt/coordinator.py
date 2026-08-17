@@ -53,10 +53,24 @@ class IndevoltDeviceUpdateCoordinator(DataUpdateCoordinator):
             data: Dict[str, Any] = {}
 
             baseline_points = [field.point for field in polling_baseline]
-            for point_group in (baseline_points, *additional_groups):
-                for batch in _chunked(list(point_group), 8):
-                    result = await self.api.fetch_data(batch)
-                    data.update(result)
+            for batch in _chunked(baseline_points, 8):
+                result = await self.api.fetch_data(batch)
+                data.update(result)
+
+            additional_data: Dict[str, Any] = {}
+            try:
+                for point_group in additional_groups:
+                    for batch in _chunked(list(point_group), 8):
+                        result = await self.api.fetch_data(batch)
+                        additional_data.update(result)
+            except Exception as err:
+                _LOGGER.debug(
+                    "Additional OpenData points are unavailable; keeping the "
+                    "baseline update: %s",
+                    err,
+                )
+            else:
+                data.update(additional_data)
 
             _LOGGER.debug("Coordinator update finished (%d keys)", len(data))
 
