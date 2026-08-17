@@ -72,19 +72,6 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
         value_fn=lambda data: None,
         set_fn=lambda c, value: c.api.set_data(point=1, value=[value]),
     ),
-    IndevoltSelectDescription(
-        key="led_light_strip_mode",
-        translation_key="led_light_strip_mode",
-        name="LED Light-strip Mode",
-        icon="mdi:led-strip-variant",
-        options_map={0: "off", 1: "on", 2: "low_power"},
-        read_point="7171",
-        entity_category=EntityCategory.CONFIG,
-        value_fn=lambda data: data.get("7171"),
-        set_fn=lambda c, value: c.api.set_data(point=35005, value=[value]),
-        create_fn=lambda data: data.get("7171") is not None,
-        report_write_failures=True,
-    ),
 )
 
 SELECTS_GEN1: tuple[IndevoltSelectDescription, ...] = (

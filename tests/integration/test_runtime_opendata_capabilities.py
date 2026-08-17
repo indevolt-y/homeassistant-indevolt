@@ -49,7 +49,6 @@ BASELINE_UNIQUE_IDS = {
     f"{SERIAL}_work_mode",
     f"{SERIAL}_state_setting",
     f"{SERIAL}_load_setting",
-    f"{SERIAL}_led_light_strip_mode",
     f"{SERIAL}_light",
     f"{SERIAL}_grid",
     f"{SERIAL}_bypass",

@@ -670,7 +670,6 @@ def test_every_select_and_switch_keeps_its_unique_id() -> None:
         "control-entry_work_mode",
         "control-entry_state_setting",
         "control-entry_load_setting",
-        "control-entry_led_light_strip_mode",
     }
     assert {
         IndevoltSwitchEntity(default, description).unique_id for description in SWITCHES

@@ -122,8 +122,8 @@ async def test_action_targets_two_real_registry_devices_in_input_order(
         assert first.writes == [(47005, [1])]
         assert first_entry.state is ConfigEntryState.LOADED
         assert second_entry.state is ConfigEntryState.LOADED
-        assert len(entry_entities(hass, first_entry)) == 16
-        assert len(entry_entities(hass, second_entry)) == 16
+        assert len(entry_entities(hass, first_entry)) == 15
+        assert len(entry_entities(hass, second_entry)) == 15
 
 
 @pytest.mark.asyncio
@@ -314,6 +314,41 @@ async def test_documented_11010_does_not_replace_the_existing_write_transport(
 
         assert backend.writes == [(1146, [900.0])]
         assert all(point != 11010 for point, _value in backend.writes)
+
+
+@pytest.mark.asyncio
+async def test_documented_35005_does_not_duplicate_the_existing_light_switch(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Keep the 1.2 light switch reading 7171 and writing 7265."""
+    backend = FakeDevice(dict(DEFAULT_DATA))
+    install_fake_devices(monkeypatch, {"192.0.2.52": backend})
+    entry = make_entry(
+        host="192.0.2.52",
+        serial="LED-SN",
+        model="SolidFlex/PowerFlex2000",
+    )
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        entities = entry_entities(hass, entry)
+        switch_entity = entities["LED-SN_light"]
+
+        assert "LED-SN_led_light_strip_mode" not in entities
+        state = hass.states.get(switch_entity.entity_id)
+        assert state is not None
+        assert state.state == "on"
+
+        await hass.services.async_call(
+            "switch",
+            "turn_off",
+            {"entity_id": switch_entity.entity_id},
+            blocking=True,
+        )
+
+        assert backend.writes == [(7265, [0])]
+        assert all(point != 35005 for point, _value in backend.writes)
 
 
 @pytest.mark.asyncio

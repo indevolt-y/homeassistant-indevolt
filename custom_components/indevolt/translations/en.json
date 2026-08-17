@@ -714,14 +714,6 @@
           "Charge/Discharge Schedule": "Charge/Discharge Schedule",
           "Custom Time Control Mode": "Custom Time Control Mode"
         }
-      },
-      "led_light_strip_mode": {
-        "name": "LED Light-strip Mode",
-        "state": {
-          "off": "off",
-          "on": "on",
-          "low_power": "low_power"
-        }
       }
     },
     "switch": {

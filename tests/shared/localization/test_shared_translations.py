@@ -104,8 +104,8 @@ def test_translation_files_have_identical_contracts() -> None:
 def test_every_translation_text_matches_the_complete_golden_contract() -> None:
     """Lock every user-facing string, not only representative examples."""
     expected_hashes = {
-        "en": "bbcd51ed3071d58acca04ce9ce67b9f91c0ea1b7c7ccb888dc6ce61056a3d0af",
-        "zh-Hans": "2709b4b59980766dcc035bf29e16b08542e274ef52d5d410ad45ebc58a7b5c50",
+        "en": "b1f2439382454ec34a684afb215e580b14d31a7070ff91a25c9145059ab7da83",
+        "zh-Hans": "f987947ea52c2f1607dc60d631e48d6c2eca32280c840189b33fefc5261e87f0",
     }
 
     for language, expected_hash in expected_hashes.items():
@@ -227,7 +227,6 @@ def test_public_state_and_option_values_are_unchanged() -> None:
     assert [description.options_map for description in SELECTS_GEN2[1:]] == [
         {0: "Standby", 1: "Charging", 2: "Discharging"},
         {1: "Smart Plug", 2: "Meter", 3: "Key Load", 4: "Custom"},
-        {0: "off", 1: "on", 2: "low_power"},
     ]
 
 

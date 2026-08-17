@@ -112,7 +112,6 @@ async def test_solidflex2000_registers_its_own_platform_contract(
         "work_mode",
         "state_setting",
         "load_setting",
-        "led_light_strip_mode",
     }
     assert switch_added == ["light"]
 

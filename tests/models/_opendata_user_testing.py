@@ -45,6 +45,7 @@ EXISTING_CONTROL_WRITE_POINTS = {
     2618: ("switch", "grid", 1143),
     6505: ("number", "backup_soc", 1142),
     11010: ("number", "feed_in_power_limit", 1146),
+    35005: ("switch", "light", 7265),
 }
 
 

@@ -268,7 +268,6 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
         entities = entry_entities(hass, entry)
         interval = entities[_set_unique_id(8646)].entity_id
         forced_power = entities[_set_unique_id(2802)].entity_id
-        light_mode = entities[_set_unique_id(35005)].entity_id
         sleep_start = entities[_set_unique_id(35001)].entity_id
 
         for value in (-1, 30.5, 61):
@@ -284,13 +283,6 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
                 "number",
                 "set_value",
                 {"entity_id": forced_power, "value": 100.5},
-                blocking=True,
-            )
-        with pytest.raises(ServiceValidationError):
-            await hass.services.async_call(
-                "select",
-                "select_option",
-                {"entity_id": light_mode, "option": "not-a-protocol-option"},
                 blocking=True,
             )
         with pytest.raises((ServiceValidationError, vol.Invalid)):
@@ -336,14 +328,6 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
                 blocking=True,
             )
 
-        backend.write_error = ConnectionError("connection lost")
-        with pytest.raises(HomeAssistantError):
-            await hass.services.async_call(
-                "select",
-                "select_option",
-                {"entity_id": light_mode, "option": "on"},
-                blocking=True,
-            )
         assert state_for_unique_id(hass, entry, _set_unique_id(8646)).state == "30"
 
 

@@ -111,6 +111,5 @@ async def test_unmatched_model_registers_the_gen2_fallback_contract(
         "work_mode",
         "state_setting",
         "load_setting",
-        "led_light_strip_mode",
     }
     assert switch_added == ["light"]

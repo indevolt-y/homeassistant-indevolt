@@ -84,18 +84,9 @@ SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
     ),
     SetUserCapability(
         35005,
-        "select",
-        "LED Light-strip Mode",
-        translation_key="led_light_strip_mode",
-        entity_category=EntityCategory.CONFIG,
-        icon="mdi:led-strip-variant",
-        key="led_light_strip_mode",
-        user_value="on",
-        wire_value=1,
-        read_point=7171,
-        read_sample_value=1,
-        expected_initial_state="on",
-        options=("off", "on", "low_power"),
+        "existing_control_transport",
+        "Documented three-state LED point; keep the 1.2 read-7171/write-7265 "
+        "switch unchanged",
     ),
     SetUserCapability(
         8646,

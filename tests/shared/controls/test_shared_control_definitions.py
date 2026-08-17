@@ -154,15 +154,6 @@ def test_select_descriptions_match_the_complete_golden_contract() -> None:
             "config",
             {1: "Smart Plug", 2: "Meter", 3: "Key Load", 4: "Custom"},
         ),
-        (
-            "led_light_strip_mode",
-            "LED Light-strip Mode",
-            "led_light_strip_mode",
-            "mdi:led-strip-variant",
-            "7171",
-            "config",
-            {0: "off", 1: "on", 2: "low_power"},
-        ),
     ]
 
 
