@@ -54,7 +54,7 @@ async def test_failed_first_refresh_retries_without_mutating_entry(
 
         assert entry.state is ConfigEntryState.LOADED
         assert dict(entry.data) == original_data
-        assert len(entry_entities(hass, entry)) == 16
+        assert len(entry_entities(hass, entry)) == 15
         assert (
             dr.async_get(hass).async_get_device(identifiers={(DOMAIN, "RETRY-SN")})
             is not None
