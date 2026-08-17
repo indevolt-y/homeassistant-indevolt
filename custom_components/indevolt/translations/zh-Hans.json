@@ -605,9 +605,6 @@
       "daily_bypass_discharge_energy": {
         "name": "当日旁路放电量"
       },
-      "daily_microinverter_energy_generation": {
-        "name": "当日微型逆变器发电量"
-      },
       "bypass_mode": {
         "name": "旁路模式",
         "state": {

@@ -605,9 +605,6 @@
       "daily_bypass_discharge_energy": {
         "name": "Daily Bypass Discharge Energy"
       },
-      "daily_microinverter_energy_generation": {
-        "name": "Daily Microinverter Energy Generation"
-      },
       "bypass_mode": {
         "name": "Bypass Mode",
         "state": {

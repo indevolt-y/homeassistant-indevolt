@@ -104,8 +104,8 @@ def test_translation_files_have_identical_contracts() -> None:
 def test_every_translation_text_matches_the_complete_golden_contract() -> None:
     """Lock every user-facing string, not only representative examples."""
     expected_hashes = {
-        "en": "adbd30f2f7e0eef9625e57c28932e0ec3a2905d131e8bc476b52bb581004d4bb",
-        "zh-Hans": "2fd8cdaa4f91c9cf5165c65c4ff96d68075f859f80f0f501b705824e9d1a50f7",
+        "en": "c1efefd2453dd49a8f0ec693a8c01a60a4552f2a25f830ab6e886c0ee67a9724",
+        "zh-Hans": "892545e16e0efa50700666a5b794203c99c4841f25c6f387d0d984f08c054f0d",
     }
 
     for language, expected_hash in expected_hashes.items():
