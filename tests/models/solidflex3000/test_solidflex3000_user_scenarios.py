@@ -8,6 +8,7 @@ from itertools import cycle
 import pytest
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import EntityCategory
+from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import device_registry as dr
 
 from custom_components.indevolt.const import DOMAIN
@@ -367,11 +368,11 @@ async def test_f_05_sf2000_with_one_4000_pack_keeps_pack_identity(
 
 
 @pytest.mark.asyncio
-async def test_f_06_wired_parallel_topology_accepts_3600_w_feed_in(
+async def test_f_06_wired_parallel_topology_preserves_feed_in_limit(
     monkeypatch,
     tmp_path,
 ) -> None:
-    """F-06: a wired master/slave pair keeps topology and the 3600 W input."""
+    """F-06: wired topology keeps the existing 2400 W feed-in limit."""
     master = FakeDevice(
         scenario_data({606: "1000", 669: 0}, pack_serials={1: "WIRED-M-PACK"})
     )
@@ -399,10 +400,23 @@ async def test_f_06_wired_parallel_topology_accepts_3600_w_feed_in(
             "centralized"
         )
 
-        await set_number(hass, master_entry, "feed_in_power_limit", 3600)
+        feed_in = require_state(
+            hass,
+            master_entry,
+            "WIRED-MASTER-SN_feed_in_power_limit",
+        )
+        assert feed_in.attributes["max"] == 2400
 
-        # This is a user-level scenario.  The source material has no OpenData
-        # request sample, so the test deliberately does not choose a raw point.
+        await set_number(hass, master_entry, "feed_in_power_limit", 2400)
+        assert len(master.writes) == 1
+        assert slave.writes == []
+
+        with pytest.raises(
+            ServiceValidationError,
+            match=r"outside valid range 50(?:\.0)? - 2400(?:\.0)?",
+        ):
+            await set_number(hass, master_entry, "feed_in_power_limit", 3600)
+
         assert len(master.writes) == 1
         assert slave.writes == []
 
