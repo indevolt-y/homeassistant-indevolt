@@ -243,6 +243,43 @@ async def test_documented_2618_does_not_replace_the_existing_write_transport(
 
 
 @pytest.mark.asyncio
+async def test_documented_6505_does_not_replace_the_existing_write_transport(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Keep the 1.2 Backup SOC reading 6105 and writing 1142."""
+    backend = FakeDevice(dict(DEFAULT_DATA))
+    install_fake_devices(monkeypatch, {"192.0.2.48": backend})
+    entry = make_entry(
+        host="192.0.2.48",
+        serial="BACKUP-SOC-SN",
+        model="SolidFlex/PowerFlex2000",
+    )
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        entities = entry_entities(hass, entry)
+        number_entity = entities["BACKUP-SOC-SN_backup_soc"]
+
+        assert "BACKUP-SOC-SN_6505" not in entities
+        state = hass.states.get(number_entity.entity_id)
+        assert state is not None
+        assert state.state == "50"
+        assert state.attributes["min"] == 5
+        assert state.attributes["max"] == 100
+
+        await hass.services.async_call(
+            "number",
+            "set_value",
+            {"entity_id": number_entity.entity_id, "value": 80},
+            blocking=True,
+        )
+
+        assert backend.writes == [(1142, [80.0])]
+        assert all(point != 6505 for point, _value in backend.writes)
+
+
+@pytest.mark.asyncio
 async def test_all_select_entities_accept_real_ha_service_calls(
     monkeypatch,
     tmp_path,

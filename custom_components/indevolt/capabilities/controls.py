@@ -27,7 +27,8 @@ SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
     SetUserCapability(
         6505,
         "existing_control_transport",
-        "Direct backup-SOC write; keep the existing user control unchanged",
+        "Documented direct backup-SOC point; keep the 1.2 read-6105/write-1142 "
+        "control unchanged",
     ),
     SetUserCapability(
         11010,
