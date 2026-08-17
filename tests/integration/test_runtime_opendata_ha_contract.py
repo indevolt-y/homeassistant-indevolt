@@ -298,6 +298,82 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
 
 
 @pytest.mark.asyncio
+async def test_ha_03_simulated_load_controls_use_uint16_boundaries(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Representative slots use whole watts across the documented uint16 range."""
+    backend = FakeDevice(_complete_backend_data())
+    write_to_read = {12197: 26000, 12220: 26023, 12244: 26047}
+
+    async def remember_values(point, value) -> None:
+        if point in write_to_read:
+            backend.data[str(write_to_read[point])] = value[0]
+
+    backend.before_write = remember_values
+    install_fake_devices(monkeypatch, {HOST: backend})
+    entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        registry = er.async_get(hass)
+        unique_ids = {point: _set_unique_id(point) for point in (12197, 12220, 12244)}
+
+        for unique_id in unique_ids.values():
+            registry_entry = entry_entities(hass, entry)[unique_id]
+            assert registry_entry.disabled_by is RegistryEntryDisabler.INTEGRATION
+            registry.async_update_entity(registry_entry.entity_id, disabled_by=None)
+
+        assert await hass.config_entries.async_reload(entry.entry_id)
+        await hass.async_block_till_done()
+        entities = entry_entities(hass, entry)
+
+        requested_values = {12197: 0, 12220: 65_535, 12244: 456}
+        for point, value in requested_values.items():
+            state = hass.states.get(entities[unique_ids[point]].entity_id)
+            assert state is not None
+            assert state.attributes["min"] == 0
+            assert state.attributes["max"] == 65_535
+            assert state.attributes["step"] == 1
+            await hass.services.async_call(
+                "number",
+                "set_value",
+                {"entity_id": state.entity_id, "value": value},
+                blocking=True,
+            )
+
+        assert backend.writes == [
+            (12197, [0]),
+            (12220, [65_535]),
+            (12244, [456]),
+        ]
+        assert {
+            point: state_for_unique_id(hass, entry, unique_id).state
+            for point, unique_id in unique_ids.items()
+        } == {12197: "0", 12220: "65535", 12244: "456"}
+
+        for point, value in ((12197, -1), (12220, 65_536), (12244, 456.5)):
+            with pytest.raises(ServiceValidationError):
+                await hass.services.async_call(
+                    "number",
+                    "set_value",
+                    {
+                        "entity_id": entities[unique_ids[point]].entity_id,
+                        "value": value,
+                    },
+                    blocking=True,
+                )
+        assert len(backend.writes) == 3
+
+        assert await hass.config_entries.async_reload(entry.entry_id)
+        await hass.async_block_till_done()
+        assert {
+            point: state_for_unique_id(hass, entry, unique_id).state
+            for point, unique_id in unique_ids.items()
+        } == {12197: "0", 12220: "65535", 12244: "456"}
+
+
+@pytest.mark.asyncio
 async def test_ha_04_refresh_and_reload_keep_entity_identity(
     monkeypatch,
     tmp_path,

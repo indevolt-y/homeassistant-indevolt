@@ -9,6 +9,8 @@ from homeassistant.const import EntityCategory
 
 from .definitions import SetUserCapability
 
+UINT16_MAX = 0xFFFF
+
 SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
     SetUserCapability(
         11009,
@@ -181,13 +183,14 @@ SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
             mode=NumberMode.BOX,
             icon="mdi:transmission-tower-import",
             user_value=float(100 + slot),
-            wire_value=float(100 + slot),
+            wire_value=100 + slot,
+            integer_wire_value=True,
             read_point=26000 + slot,
             read_sample_value=100 + slot,
             expected_initial_state=str(100 + slot),
             enabled_by_default=False,
             minimum=0,
-            maximum=10800,
+            maximum=UINT16_MAX,
             step=1,
             unit="W",
         )
