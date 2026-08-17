@@ -422,11 +422,11 @@ async def test_f_06_wired_parallel_topology_preserves_feed_in_limit(
 
 
 @pytest.mark.asyncio
-async def test_f_07_wireless_parallel_topology_accepts_10800_w_feed_in(
+async def test_f_07_wireless_parallel_topology_preserves_feed_in_limit(
     monkeypatch,
     tmp_path,
 ) -> None:
-    """F-07: a wireless master/slave pair keeps topology and 10800 W input."""
+    """F-07: wireless topology keeps the existing 2400 W feed-in limit."""
     master = FakeDevice(
         scenario_data({606: "1000", 669: 1}, pack_serials={1: "RADIO-M-PACK"})
     )
@@ -454,10 +454,23 @@ async def test_f_07_wireless_parallel_topology_accepts_10800_w_feed_in(
             "coordinated"
         )
 
-        await set_number(hass, master_entry, "feed_in_power_limit", 10_800)
+        feed_in = require_state(
+            hass,
+            master_entry,
+            "RADIO-MASTER-SN_feed_in_power_limit",
+        )
+        assert feed_in.attributes["max"] == 2400
 
-        # This is a user-level scenario.  The source material has no OpenData
-        # request sample, so the test deliberately does not choose a raw point.
+        await set_number(hass, master_entry, "feed_in_power_limit", 2400)
+        assert len(master.writes) == 1
+        assert slave.writes == []
+
+        with pytest.raises(
+            ServiceValidationError,
+            match=r"outside valid range 50(?:\.0)? - 2400(?:\.0)?",
+        ):
+            await set_number(hass, master_entry, "feed_in_power_limit", 10_800)
+
         assert len(master.writes) == 1
         assert slave.writes == []
 
