@@ -146,24 +146,9 @@ SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
     ),
     SetUserCapability(
         4,
-        "existing_select_extension",
-        "Work Mode",
-        translation_key="work_mode",
-        entity_category=EntityCategory.CONFIG,
-        icon="mdi:cog",
-        key="work_mode",
-        user_value="Custom Time Control Mode",
-        wire_value=6,
-        read_point=7101,
-        read_sample_value=1,
-        expected_initial_state="Self-Consumed Prioritized",
-        options=(
-            "Self-Consumed Prioritized",
-            "Real-Time Control",
-            "Charge/Discharge Schedule",
-            "Custom Time Control Mode",
-        ),
-        create_requires_read_value=False,
+        "existing_control_transport",
+        "Documented custom-time mode point; keep the 1.2 read-7101/write-47005 "
+        "work-mode options unchanged",
     ),
     *(
         SetUserCapability(

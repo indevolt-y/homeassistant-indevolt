@@ -133,7 +133,6 @@ def test_select_descriptions_match_the_complete_golden_contract() -> None:
                 1: "Self-Consumed Prioritized",
                 4: "Real-Time Control",
                 5: "Charge/Discharge Schedule",
-                6: "Custom Time Control Mode",
             },
         ),
         (

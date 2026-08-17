@@ -16,7 +16,6 @@ SetExposure = Literal[
     "number",
     "select",
     "time",
-    "existing_select_extension",
     "existing_control_transport",
     "external_data_injection",
 ]
@@ -113,13 +112,10 @@ class SetUserCapability:
             "number",
             "select",
             "time",
-            "existing_select_extension",
         }
 
     @property
     def entity_domain(self) -> str | None:
-        if self.exposure == "existing_select_extension":
-            return "select"
         if self.exposure in {"number", "select", "time"}:
             return self.exposure
         return None

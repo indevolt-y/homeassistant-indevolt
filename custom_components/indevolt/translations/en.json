@@ -711,8 +711,7 @@
         "state": {
           "Self-Consumed Prioritized": "Self-Consumed Prioritized",
           "Real-Time Control": "Real-Time Control",
-          "Charge/Discharge Schedule": "Charge/Discharge Schedule",
-          "Custom Time Control Mode": "Custom Time Control Mode"
+          "Charge/Discharge Schedule": "Charge/Discharge Schedule"
         }
       }
     },

@@ -222,7 +222,6 @@ async def test_modbus_version_does_not_unlock_unreturned_capabilities(
             "Self-Consumed Prioritized",
             "Real-Time Control",
             "Charge/Discharge Schedule",
-            "Custom Time Control Mode",
         )
 
 

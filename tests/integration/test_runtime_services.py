@@ -352,6 +352,42 @@ async def test_documented_35005_does_not_duplicate_the_existing_light_switch(
 
 
 @pytest.mark.asyncio
+async def test_documented_point_4_does_not_extend_the_existing_work_mode(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Keep the 1.2 work-mode options and point 47005 writes."""
+    backend = FakeDevice(dict(DEFAULT_DATA))
+    install_fake_devices(monkeypatch, {"192.0.2.53": backend})
+    entry = make_entry(
+        host="192.0.2.53",
+        serial="WORK-MODE-SN",
+        model="SolidFlex/PowerFlex2000",
+    )
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        select_entity = entry_entities(hass, entry)["WORK-MODE-SN_work_mode"]
+        state = hass.states.get(select_entity.entity_id)
+        assert state is not None
+        assert tuple(state.attributes["options"]) == (
+            "Self-Consumed Prioritized",
+            "Real-Time Control",
+            "Charge/Discharge Schedule",
+        )
+
+        await hass.services.async_call(
+            "select",
+            "select_option",
+            {"entity_id": select_entity.entity_id, "option": "Real-Time Control"},
+            blocking=True,
+        )
+
+        assert backend.writes == [(47005, [4])]
+        assert all(point != 4 for point, _value in backend.writes)
+
+
+@pytest.mark.asyncio
 async def test_all_select_entities_accept_real_ha_service_calls(
     monkeypatch,
     tmp_path,

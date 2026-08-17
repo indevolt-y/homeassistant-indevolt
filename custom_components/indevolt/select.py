@@ -40,15 +40,11 @@ SELECTS_GEN2: tuple[IndevoltSelectDescription, ...] = (
             1: "Self-Consumed Prioritized",
             4: "Real-Time Control",
             5: "Charge/Discharge Schedule",
-            6: "Custom Time Control Mode",
         },
         read_point="7101",
         entity_category=EntityCategory.CONFIG,
         value_fn=lambda data: data.get("7101"),
-        set_fn=lambda c, value: c.api.set_data(
-            point=4 if value == 6 else 47005,
-            value=[value],
-        ),
+        set_fn=lambda c, value: c.api.set_data(point=47005, value=[value]),
     ),
     IndevoltSelectDescription(
         key="state_setting",

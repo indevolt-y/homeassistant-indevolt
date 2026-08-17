@@ -711,8 +711,7 @@
         "state": {
           "Self-Consumed Prioritized": "自发自用优先",
           "Real-Time Control": "实时控制",
-          "Charge/Discharge Schedule": "充放电计划",
-          "Custom Time Control Mode": "自定义定时控制模式"
+          "Charge/Discharge Schedule": "充放电计划"
         }
       }
     },

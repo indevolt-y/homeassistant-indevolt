@@ -104,8 +104,8 @@ def test_translation_files_have_identical_contracts() -> None:
 def test_every_translation_text_matches_the_complete_golden_contract() -> None:
     """Lock every user-facing string, not only representative examples."""
     expected_hashes = {
-        "en": "b1f2439382454ec34a684afb215e580b14d31a7070ff91a25c9145059ab7da83",
-        "zh-Hans": "f987947ea52c2f1607dc60d631e48d6c2eca32280c840189b33fefc5261e87f0",
+        "en": "03d86b048afc34948b8828d0b61aea66e217775f26850b9a548d99b204c317a1",
+        "zh-Hans": "f00ac6b894b76aa0e235181eb5e689b062a737f35a8a7cae0d098d9591bc5bde",
     }
 
     for language, expected_hash in expected_hashes.items():
@@ -223,7 +223,6 @@ def test_public_state_and_option_values_are_unchanged() -> None:
         (4, "Real-Time Control"),
         (5, "Charge/Discharge Schedule"),
     ]
-    assert SELECTS_GEN2[0].options_map[6] == "Custom Time Control Mode"
     assert [description.options_map for description in SELECTS_GEN2[1:]] == [
         {0: "Standby", 1: "Charging", 2: "Discharging"},
         {1: "Smart Plug", 2: "Meter", 3: "Key Load", 4: "Custom"},
