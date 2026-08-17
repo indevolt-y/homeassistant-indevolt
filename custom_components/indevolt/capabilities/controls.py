@@ -33,7 +33,8 @@ SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
     SetUserCapability(
         11010,
         "existing_control_transport",
-        "Direct feed-in-limit write; keep the existing user control unchanged",
+        "Documented direct feed-in-limit point; keep the 1.2 read-11010/write-1146 "
+        "control unchanged",
     ),
     SetUserCapability(
         15203,

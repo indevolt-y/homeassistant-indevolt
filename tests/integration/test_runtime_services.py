@@ -280,6 +280,43 @@ async def test_documented_6505_does_not_replace_the_existing_write_transport(
 
 
 @pytest.mark.asyncio
+async def test_documented_11010_does_not_replace_the_existing_write_transport(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Keep the 1.2 feed-in limit reading 11010 and writing 1146."""
+    backend = FakeDevice(dict(DEFAULT_DATA))
+    install_fake_devices(monkeypatch, {"192.0.2.49": backend})
+    entry = make_entry(
+        host="192.0.2.49",
+        serial="FEED-IN-LIMIT-SN",
+        model="SolidFlex/PowerFlex2000",
+    )
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        entities = entry_entities(hass, entry)
+        number_entity = entities["FEED-IN-LIMIT-SN_feed_in_power_limit"]
+
+        assert "FEED-IN-LIMIT-SN_11010" not in entities
+        state = hass.states.get(number_entity.entity_id)
+        assert state is not None
+        assert state.state == "800"
+        assert state.attributes["min"] == 50
+        assert state.attributes["max"] == 2400
+
+        await hass.services.async_call(
+            "number",
+            "set_value",
+            {"entity_id": number_entity.entity_id, "value": 900},
+            blocking=True,
+        )
+
+        assert backend.writes == [(1146, [900.0])]
+        assert all(point != 11010 for point, _value in backend.writes)
+
+
+@pytest.mark.asyncio
 async def test_all_select_entities_accept_real_ha_service_calls(
     monkeypatch,
     tmp_path,
