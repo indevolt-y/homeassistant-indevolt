@@ -201,11 +201,18 @@ async def test_modbus_version_does_not_unlock_unreturned_capabilities(
     backend_data[MODBUS_VERSION_POINT] = 15
     backend = FakeDevice(backend_data)
     install_fake_devices(monkeypatch, {HOST: backend})
-    entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
+    entry = make_entry(
+        host=HOST,
+        serial=SERIAL,
+        model=MODEL,
+        firmware="999.999.999",
+    )
+    original_data = dict(entry.data)
 
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, entry)
 
+        assert dict(entry.data) == original_data
         version_capability = next(
             capability
             for capability in GET_USER_CAPABILITIES
@@ -226,20 +233,29 @@ async def test_modbus_version_does_not_unlock_unreturned_capabilities(
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize("stored_model", [MODEL, "FutureModel"])
 async def test_returned_new_points_do_not_depend_on_modbus_version(
     monkeypatch,
     tmp_path,
+    stored_model,
 ) -> None:
-    """Each returned point is usable even when point 1127 is absent."""
+    """Returned points do not depend on guessed model or firmware thresholds."""
     backend_data = capability_backend_data()
     backend_data.pop(MODBUS_VERSION_POINT)
     backend = FakeDevice(backend_data)
     install_fake_devices(monkeypatch, {HOST: backend})
-    entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
+    entry = make_entry(
+        host=HOST,
+        serial=SERIAL,
+        model=stored_model,
+        firmware="0.0.0",
+    )
+    original_data = dict(entry.data)
 
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, entry)
 
+        assert dict(entry.data) == original_data
         version_capability = next(
             capability
             for capability in GET_USER_CAPABILITIES
