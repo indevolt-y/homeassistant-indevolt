@@ -504,22 +504,28 @@ async def test_f_08_user_sees_the_connected_mr1_meter(
 
 
 @pytest.mark.asyncio
-async def test_f_09_all_four_load_sources_can_be_selected_and_read_back(
+async def test_f_09_all_four_load_sources_write_without_inventing_readback(
     monkeypatch,
     tmp_path,
 ) -> None:
-    """F-09: Smart Plug, Meter, Key Load, and Custom are real user choices."""
+    """F-09: all load choices write while the existing state stays unknown."""
     backend = FakeDevice(scenario_data())
     install_fake_devices(monkeypatch, {HOST: backend})
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
 
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, entry)
-        for option in ("Smart Plug", "Meter", "Key Load", "Custom"):
+        for expected_value, option in enumerate(
+            ("Smart Plug", "Meter", "Key Load", "Custom"),
+            start=1,
+        ):
             await select_option(hass, entry, "load_setting", option)
+            assert backend.writes[-1] == (1, [expected_value])
+            assert require_state(hass, entry, f"{SERIAL}_load_setting").state == (
+                "unknown"
+            )
 
         assert backend.writes == [(1, [1]), (1, [2]), (1, [3]), (1, [4])]
-        assert require_state(hass, entry, f"{SERIAL}_load_setting").state == ("Custom")
 
 
 @pytest.mark.asyncio
