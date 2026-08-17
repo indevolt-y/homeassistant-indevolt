@@ -751,8 +751,8 @@
       "critical_load_enabled": {
         "name": "Critical Load Enabled"
       },
-      "grid_charging": {
-        "name": "Grid Charging"
+      "grid_charging_permission": {
+        "name": "Grid Charging Permission"
       },
       "bypass": {
         "name": "Bypass"

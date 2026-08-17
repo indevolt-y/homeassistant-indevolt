@@ -751,8 +751,8 @@
       "critical_load_enabled": {
         "name": "关键负载已启用"
       },
-      "grid_charging": {
-        "name": "电网充电"
+      "grid_charging_permission": {
+        "name": "并网充电许可"
       },
       "bypass": {
         "name": "旁路"
