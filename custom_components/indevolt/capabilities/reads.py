@@ -109,6 +109,8 @@ def _sensor_metadata(
     if unit in {"Wh", "kWh"}:
         if "Rated Capacity" in name:
             return SensorDeviceClass.ENERGY_STORAGE, SensorStateClass.MEASUREMENT
+        if name == "Cumulative Production":
+            return SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING
         if name.startswith("Daily "):
             return SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING
         return SensorDeviceClass.ENERGY, SensorStateClass.TOTAL

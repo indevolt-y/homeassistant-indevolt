@@ -569,7 +569,7 @@ async def test_ha_09_energy_metadata_matches_long_term_statistics_semantics(
     backend = FakeDevice(_complete_backend_data())
     install_fake_devices(monkeypatch, {HOST: backend})
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
-    lifetime_points = (11007, 9284, 1505)
+    lifetime_points = (11007, 9284)
     daily_points = (11036, 9285, 11035, 11037)
 
     async with home_assistant_runtime(tmp_path) as hass:
@@ -580,6 +580,15 @@ async def test_ha_09_energy_metadata_matches_long_term_statistics_semantics(
             assert state.attributes["device_class"] == SensorDeviceClass.ENERGY
             assert state.attributes["state_class"] == SensorStateClass.TOTAL
             assert state.attributes["unit_of_measurement"] in {"Wh", "kWh"}
+
+        cumulative_production = state_for_unique_id(hass, entry, _get_unique_id(1505))
+        assert (
+            cumulative_production.attributes["device_class"] == SensorDeviceClass.ENERGY
+        )
+        assert cumulative_production.attributes["state_class"] == (
+            SensorStateClass.TOTAL_INCREASING
+        )
+        assert cumulative_production.attributes["unit_of_measurement"] == "kWh"
 
         for point in daily_points:
             state = state_for_unique_id(hass, entry, _get_unique_id(point))
