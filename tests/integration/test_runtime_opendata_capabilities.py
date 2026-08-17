@@ -310,6 +310,24 @@ async def test_bk_user_sees_every_guessed_opendata_capability_after_setup(
 
 
 @pytest.mark.asyncio
+async def test_bk_pcs_version_without_validated_wire_sample_is_not_exposed(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Point 1119 stays hidden on BK until its wire conversion is evidenced."""
+    backend = FakeDevice(bk_capability_backend_data() | {"1119": "UNVERIFIED"})
+    install_fake_devices(monkeypatch, {BK_HOST: backend})
+    entry = make_entry(host=BK_HOST, serial=BK_SERIAL, model=BK_MODEL)
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+
+        requested = {point for batch in backend.fetches for point in batch}
+        assert 1119 not in requested
+        assert f"{BK_SERIAL}_1119" not in entry_entities(hass, entry)
+
+
+@pytest.mark.asyncio
 async def test_non_user_getdata_points_do_not_create_duplicate_ha_items(
     monkeypatch,
     tmp_path,

@@ -33,8 +33,8 @@ async def test_bk1600_polls_its_own_point_contract() -> None:
     data = await coordinator._async_update_data()
 
     points = {point for batch in api.batches for point in batch}
-    assert [len(batch) for batch in api.batches] == [8, 8, 3, 8, 8, 8, 3]
-    assert len(points) == 46
+    assert [len(batch) for batch in api.batches] == [8, 8, 3, 8, 8, 8, 2]
+    assert len(points) == 45
     assert {1501, 1505, 6001, 21028} <= points
     assert 142 in points
     assert 19177 not in points

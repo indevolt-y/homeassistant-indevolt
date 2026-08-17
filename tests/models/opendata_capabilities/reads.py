@@ -545,7 +545,6 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
 BK_GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
     _sensor(1118, "BK1600 Series EMS Version", sample="EMS-1.0.0"),
     _sensor(1107, "BK1600 Series BMS Version", sample="BMS-1.0.0"),
-    _sensor(1119, "BK1600 Series PCS Version", sample="PCS-1.0.0"),
     _sensor(311, "BK1600 Series MPPT Version", sample="MPPT-1.0.0"),
     _sensor(142, "Rated Capacity", unit="kWh"),
     GetUserCapability(

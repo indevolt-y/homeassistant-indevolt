@@ -161,7 +161,6 @@ REMAINING_DEFAULT_USER_READ_POINTS: tuple[int, ...] = (
 REMAINING_BK_USER_READ_POINTS: tuple[int, ...] = (
     1118,
     1107,
-    1119,
     311,
     142,
     2618,

@@ -621,9 +621,6 @@
       "bk1600_series_bms_version": {
         "name": "BK1600 Series BMS Version"
       },
-      "bk1600_series_pcs_version": {
-        "name": "BK1600 Series PCS Version"
-      },
       "bk1600_series_mppt_version": {
         "name": "BK1600 Series MPPT Version"
       },

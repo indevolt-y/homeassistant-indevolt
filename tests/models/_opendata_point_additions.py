@@ -207,7 +207,6 @@ REMAINING_DEFAULT_READ_POINTS: tuple[int, ...] = (
 REMAINING_BK_USER_READ_POINTS: tuple[int, ...] = (
     1118,
     1107,
-    1119,
     311,
     142,
     2618,
@@ -235,9 +234,10 @@ REMAINING_BK_USER_READ_POINTS: tuple[int, ...] = (
 )
 
 # Point 0 duplicates the configured device serial. Point 667 is explicitly
-# documented as not applicable to BK1600. Their HA expectation is therefore no
-# independent entity and no BK polling request.
-BK_NON_USER_READ_POINTS: tuple[int, ...] = (0, 667)
+# documented as not applicable to BK1600. Point 1119 has a documented wire
+# conversion but no validated raw BK response from which to implement it. Their
+# HA expectation is therefore no independent entity and no BK polling request.
+BK_NON_USER_READ_POINTS: tuple[int, ...] = (0, 667, 1119)
 
 REMAINING_BK_READ_POINTS: tuple[int, ...] = (
     REMAINING_BK_USER_READ_POINTS + BK_NON_USER_READ_POINTS
