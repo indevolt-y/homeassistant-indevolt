@@ -649,11 +649,11 @@ async def test_f_16_forced_full_charge_settings_survive_reload(
     monkeypatch,
     tmp_path,
 ) -> None:
-    """F-16: the one-day interval and start time remain after an HA reload."""
-    backend = FakeDevice(scenario_data({1127: 15, 8646: 1, 8647: 0x0800}))
+    """F-16: all forced full-charge settings remain after an HA reload."""
+    backend = FakeDevice(scenario_data({1127: 15, 8646: 1, 8647: 0x0800, 2802: 100}))
 
     async def remember_settings(point, value) -> None:
-        if point in {8646, 8647}:
+        if point in {8646, 8647, 2802}:
             backend.data[str(point)] = value[0]
 
     backend.before_write = remember_settings
@@ -667,6 +667,9 @@ async def test_f_16_forced_full_charge_settings_survive_reload(
         )
         start = require_registry_entity(
             hass, entry, f"{SERIAL}_forced_full_charge_start_time"
+        )
+        power = require_registry_entity(
+            hass, entry, f"{SERIAL}_forced_ac_charging_power"
         )
         original_unique_ids = set(entry_entities(hass, entry))
 
@@ -682,8 +685,14 @@ async def test_f_16_forced_full_charge_settings_survive_reload(
             {"entity_id": start.entity_id, "time": time(8, 0)},
             blocking=True,
         )
+        await hass.services.async_call(
+            "number",
+            "set_value",
+            {"entity_id": power.entity_id, "value": 100},
+            blocking=True,
+        )
         await hass.async_block_till_done()
-        assert backend.writes == [(8646, [1]), (8647, [0x0800])]
+        assert backend.writes == [(8646, [1]), (8647, [0x0800]), (2802, [100])]
 
         hass.data.setdefault(DOMAIN, {})[entry.entry_id] = entry.runtime_data
         assert await hass.config_entries.async_reload(entry.entry_id)
@@ -696,6 +705,10 @@ async def test_f_16_forced_full_charge_settings_survive_reload(
         assert (
             require_state(hass, entry, f"{SERIAL}_forced_full_charge_start_time").state
             == "08:00:00"
+        )
+        assert (
+            require_state(hass, entry, f"{SERIAL}_forced_ac_charging_power").state
+            == "100"
         )
 
 

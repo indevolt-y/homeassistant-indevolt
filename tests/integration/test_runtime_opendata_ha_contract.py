@@ -217,6 +217,7 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
         await add_entry(hass, entry)
         entities = entry_entities(hass, entry)
         interval = entities[_set_unique_id(8646)].entity_id
+        forced_power = entities[_set_unique_id(2802)].entity_id
         light_mode = entities[_set_unique_id(35005)].entity_id
         sleep_start = entities[_set_unique_id(35001)].entity_id
 
@@ -228,6 +229,13 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
                     {"entity_id": interval, "value": value},
                     blocking=True,
                 )
+        with pytest.raises(ServiceValidationError):
+            await hass.services.async_call(
+                "number",
+                "set_value",
+                {"entity_id": forced_power, "value": 100.5},
+                blocking=True,
+            )
         with pytest.raises(ServiceValidationError):
             await hass.services.async_call(
                 "select",
@@ -250,7 +258,13 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
             {"entity_id": interval, "value": 30},
             blocking=True,
         )
-        assert backend.writes == [(8646, [30])]
+        await hass.services.async_call(
+            "number",
+            "set_value",
+            {"entity_id": forced_power, "value": 100},
+            blocking=True,
+        )
+        assert backend.writes == [(8646, [30]), (2802, [100])]
         backend.writes.clear()
 
         backend.write_result = False
