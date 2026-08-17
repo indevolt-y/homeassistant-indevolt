@@ -285,7 +285,6 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
         enabled=False,
     ),
     _pack_sensor(5, 9280, "Battery Pack 5 Heater Temperature", unit="°C"),
-    _pack_sensor(5, 9281, "Battery Pack 5 Heater Power", unit="W"),
     _sensor(9405, "System SOC", unit="%"),
     _sensor(
         9079,
@@ -334,12 +333,6 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
         state="charging",
         cases=DCDC_STATE_CASES,
         options=_enum_options(1, "charging", DCDC_STATE_CASES),
-    ),
-    _binary(
-        9128,
-        "Battery Pack 3 Heater",
-        scope="battery_3",
-        device_class=BinarySensorDeviceClass.RUNNING,
     ),
     _pack_sensor(
         4,
@@ -510,7 +503,6 @@ GET_USER_CAPABILITIES: tuple[GetUserCapability, ...] = (
     _sensor(6108, "Real-time Control End SOC", unit="%"),
     _sensor(9284, "Total Bypass Port Discharge Energy", unit="Wh"),
     _sensor(9285, "Daily Bypass Discharge Energy", unit="Wh"),
-    _sensor(11035, "Daily Microinverter Energy Generation", unit="Wh"),
     _sensor(
         11039,
         "Bypass Mode",

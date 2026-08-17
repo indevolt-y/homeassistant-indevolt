@@ -848,7 +848,6 @@ async def test_f_19_fixed_power_and_energy_values_have_correct_units(
         ("Off-grid Output Energy", "0.53", "kWh"),
         ("Daily Off-grid Discharge Energy", "530", "Wh"),
         ("Bypass Input Energy", "527", "Wh"),
-        ("Daily Microinverter Energy Generation", "527", "Wh"),
         ("Total Bypass Port Discharge Energy", "177", "Wh"),
         ("Daily Bypass Discharge Energy", "177", "Wh"),
     )
@@ -859,6 +858,7 @@ async def test_f_19_fixed_power_and_energy_values_have_correct_units(
             state = require_named_state(hass, name)
             assert state.state == state_value
             assert state.attributes.get("unit_of_measurement") == unit
+        assert f"{SERIAL}_11035" not in entry_entities(hass, entry)
 
 
 @pytest.mark.asyncio

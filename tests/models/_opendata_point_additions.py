@@ -67,7 +67,6 @@ ADDITIONAL_DEFAULT_READ_POINTS: tuple[int, ...] = (
     9214,
     9267,
     9280,
-    9281,
     9405,
     9079,
     9080,
@@ -76,7 +75,6 @@ ADDITIONAL_DEFAULT_READ_POINTS: tuple[int, ...] = (
     9111,
     9112,
     9127,
-    9128,
     9143,
     9144,
     9278,
@@ -193,7 +191,6 @@ DEFAULT_CAPABILITY_POINT_BATCHES = (
 REMAINING_DEFAULT_USER_READ_POINTS: tuple[int, ...] = (
     9284,
     9285,
-    11035,
     11039,
     11037,
     1505,

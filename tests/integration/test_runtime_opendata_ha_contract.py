@@ -230,6 +230,30 @@ async def test_ha_02_companion_register_units_reach_home_assistant(
 
 
 @pytest.mark.asyncio
+async def test_ha_02_conflicting_protocol_points_are_not_published(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Points without one unambiguous meaning do not become HA entities."""
+    data = _complete_backend_data()
+    data.update({"9128": 1, "9281": 42, "11035": 527})
+    backend = FakeDevice(data)
+    install_fake_devices(monkeypatch, {HOST: backend})
+    entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        conflicting_points = {9128, 9281, 11035}
+        requested_points = {point for batch in backend.fetches for point in batch}
+        assert requested_points.isdisjoint(conflicting_points)
+        assert {
+            f"{SERIAL}_battery_3_9128",
+            f"{SERIAL}_battery_5_9281",
+            f"{SERIAL}_11035",
+        }.isdisjoint(entry_entities(hass, entry))
+
+
+@pytest.mark.asyncio
 async def test_ha_03_controls_validate_input_and_report_write_failures(
     monkeypatch,
     tmp_path,
@@ -753,7 +777,7 @@ async def test_ha_09_energy_metadata_matches_long_term_statistics_semantics(
     install_fake_devices(monkeypatch, {HOST: backend})
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
     lifetime_points = (11007, 9284)
-    daily_points = (11036, 9285, 11035, 11037)
+    daily_points = (11036, 9285, 11037)
 
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, entry)
