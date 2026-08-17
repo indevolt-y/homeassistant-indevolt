@@ -208,6 +208,41 @@ async def test_documented_11009_does_not_replace_the_existing_write_transport(
 
 
 @pytest.mark.asyncio
+async def test_documented_2618_does_not_replace_the_existing_write_transport(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Keep the 1.2 switch reading 2618 and writing 1143."""
+    backend = FakeDevice(dict(DEFAULT_DATA))
+    install_fake_devices(monkeypatch, {"192.0.2.47": backend})
+    entry = make_entry(
+        host="192.0.2.47",
+        serial="GRID-CHARGE-SN",
+        model="SolidFlex/PowerFlex2000",
+    )
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        entities = entry_entities(hass, entry)
+        switch_entity = entities["GRID-CHARGE-SN_grid"]
+
+        assert "GRID-CHARGE-SN_2618" not in entities
+        state = hass.states.get(switch_entity.entity_id)
+        assert state is not None
+        assert state.state == "on"
+
+        await hass.services.async_call(
+            "switch",
+            "turn_off",
+            {"entity_id": switch_entity.entity_id},
+            blocking=True,
+        )
+
+        assert backend.writes == [(1143, [0])]
+        assert all(point != 2618 for point, _value in backend.writes)
+
+
+@pytest.mark.asyncio
 async def test_all_select_entities_accept_real_ha_service_calls(
     monkeypatch,
     tmp_path,

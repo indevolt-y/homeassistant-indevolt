@@ -21,7 +21,8 @@ SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
     SetUserCapability(
         2618,
         "existing_control_transport",
-        "Direct grid-charging write; keep the existing user control unchanged",
+        "Documented direct grid-charging point; keep the 1.2 read-2618/write-1143 "
+        "control unchanged",
     ),
     SetUserCapability(
         6505,
