@@ -171,6 +171,16 @@ ADDITIONAL_DEFAULT_POINT_BATCHES: tuple[tuple[int, ...], ...] = tuple(
     ADDITIONAL_DEFAULT_READ_POINTS[index : index + 8]
     for index in range(0, len(ADDITIONAL_DEFAULT_READ_POINTS), 8)
 )
+SIMULATED_LOAD_READ_POINTS: tuple[int, ...] = tuple(range(26000, 26048))
+STEADY_ADDITIONAL_DEFAULT_READ_POINTS: tuple[int, ...] = tuple(
+    point
+    for point in ADDITIONAL_DEFAULT_READ_POINTS
+    if point not in SIMULATED_LOAD_READ_POINTS
+)
+STEADY_ADDITIONAL_DEFAULT_POINT_BATCHES: tuple[tuple[int, ...], ...] = tuple(
+    STEADY_ADDITIONAL_DEFAULT_READ_POINTS[index : index + 8]
+    for index in range(0, len(STEADY_ADDITIONAL_DEFAULT_READ_POINTS), 8)
+)
 
 # These three reads predate the point-table additions, but their matching SetData
 # points become user controls in this design. Poll them so those controls show the
@@ -182,6 +192,9 @@ DEFAULT_CAPABILITY_READ_POINTS = (
 )
 DEFAULT_CAPABILITY_POINT_BATCHES = (
     ADDITIONAL_DEFAULT_POINT_BATCHES + CONTROL_STATE_POINT_BATCHES
+)
+STEADY_DEFAULT_CAPABILITY_POINT_BATCHES = (
+    STEADY_ADDITIONAL_DEFAULT_POINT_BATCHES + CONTROL_STATE_POINT_BATCHES
 )
 
 # Documented GetData points that should become user-visible HA entities but are

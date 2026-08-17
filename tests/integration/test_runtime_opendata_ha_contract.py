@@ -17,8 +17,9 @@ from homeassistant.helpers.entity_registry import RegistryEntryDisabler
 from custom_components.indevolt.const import DOMAIN
 from tests.models._opendata_point_additions import (
     BASELINE_DEFAULT_POINT_BATCHES,
-    DEFAULT_CAPABILITY_POINT_BATCHES,
     REMAINING_DEFAULT_USER_READ_POINTS,
+    SIMULATED_LOAD_READ_POINTS,
+    STEADY_DEFAULT_CAPABILITY_POINT_BATCHES,
 )
 from tests.models._opendata_user_testing import PACK_SERIAL_POINTS
 from tests.models.opendata_capabilities import (
@@ -635,6 +636,53 @@ async def test_ha_07_new_battery_points_share_the_existing_pack_lifecycle(
 
 
 @pytest.mark.asyncio
+async def test_ha_08_disabled_load_slots_are_only_discovered_once(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Disabled slots leave steady polling; enabled slots keep their readback."""
+    backend = FakeDevice(_complete_backend_data())
+    install_fake_devices(monkeypatch, {HOST: backend})
+    entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        initial_fetches = list(backend.fetches)
+        initially_requested = {point for batch in initial_fetches for point in batch}
+        assert set(SIMULATED_LOAD_READ_POINTS) <= initially_requested
+
+        entities = entry_entities(hass, entry)
+        for write_point in range(12197, 12245):
+            assert (
+                entities[_set_unique_id(write_point)].disabled_by
+                is RegistryEntryDisabler.INTEGRATION
+            )
+
+        backend.fetches.clear()
+        await _refresh(hass, entry)
+        steady_requested = {point for batch in backend.fetches for point in batch}
+        assert steady_requested.isdisjoint(SIMULATED_LOAD_READ_POINTS)
+        assert len(initial_fetches) - len(backend.fetches) == 6
+
+        first_slot = entities[_set_unique_id(12197)]
+        er.async_get(hass).async_update_entity(first_slot.entity_id, disabled_by=None)
+        assert await hass.config_entries.async_reload(entry.entry_id)
+        await hass.async_block_till_done()
+
+        backend.fetches.clear()
+        backend.data["26000"] = 321
+        await _refresh(hass, entry)
+        enabled_slot_requests = [
+            point
+            for batch in backend.fetches
+            for point in batch
+            if point in SIMULATED_LOAD_READ_POINTS
+        ]
+        assert enabled_slot_requests == [26000]
+        assert state_for_unique_id(hass, entry, _set_unique_id(12197)).state == "321"
+
+
+@pytest.mark.asyncio
 async def test_ha_08_expanded_polling_is_atomic_serialized_and_recovers(
     monkeypatch,
     tmp_path,
@@ -645,7 +693,7 @@ async def test_ha_08_expanded_polling_is_atomic_serialized_and_recovers(
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
     expected_batches = (
         BASELINE_DEFAULT_POINT_BATCHES
-        + DEFAULT_CAPABILITY_POINT_BATCHES
+        + STEADY_DEFAULT_CAPABILITY_POINT_BATCHES
         + (REMAINING_DEFAULT_USER_READ_POINTS,)
     )
 

@@ -12,6 +12,7 @@ from custom_components.indevolt.opendata.additional_points import (
     DEFAULT_ADDITIONAL_READ_GROUPS,
 )
 from custom_components.indevolt.opendata.polling import DEFAULT_POLLING_BASELINE
+from tests.models._opendata_point_additions import SIMULATED_LOAD_READ_POINTS
 
 from ._support import (
     DEFAULT_DATA,
@@ -25,8 +26,13 @@ from ._support import (
     state_for_unique_id,
 )
 
-DEFAULT_BATCH_COUNT = (len(DEFAULT_POLLING_BASELINE) + 7) // 8 + sum(
-    (len(group) + 7) // 8 for group in DEFAULT_ADDITIONAL_READ_GROUPS
+DEFAULT_STEADY_BATCH_COUNT = (len(DEFAULT_POLLING_BASELINE) + 7) // 8 + sum(
+    (
+        len(tuple(point for point in group if point not in SIMULATED_LOAD_READ_POINTS))
+        + 7
+    )
+    // 8
+    for group in DEFAULT_ADDITIONAL_READ_GROUPS
 )
 
 
@@ -79,7 +85,7 @@ async def test_two_explicit_refreshes_are_serialized_and_both_complete(
         release_first_fetch.set()
         await asyncio.gather(first_refresh, second_refresh)
 
-        assert len(backend.fetches) == DEFAULT_BATCH_COUNT * 2
+        assert len(backend.fetches) == DEFAULT_STEADY_BATCH_COUNT * 2
         assert maximum_active_fetches == 1
         assert coordinator.last_update_success is True
 
@@ -141,7 +147,7 @@ async def test_queued_refresh_recovers_after_an_earlier_batch_fails(
         await hass.async_block_till_done()
 
         assert failure_raised is True
-        assert len(backend.fetches) == 3 + DEFAULT_BATCH_COUNT
+        assert len(backend.fetches) == 3 + DEFAULT_STEADY_BATCH_COUNT
         assert coordinator.last_update_success is True
         assert (
             state_for_unique_id(hass, entry, "QUEUED-RECOVERY-SN_142").state == "4096"
@@ -192,7 +198,7 @@ async def test_refresh_completes_while_number_write_waits_then_write_refreshes_a
         try:
             await asyncio.wait_for(coordinator.async_refresh(), timeout=2)
             assert write_task.done() is False
-            assert len(backend.fetches) == DEFAULT_BATCH_COUNT
+            assert len(backend.fetches) == DEFAULT_STEADY_BATCH_COUNT
             assert (
                 state_for_unique_id(hass, entry, "WRITE-REFRESH-SN_142").state == "5000"
             )
@@ -202,7 +208,7 @@ async def test_refresh_completes_while_number_write_waits_then_write_refreshes_a
         await write_task
 
         assert backend.writes == [(47016, [1200.0])]
-        assert len(backend.fetches) == DEFAULT_BATCH_COUNT * 2
+        assert len(backend.fetches) == DEFAULT_STEADY_BATCH_COUNT * 2
         assert coordinator.last_update_success is True
 
 
@@ -248,7 +254,7 @@ async def test_simultaneous_number_services_do_not_drop_either_request(
         assert Counter((point, tuple(value)) for point, value in backend.writes) == (
             Counter({(1142, (80.0,)): 1, (47016, (2200.0,)): 1})
         )
-        assert len(backend.fetches) == DEFAULT_BATCH_COUNT * 2
+        assert len(backend.fetches) == DEFAULT_STEADY_BATCH_COUNT * 2
 
 
 @pytest.mark.asyncio
@@ -342,8 +348,8 @@ async def test_concurrent_actions_for_two_entries_remain_independent(
 
         assert first.writes == [(47005, [4]), (47015, [1, 1200, 60])]
         assert second.writes == [(47005, [4]), (47015, [2, 2300, 70])]
-        assert len(first.fetches) == DEFAULT_BATCH_COUNT
-        assert len(second.fetches) == DEFAULT_BATCH_COUNT
+        assert len(first.fetches) == DEFAULT_STEADY_BATCH_COUNT
+        assert len(second.fetches) == DEFAULT_STEADY_BATCH_COUNT
 
 
 @pytest.mark.asyncio
@@ -396,7 +402,7 @@ async def test_cancelled_number_service_does_not_poison_the_next_write(
         )
 
         assert backend.writes == [(47016, [1200.0]), (47016, [1300.0])]
-        assert len(backend.fetches) == DEFAULT_BATCH_COUNT
+        assert len(backend.fetches) == DEFAULT_STEADY_BATCH_COUNT
         assert entry.runtime_data.last_update_success is True
 
 
@@ -437,10 +443,10 @@ async def test_shutdown_during_refresh_finishes_inflight_work_and_blocks_new_fet
         await inflight_refresh
         await hass.async_block_till_done()
 
-        assert len(backend.fetches) == DEFAULT_BATCH_COUNT
+        assert len(backend.fetches) == DEFAULT_STEADY_BATCH_COUNT
         assert (
             state_for_unique_id(hass, entry, "SHUTDOWN-REFRESH-SN_142").state == "6000"
         )
 
         await coordinator.async_refresh()
-        assert len(backend.fetches) == DEFAULT_BATCH_COUNT
+        assert len(backend.fetches) == DEFAULT_STEADY_BATCH_COUNT

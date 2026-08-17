@@ -319,6 +319,18 @@ class IndevoltCapabilityNumberEntity(IndevoltEntity, NumberEntity):
     def device_info(self):
         return self.device_info_main()
 
+    async def async_added_to_hass(self) -> None:
+        """Poll an optional readback only while this entity is enabled."""
+        await super().async_added_to_hass()
+        assert self.capability.read_point is not None
+        self.coordinator.register_optional_read_point(self.capability.read_point)
+
+    async def async_will_remove_from_hass(self) -> None:
+        """Release an optional readback when Home Assistant removes the entity."""
+        assert self.capability.read_point is not None
+        self.coordinator.unregister_optional_read_point(self.capability.read_point)
+        await super().async_will_remove_from_hass()
+
     @property
     def native_value(self) -> int | float | None:
         return self.coordinator.data.get(str(self.capability.read_point))
