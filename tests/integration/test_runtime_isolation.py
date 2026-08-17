@@ -201,15 +201,8 @@ async def test_entities_missing_on_first_response_are_not_added_later(
         assert device_for_serial(hass, "battery_1_LATE-PACK") is None
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Existing unload reads hass.data[DOMAIN][entry_id], so Home Assistant "
-        "cannot complete the isolation check until that lifecycle bug is fixed"
-    ),
-)
 @pytest.mark.asyncio
-async def test_unloading_one_entry_leaves_the_other_entry_running(
+async def test_removing_one_entry_leaves_the_other_entry_running(
     monkeypatch,
     tmp_path,
 ) -> None:
@@ -233,14 +226,20 @@ async def test_unloading_one_entry_leaves_the_other_entry_running(
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, first_entry)
         await add_entry(hass, second_entry)
+        first_entity_ids = {
+            item.entity_id for item in entry_entities(hass, first_entry).values()
+        }
         second_entity_ids = {
             item.entity_id for item in entry_entities(hass, second_entry).values()
         }
 
-        assert await hass.config_entries.async_unload(first_entry.entry_id) is True
+        assert await hass.config_entries.async_remove(first_entry.entry_id) == {
+            "require_restart": False
+        }
         await hass.async_block_till_done()
 
-        assert first_entry.state is ConfigEntryState.NOT_LOADED
+        assert hass.config_entries.async_get_entry(first_entry.entry_id) is None
+        assert all(hass.states.get(entity_id) is None for entity_id in first_entity_ids)
         assert second_entry.state is ConfigEntryState.LOADED
         assert all(
             hass.states.get(entity_id) is not None for entity_id in second_entity_ids

@@ -13,13 +13,18 @@ from custom_components.indevolt.const import DOMAIN, PLATFORMS
 class FakeConfigEntries:
     """Return and record a fixed platform-unload result."""
 
-    def __init__(self, unload_result: bool) -> None:
+    def __init__(self, unload_result: bool, loaded_entries=None) -> None:
         self.unload_result = unload_result
+        self.loaded_entries = list(loaded_entries or [])
         self.unloaded = []
 
     async def async_unload_platforms(self, entry, platforms) -> bool:
         self.unloaded.append((entry, list(platforms)))
         return self.unload_result
+
+    def async_loaded_entries(self, domain):
+        assert domain == DOMAIN
+        return self.loaded_entries
 
 
 class FakeCoordinator:
@@ -32,18 +37,18 @@ class FakeCoordinator:
         self.shutdowns += 1
 
 
-def make_hass(entry, coordinator, *, unload_result: bool):
+def make_hass(*, unload_result: bool, loaded_entries=None):
     return SimpleNamespace(
-        data={DOMAIN: {entry.entry_id: coordinator}},
-        config_entries=FakeConfigEntries(unload_result),
+        data={DOMAIN: {}},
+        config_entries=FakeConfigEntries(unload_result, loaded_entries),
     )
 
 
 @pytest.mark.asyncio
 async def test_successful_unload_shuts_down_and_removes_last_domain_entry() -> None:
-    entry = SimpleNamespace(entry_id="entry-3")
     coordinator = FakeCoordinator()
-    hass = make_hass(entry, coordinator, unload_result=True)
+    entry = SimpleNamespace(entry_id="entry-3", runtime_data=coordinator)
+    hass = make_hass(unload_result=True)
 
     assert await indevolt.async_unload_entry(hass, entry) is True
 
@@ -54,34 +59,27 @@ async def test_successful_unload_shuts_down_and_removes_last_domain_entry() -> N
 
 @pytest.mark.asyncio
 async def test_failed_platform_unload_keeps_coordinator_running() -> None:
-    entry = SimpleNamespace(entry_id="entry-4")
     coordinator = FakeCoordinator()
-    hass = make_hass(entry, coordinator, unload_result=False)
+    entry = SimpleNamespace(entry_id="entry-4", runtime_data=coordinator)
+    hass = make_hass(unload_result=False)
 
     assert await indevolt.async_unload_entry(hass, entry) is False
 
     assert coordinator.shutdowns == 0
     assert hass.config_entries.unloaded == [(entry, list(PLATFORMS))]
-    assert hass.data == {DOMAIN: {entry.entry_id: coordinator}}
+    assert hass.data == {DOMAIN: {}}
 
 
 @pytest.mark.asyncio
-async def test_successful_unload_preserves_other_entries_and_domain() -> None:
-    entry = SimpleNamespace(entry_id="entry-6")
+async def test_successful_unload_preserves_other_runtime_coordinators() -> None:
     coordinator = FakeCoordinator()
     other_coordinator = FakeCoordinator()
-    hass = SimpleNamespace(
-        data={
-            DOMAIN: {
-                entry.entry_id: coordinator,
-                "entry-7": other_coordinator,
-            }
-        },
-        config_entries=FakeConfigEntries(True),
-    )
+    entry = SimpleNamespace(entry_id="entry-6", runtime_data=coordinator)
+    other_entry = SimpleNamespace(entry_id="entry-7", runtime_data=other_coordinator)
+    hass = make_hass(unload_result=True, loaded_entries=[other_entry])
 
     assert await indevolt.async_unload_entry(hass, entry) is True
 
     assert coordinator.shutdowns == 1
-    assert other_coordinator.shutdowns == 0
-    assert hass.data == {DOMAIN: {"entry-7": other_coordinator}}
+    assert other_entry.runtime_data.shutdowns == 0
+    assert hass.data == {DOMAIN: {}}

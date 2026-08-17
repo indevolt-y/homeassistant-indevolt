@@ -51,7 +51,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         coordinator = IndevoltDeviceUpdateCoordinator(hass, entry.data)
         # Perform initial data refresh.
         await coordinator.async_config_entry_first_refresh()
-        # Store coordinator in hass.data for platform access.
+        # Store the coordinator on the config entry for platform access.
         entry.runtime_data = coordinator
 
         # Set up all platforms (sensors, switches, etc.).
@@ -76,11 +76,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if unload_ok:
-        coordinator = hass.data[DOMAIN].pop(entry.entry_id)
-        await coordinator.async_shutdown()
+        await entry.runtime_data.async_shutdown()
 
-        if not hass.data[DOMAIN]:
-            hass.data.pop(DOMAIN)
+        if not hass.config_entries.async_loaded_entries(DOMAIN):
+            hass.data.pop(DOMAIN, None)
 
     return unload_ok
 

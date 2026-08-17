@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pytest
 from homeassistant.config_entries import ConfigEntryState
+from homeassistant.const import STATE_UNAVAILABLE
 
 from ._support import (
     DEFAULT_DATA,
@@ -16,15 +17,8 @@ from ._support import (
 )
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "Existing unload reads hass.data[DOMAIN][entry_id], but setup stores the "
-        "coordinator only in entry.runtime_data"
-    ),
-)
 @pytest.mark.asyncio
-async def test_real_unload_removes_states_and_finishes_cleanly(
+async def test_real_unload_marks_states_unavailable_and_finishes_cleanly(
     monkeypatch,
     tmp_path,
 ) -> None:
@@ -46,13 +40,13 @@ async def test_real_unload_removes_states_and_finishes_cleanly(
         await hass.async_block_till_done()
 
         assert entry.state is ConfigEntryState.NOT_LOADED
-        assert all(hass.states.get(entity_id) is None for entity_id in owned_entity_ids)
+        assert all(
+            (state := hass.states.get(entity_id)) is not None
+            and state.state == STATE_UNAVAILABLE
+            for entity_id in owned_entity_ids
+        )
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="Reload is blocked by the same existing unload failure",
-)
 @pytest.mark.asyncio
 async def test_real_reload_preserves_entry_data_and_entity_unique_ids(
     monkeypatch,

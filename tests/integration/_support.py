@@ -143,12 +143,6 @@ async def home_assistant_runtime(
     finally:
         for entry in hass.config_entries.async_entries(DOMAIN):
             if entry.state is ConfigEntryState.LOADED:
-                # Production unload currently looks in hass.data even though setup
-                # stores the coordinator in runtime_data. Supply that missing cleanup
-                # reference only after every assertion has finished, so the strict
-                # lifecycle xfails still exercise the real bug while HA can release
-                # all entity-platform objects before the Python process exits.
-                hass.data.setdefault(DOMAIN, {})[entry.entry_id] = entry.runtime_data
                 await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
         await hass.async_stop(force=True)
