@@ -173,6 +173,41 @@ async def test_all_number_entities_accept_real_ha_service_calls(
 
 
 @pytest.mark.asyncio
+async def test_documented_11009_does_not_replace_the_existing_write_transport(
+    monkeypatch,
+    tmp_path,
+) -> None:
+    """Keep the 1.2 control reading 11009 and writing 1138."""
+    backend = FakeDevice(dict(DEFAULT_DATA))
+    install_fake_devices(monkeypatch, {"192.0.2.46": backend})
+    entry = make_entry(
+        host="192.0.2.46",
+        serial="AC-LIMIT-SN",
+        model="SolidFlex/PowerFlex2000",
+    )
+
+    async with home_assistant_runtime(tmp_path) as hass:
+        await add_entry(hass, entry)
+        entities = entry_entities(hass, entry)
+        number_entity = entities["AC-LIMIT-SN_inverter_input_limit"]
+
+        assert "AC-LIMIT-SN_11009" not in entities
+        state = hass.states.get(number_entity.entity_id)
+        assert state is not None
+        assert state.state == "1000"
+
+        await hass.services.async_call(
+            "number",
+            "set_value",
+            {"entity_id": number_entity.entity_id, "value": 1200},
+            blocking=True,
+        )
+
+        assert backend.writes == [(1138, [1200.0])]
+        assert all(point != 11009 for point, _value in backend.writes)
+
+
+@pytest.mark.asyncio
 async def test_all_select_entities_accept_real_ha_service_calls(
     monkeypatch,
     tmp_path,

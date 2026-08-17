@@ -15,7 +15,8 @@ SET_USER_CAPABILITIES: tuple[SetUserCapability, ...] = (
     SetUserCapability(
         11009,
         "existing_control_transport",
-        "Direct AC charging limit write; keep the existing user control unchanged",
+        "Documented direct AC charging point; keep the 1.2 read-11009/write-1138 "
+        "control unchanged",
     ),
     SetUserCapability(
         2618,
