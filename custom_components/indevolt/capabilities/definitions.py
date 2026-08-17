@@ -95,6 +95,7 @@ class SetUserCapability:
     key: str | None = None
     user_value: Any = None
     wire_value: int | float | None = None
+    integer_wire_value: bool = False
     read_point: int | None = None
     read_sample_value: Any = None
     expected_initial_state: str | None = None

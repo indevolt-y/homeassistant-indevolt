@@ -683,7 +683,7 @@ async def test_f_16_forced_full_charge_settings_survive_reload(
             blocking=True,
         )
         await hass.async_block_till_done()
-        assert backend.writes == [(8646, [1.0]), (8647, [0x0800])]
+        assert backend.writes == [(8646, [1]), (8647, [0x0800])]
 
         hass.data.setdefault(DOMAIN, {})[entry.entry_id] = entry.runtime_data
         assert await hass.config_entries.async_reload(entry.entry_id)
@@ -691,7 +691,7 @@ async def test_f_16_forced_full_charge_settings_survive_reload(
         assert set(entry_entities(hass, entry)) == original_unique_ids
         assert (
             require_state(hass, entry, f"{SERIAL}_forced_full_charge_interval").state
-            == "1.0"
+            == "1"
         )
         assert (
             require_state(hass, entry, f"{SERIAL}_forced_full_charge_start_time").state

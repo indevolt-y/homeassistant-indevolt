@@ -220,7 +220,7 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
         light_mode = entities[_set_unique_id(35005)].entity_id
         sleep_start = entities[_set_unique_id(35001)].entity_id
 
-        for value in (-1, 61):
+        for value in (-1, 30.5, 61):
             with pytest.raises(ServiceValidationError):
                 await hass.services.async_call(
                     "number",
@@ -243,6 +243,15 @@ async def test_ha_03_controls_validate_input_and_report_write_failures(
                 blocking=True,
             )
         assert backend.writes == []
+
+        await hass.services.async_call(
+            "number",
+            "set_value",
+            {"entity_id": interval, "value": 30},
+            blocking=True,
+        )
+        assert backend.writes == [(8646, [30])]
+        backend.writes.clear()
 
         backend.write_result = False
         with pytest.raises(HomeAssistantError):

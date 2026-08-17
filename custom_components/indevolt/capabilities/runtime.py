@@ -70,10 +70,18 @@ async def async_write_control(
     value: int | float,
 ) -> None:
     """Write one new control and report rejection without changing old controls."""
+    wire_value = value
+    if capability.integer_wire_value:
+        if not isinstance(value, (int, float)) or not float(value).is_integer():
+            raise ServiceValidationError(
+                f"OpenData point {capability.point} requires a whole number"
+            )
+        wire_value = int(value)
+
     try:
         accepted = await coordinator.api.set_data(
             point=capability.point,
-            value=[value],
+            value=[wire_value],
         )
     except Exception as err:
         raise HomeAssistantError(
