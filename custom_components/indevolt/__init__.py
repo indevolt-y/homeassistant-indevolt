@@ -24,6 +24,7 @@ from homeassistant.helpers import device_registry as dr
 # order, and import side effects are unchanged.
 from .const import DOMAIN, MAX_REAL_TIME_CONTROL_POWER, PLATFORMS
 from .coordinator import IndevoltDeviceUpdateCoordinator
+from .entry_config import resolve_entry_config
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,7 +49,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     try:
-        coordinator = IndevoltDeviceUpdateCoordinator(hass, entry.data)
+        coordinator = IndevoltDeviceUpdateCoordinator(
+            hass,
+            resolve_entry_config(entry.data),
+        )
         # Perform initial data refresh.
         await coordinator.async_config_entry_first_refresh()
         # Store the coordinator on the config entry for platform access.

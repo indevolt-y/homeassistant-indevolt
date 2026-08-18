@@ -17,6 +17,7 @@ from .capabilities.runtime import (
     is_returned,
 )
 from .entity import IndevoltEntity
+from .entry_config import runtime_device_model
 
 
 async def async_setup_entry(
@@ -25,7 +26,7 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up returned binary values without changing existing platforms."""
-    capabilities = capabilities_for_model(entry.data.get("device_model"))
+    capabilities = capabilities_for_model(runtime_device_model(entry.runtime_data))
     async_add_entities(
         IndevoltCapabilityBinarySensorEntity(entry.runtime_data, capability)
         for capability in capabilities

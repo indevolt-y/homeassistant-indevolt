@@ -35,6 +35,7 @@ from .capabilities.runtime import (
 from .const import MAX_REAL_TIME_CONTROL_POWER
 from .coordinator import IndevoltDeviceUpdateCoordinator
 from .entity import IndevoltEntity
+from .entry_config import runtime_device_model
 from .opendata import IndevoltAPI
 from .opendata.commands import (
     set_backup_soc,
@@ -195,7 +196,7 @@ NUMBERS_GEN1 = [
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    device_model = entry.data.get("device_model")
+    device_model = runtime_device_model(entry.runtime_data)
     if "BK1600" in device_model:
         entities = [
             IndevoltNumberEntity(entry.runtime_data, description)
@@ -235,7 +236,7 @@ class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
 
     @property
     def native_max_value(self) -> int:
-        if "BK1600" not in self.coordinator.config_entry.data.get("device_model"):
+        if "BK1600" not in runtime_device_model(self.coordinator):
             return self.entity_description.native_max_value
 
         if self.entity_description.key != "power_setting":
@@ -271,7 +272,7 @@ class IndevoltNumberEntity(IndevoltEntity, NumberEntity):
         # Rollback: Remove this conditional branch and restore the old metadata
         # maximum; entity registration and stored data require no migration.
         if (
-            "BK1600" not in self.coordinator.config_entry.data.get("device_model")
+            "BK1600" not in runtime_device_model(self.coordinator)
             and self.entity_description.key == "power_setting"
             and value > MAX_REAL_TIME_CONTROL_POWER
         ):

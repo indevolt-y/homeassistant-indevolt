@@ -16,6 +16,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .entity import IndevoltEntity
+from .entry_config import runtime_device_model
 
 PARALLEL_UPDATES = 1
 
@@ -84,7 +85,7 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up switches."""
-    if "BK1600" in entry.data.get("device_model"):
+    if "BK1600" in runtime_device_model(entry.runtime_data):
         return
 
     async_add_entities(

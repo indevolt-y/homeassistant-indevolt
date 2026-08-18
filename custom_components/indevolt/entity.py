@@ -7,6 +7,11 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .coordinator import IndevoltDeviceUpdateCoordinator
+from .entry_config import (
+    runtime_device_model,
+    runtime_firmware_version,
+    runtime_serial_number,
+)
 
 BATTERY_PACK_KEY = {1: "9032", 2: "9051", 3: "9070", 4: "9165", 5: "9218"}
 
@@ -21,15 +26,14 @@ class IndevoltEntity(CoordinatorEntity[IndevoltDeviceUpdateCoordinator]):
         super().__init__(coordinator)
 
     def device_info_main(self) -> DeviceInfo:
-        entry = self.coordinator.config_entry
-        sn = entry.data.get("sn")
-        model = entry.data.get("device_model")
+        sn = runtime_serial_number(self.coordinator)
+        model = runtime_device_model(self.coordinator)
 
         return DeviceInfo(
             identifiers={(DOMAIN, sn)},
             name=f"{model} ({sn})",
             manufacturer="INDEVOLT",
-            sw_version=entry.data.get("fw_version"),
+            sw_version=runtime_firmware_version(self.coordinator),
             model=model,
             serial_number=sn,
         )
@@ -43,5 +47,5 @@ class IndevoltEntity(CoordinatorEntity[IndevoltDeviceUpdateCoordinator]):
             manufacturer="INDEVOLT",
             model="Battery Pack",
             serial_number=sn,
-            via_device=(DOMAIN, self.coordinator.config_entry.data.get("sn")),
+            via_device=(DOMAIN, runtime_serial_number(self.coordinator)),
         )

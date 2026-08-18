@@ -9,7 +9,7 @@ from typing import Any, Dict, Iterable
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DEFAULT_SCAN_INTERVAL, DOMAIN
+from .const import DEFAULT_PORT, DEFAULT_SCAN_INTERVAL, DOMAIN
 from .opendata import IndevoltAPI
 from .opendata.additional_points import (
     BK_ADDITIONAL_READ_GROUPS,
@@ -38,7 +38,7 @@ class IndevoltDeviceUpdateCoordinator(DataUpdateCoordinator):
         # Initialize Indevolt API.
         self.api = IndevoltAPI(
             host=config["host"],
-            port=config["port"],
+            port=config.get("port", DEFAULT_PORT),
             session=async_get_clientsession(self.hass),
         )
         self._discover_optional_read_points = True

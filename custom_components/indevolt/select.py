@@ -12,6 +12,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .coordinator import IndevoltDeviceUpdateCoordinator
 from .entity import IndevoltEntity
+from .entry_config import runtime_device_model
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -92,7 +93,7 @@ async def async_setup_entry(
 ) -> None:
     coordinator: IndevoltDeviceUpdateCoordinator = entry.runtime_data
 
-    if "BK1600" in entry.data.get("device_model"):
+    if "BK1600" in runtime_device_model(coordinator):
         async_add_entities(
             IndevoltSelectEntity(coordinator, description)
             for description in SELECTS_GEN1

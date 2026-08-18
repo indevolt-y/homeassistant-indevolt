@@ -10,6 +10,7 @@ from .capabilities.runtime import (
     is_returned,
 )
 from .entity import IndevoltEntity
+from .entry_config import runtime_device_model
 from .sensor_descriptions.battery_pack import BATTERY_PACK_SENSORS
 from .sensor_descriptions.entity_description import IndevoltSensorEntityDescription
 from .sensor_descriptions.gen1 import SENSORS_GEN1
@@ -33,7 +34,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
     It creates sensor entities for each defined sensor description.
     """
     # Create an entity for each sensor description.
-    device_model = entry.data.get("device_model")
+    device_model = runtime_device_model(entry.runtime_data)
     if "BK1600" in device_model:
         entities = [
             IndevoltSensorEntity(entry.runtime_data, description)
