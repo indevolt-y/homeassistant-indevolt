@@ -1024,24 +1024,22 @@ async def test_f_22_two_pack_heater_cycles_keep_pack_ownership(
 
 
 @pytest.mark.asyncio
-async def test_f_23_reported_master_heater_fault_is_user_visible(
+async def test_f_23_missing_master_heater_fault_source_creates_no_entity(
     monkeypatch,
     tmp_path,
 ) -> None:
-    """F-23: HA provides a user-visible master-heater fault entity."""
+    """F-23: HA does not invent a fault entity without an OpenData source."""
     backend = FakeDevice(scenario_data())
     install_fake_devices(monkeypatch, {HOST: backend})
     entry = make_entry(host=HOST, serial=SERIAL, model=MODEL)
 
     async with home_assistant_runtime(tmp_path) as hass:
         await add_entry(hass, entry)
-        fault = require_named_state(hass, "Master Battery Heater Fault")
-        main_device = device_for_serial(hass, SERIAL)
-        assert main_device is not None
-        registry_entry = next(
-            entity
-            for entity in entry_entities(hass, entry).values()
-            if entity.entity_id == fault.entity_id
-        )
-        assert registry_entry.device_id == main_device.id
-        assert fault.state == "off"
+        matches = [
+            state
+            for state in hass.states.async_all()
+            if str(state.attributes.get("friendly_name", "")).endswith(
+                "Master Battery Heater Fault"
+            )
+        ]
+        assert matches == []
